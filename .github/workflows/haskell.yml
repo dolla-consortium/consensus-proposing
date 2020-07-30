@@ -1,0 +1,68 @@
+name: Haskell CI
+
+on: [pull_request]
+
+jobs:
+  build:
+    name: GHC ${{ matrix.ghc_version }}
+    env:
+      CABAL_REINIT_CONFIG: y
+      LC_ALL: C.UTF-8
+
+      ENABLE_INSTALL: y
+
+      STACK_UPGRADE: "y"
+
+      CABAL_CHECK_RELAX: y
+      CABAL_NO_SANDBOX: y
+      CABAL_HACKAGE_MIRROR: hackage.haskell.org:http://hackage.fpcomplete.com
+
+      PACKCHECK_LOCAL_PATH: "./packcheck.sh"
+      PACKCHECK_GITHUB_URL: "https://raw.githubusercontent.com/harendra-kumar/packcheck"
+      PACKCHECK_GITHUB_COMMIT: "563702bd02c41343dcd3dfcfef0845ca428a9240"
+
+      BUILD: ${{ matrix.build }}
+      GHCVER: ${{ matrix.ghc_version }}
+      RESOLVER: ${{ matrix.resolver }}
+      DISABLE_SDIST_GIT_CHECK: "y"
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ghc_version: [8.8.3]
+        cabal_version: ["3.0"]
+        include:
+          - ghc_version: 8.8.3
+            build: stack
+            resolver: lts-16.2
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-haskell@v1
+      with:
+        ghc-version: ${{ matrix.ghc_version }}
+        cabal-version: ${{ matrix.cabal_version }}
+
+    - uses: actions/cache@v1
+      name: Cache ~/.stack
+      with:
+        path: ~/.stack
+        key: ${{ runner.os }}-stack-${{ matrix.resolver }}
+
+    - name: Download packcheck
+      run: |
+        # If a custom stack-yaml is specified, replace the default with that
+        if test -e "$STACK_YAML"; then rm -f stack.yaml && ln -sv $STACK_YAML stack.yaml; else true; fi
+        unset STACK_YAML
+
+        # Get packcheck if needed
+        CURL=$(which curl)
+        PACKCHECK_URL=${PACKCHECK_GITHUB_URL}/${PACKCHECK_GITHUB_COMMIT}/packcheck.sh
+        if test ! -e "$PACKCHECK_LOCAL_PATH"; then $CURL -sL -o "$PACKCHECK_LOCAL_PATH" $PACKCHECK_URL; fi;
+        chmod +x $PACKCHECK_LOCAL_PATH
+
+    - name: Run packcheck
+      run: |
+        bash -c "$PACKCHECK_LOCAL_PATH $BUILD"
