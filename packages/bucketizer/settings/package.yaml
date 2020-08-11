@@ -1,0 +1,18 @@
+name: dolla-consensus-proposer-bucketizer-settings
+version: 0.0.0.1
+extra-source-files:
+  - README.md
+
+ghc-options:
+  - -Wall
+  - -j
+
+library:
+  source-dirs: lib
+
+  dependencies:
+    - dolla-base == 1.0.0
+    - base == 4.13.0.0
+    - aeson == 1.4.7.1
+
+

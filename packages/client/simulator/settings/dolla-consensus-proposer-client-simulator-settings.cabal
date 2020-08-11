@@ -1,0 +1,28 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 00b4fab66d8ff95e20d97e91ddc958252d8bb443424a1f762ae1d7522e6d101c
+
+name:           dolla-consensus-proposer-client-simulator-settings
+version:        0.0.0.1
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposer.Client.Simulator.Settings
+  other-modules:
+      Paths_dolla_consensus_proposer_client_simulator_settings
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall -j
+  build-depends:
+      aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , dolla-base ==1.0.0
+    , dolla-consensus-proposer-receptionist-settings
+  default-language: Haskell2010

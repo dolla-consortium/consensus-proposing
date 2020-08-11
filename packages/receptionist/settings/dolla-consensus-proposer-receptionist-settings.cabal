@@ -1,0 +1,28 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: c9c4eb99e1bf05a98e670288307f3ec7189f394d04843dc85359de002b14e63d
+
+name:           dolla-consensus-proposer-receptionist-settings
+version:        0.0.0.1
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposer.Receptionist.API.Client.Settings
+      Dolla.Consensus.Proposer.Receptionist.API.Server.Settings
+  other-modules:
+      Paths_dolla_consensus_proposer_receptionist_settings
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall -j
+  build-depends:
+      aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , dolla-base ==1.0.0
+  default-language: Haskell2010

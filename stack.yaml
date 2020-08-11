@@ -1,18 +1,31 @@
 # When changing the resolver, also update the docker image in `.gitlab-ci.yml` accordingly!
 resolver: lts-16.2
 packages:
+  # Packages specific to the proposer pipeline
+  - packages/bucketizer
+  - packages/bucketizer/settings
 
-  - src/proposer
-  - src/settings
+  - packages/receptionist
+  - packages/receptionist/settings
+
+  - packages/client/simulator
+  - packages/client/simulator/settings
+
+  - packages/zeus
+
+  # Working locally with internal dependencies directly (comment them in extra-deps)
+  #  - ../base
+  #  - ../consensus-base
 
 extra-deps:
-
+  # Internal dependencies
   - github: dolla-consortium/base
-    commit: 8250d09415fb3302f98a35558efa8fa678d74407
+    commit: bf2ef0cb0ea1cf2fda8e6084c693043d7b6956d5
 
   - github: dolla-consortium/consensus-base
     commit: 7b952cb81e107bf222838bd923463ecceb59d2fd
 
+  # Third party dependencies
   - terminfo-hs-0.2.1.1
   - either-5.0.1@sha256:ec9b644f35d38482cecc1eccbf711c2fc38422812140498203d89dc39a80a920
   - ansi-terminal-0.9.1@sha256:48f53532d0f365ffa568c8cf0adc84c66f800a7d80d3329e4f04fa75392f4af1

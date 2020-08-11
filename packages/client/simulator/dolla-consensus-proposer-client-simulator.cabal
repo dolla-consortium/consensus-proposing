@@ -1,0 +1,53 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 13cd41883d9b9bfc2221865ba755845be6d3ee3a7a114cceaa96ec3d42b122d5
+
+name:           dolla-consensus-proposer-client-simulator
+version:        0.0.0.1
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposer.Client.Simulator.Dependencies
+      Dolla.Consensus.Proposer.Client.Simulator.Simulator
+  other-modules:
+      Paths_dolla_consensus_proposer_client_simulator
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall -j
+  build-depends:
+      aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , byline ==0.3.2.1
+    , dolla-base ==1.0.0
+    , dolla-consensus-base ==1.0.0
+    , dolla-consensus-proposer-client-simulator-settings
+    , dolla-consensus-proposer-receptionist
+    , dolla-consensus-proposer-receptionist-settings
+    , mtl ==2.2.2
+    , random ==1.1
+    , streamly ==0.7.2
+    , text ==1.2.4.0
+    , uuid ==1.3.13
+  default-language: Haskell2010
+
+executable dolla-consensus-proposer-client-simulator
+  main-is: Executables.hs
+  other-modules:
+      Paths_dolla_consensus_proposer_client_simulator
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -j -main-is Executables.clientSimulator -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base ==4.13.0.0
+    , dolla-base ==1.0.0
+    , dolla-consensus-proposer-client-simulator
+    , dolla-consensus-proposer-client-simulator-settings
+    , dolla-consensus-proposer-receptionist-settings
+  default-language: Haskell2010
