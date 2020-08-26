@@ -3,7 +3,7 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE FlexibleContexts #-}
 
-module Dolla.Consensus.Proposer.Bucketizer.Bucketizer (requestBucketizer) where
+module Dolla.Consensus.Proposer.Bucketizer.Bucketizer (genesis) where
 
 import           Prelude hiding (log,writeFile)
 import           Data.Function ((&))
@@ -23,55 +23,115 @@ import           Data.ByteString hiding (length,map,append)
 import qualified Streamly.Internal.Prelude as S
 import qualified Streamly.Internal.FileSystem.Handle as IFH
 import qualified System.IO as FH
-import Data.Word (Word8)
-import Control.Monad.Catch (MonadCatch)
-import System.Directory
+import           Data.Word (Word8)
+import           Control.Monad.Catch (MonadCatch)
+import           System.Directory
+import qualified Dolla.Common.Streamly as S (groupsBy2,lmap2)
+import           Data.Aeson.Types (ToJSON)
+import           GHC.IO.IOMode
 
-import Control.Monad.State.Strict (StateT(..), get, put)
-import Data.Aeson.Types (ToJSON)
-import GHC.IO.IOMode
+import           Streamly.Internal.Data.Fold.Types
+import Control.Monad.State (MonadState, put, get)
+import Dolla.Common.Memory.Byte (Byte)
+import Dolla.Common.Logging.Core
 
 
-requestBucketizer
+genesis
   :: ( MemoryStreamLoggable m log
      , MonadReader Dependencies m
-     , MonadIO m , S.MonadAsync m
+     , MonadIO m
+     , S.MonadAsync m
      , MonadCatch m)
   => log Request
   -> log Output
   ->  S.SerialT m ()
-requestBucketizer requestLog outputLog =
+genesis requestLog outputLog =
   streamWithLogItem infinitely requestLog
   & serialize
-  & bucketizeAndPersist
-  & S.indexed
-  & S.mapM (\(blockOffset,()) -> do
-      Dependencies {proposalRootFolder} <- ask
-      liftIO $ renameFile
-        (proposalRootFolder ++ "local/" ++ show blockOffset ++ ".tmp")
-        (proposalRootFolder ++ "local/" ++ show blockOffset ++ ".proposal")
-      void $ append outputLog (fromIntegralToOffset blockOffset) LocalProposalProduced)
+  & assign
+  & persist
+  & notify
+
+  where notify = S.mapM (\localOffsetPersisted -> void $ append outputLog localOffsetPersisted LocalProposalProduced)
 
 serialize
-  :: (MonadReader Dependencies m , MonadIO m , S.MonadAsync m,ToJSON a)
+  :: ( MonadReader Dependencies m
+     , MonadIO m
+     , S.MonadAsync m
+     , ToJSON a)
   => S.SerialT m a
-  -> S.SerialT m Word8
-serialize input =  input & S.map (unpack . getEncodedItem) & S.concatMap S.fromList
+  -> S.SerialT m [Word8]
+serialize input =  input & S.map (unpack . getEncodedItem)
 
-bucketizeAndPersist
-  :: (MonadReader Dependencies m ,MonadIO m,Monad m) 
-  => S.SerialT m Word8 
-  -> S.SerialT m ()
-bucketizeAndPersist inputStream = do
-    let proposalSize = 1000 * 1024 -- 1 MB
+data AssigningState
+  = AssigningState
+    { currentLocalOffset :: Offset
+    , currentRequest :: [Word8]
+    , currentProposalSize :: Byte}
+
+data Assignment = Assignment {localProposalOffset :: Offset, content :: Word8} deriving Show
+
+assign
+  :: Monad m
+  => S.SerialT m [Word8]
+  -> S.SerialT m Assignment
+assign input
+  = input
+    & S.postscan
+        (Fold
+          (\AssigningState {..} requestInBytes -> do
+              let proposalSizeLimit = 1000 * 1024 :: Byte -- 1 MB
+                  requestSize  = fromIntegral $ length requestInBytes
+              if (currentProposalSize + requestSize) > proposalSizeLimit
+              then return AssigningState
+                          { currentProposalSize = 0
+                          , currentLocalOffset = nextOffset currentLocalOffset
+                          , currentRequest = requestInBytes}
+              else return AssigningState
+                          { currentProposalSize = currentProposalSize + requestSize
+                          , currentLocalOffset
+                          , currentRequest = requestInBytes})
+          (return AssigningState
+            { currentLocalOffset = 0
+            , currentProposalSize = 0
+            , currentRequest = []})
+          (\AssigningState {..}
+              -> return $ (\requestChunk -> Assignment {localProposalOffset = currentLocalOffset, content = requestChunk} ) <$> currentRequest))
+    & S.concatMap S.fromList
+
+persist
+  :: ( MonadReader Dependencies m
+     , S.MonadAsync m
+     , Monad m)
+  => S.SerialT m Assignment
+  -> S.SerialT m Offset
+persist inputStream = do
     Dependencies {proposalRootFolder} <- ask
     inputStream
       & S.liftInner
-      & S.chunksOf2 proposalSize getNewHandle IFH.write2
+      & S.groupsBy2
+          assignedWithingSameLocalProposal
+          getLocalProposalFileHandle
+          (S.lmap2 content IFH.write2)
       & S.evalStateT State
                       { localProposalRootFolder = proposalRootFolder ++ "local/"
                       , handleMaybe = Nothing
                       , localBlockOffset = 0}
+      & S.indexed
+      & S.mapM (\(blockOffset,()) -> do
+          liftIO $ renameFile
+            (proposalRootFolder ++ "local/" ++ show blockOffset ++ ".tmp")
+            (proposalRootFolder ++ "local/" ++ show blockOffset ++ ".proposal")
+          return $ fromIntegralToOffset blockOffset)
+
+assignedWithingSameLocalProposal
+  :: Assignment
+  -> Assignment
+  -> Bool
+assignedWithingSameLocalProposal
+  Assignment {localProposalOffset = previous}
+  Assignment {localProposalOffset = current}
+  = previous == current
 
 data State
   = State
@@ -79,8 +139,12 @@ data State
     , handleMaybe :: Maybe FH.Handle
     , localBlockOffset :: Offset }
 
-getNewHandle :: (MonadIO m,Monad m) => StateT State m FH.Handle
-getNewHandle = do
+getLocalProposalFileHandle
+  :: ( MonadIO m
+     , Monad m
+     , MonadState State m)
+     => m FH.Handle
+getLocalProposalFileHandle = do
     State {..} <- get
     liftIO (createDirectoryIfMissing True localProposalRootFolder )
     newLocalOffset <- case handleMaybe of

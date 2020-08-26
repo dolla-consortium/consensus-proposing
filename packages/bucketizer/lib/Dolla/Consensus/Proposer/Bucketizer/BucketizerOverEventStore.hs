@@ -29,7 +29,7 @@ start = do
   lift $ drain
     $ SIP.runReaderT
         d
-        (requestBucketizer
+        (genesis
           (getEventStoreLog eventStoreClient LocalRequestLog)
           (getEventStoreLog eventStoreClient ProposerOutputLog))
   log logger INFO "Proposal Maker down"
