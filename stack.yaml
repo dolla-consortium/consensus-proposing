@@ -1,15 +1,15 @@
 # When changing the resolver, also update the docker image in `.gitlab-ci.yml` accordingly!
 resolver: lts-16.2
 packages:
-  # Packages specific to the proposer pipeline
-  - packages/bucketizer
-  - packages/bucketizer/settings
+  # Packages specific to the proposing pipeline
+  - packages/requesting/simulating
+  - packages/requesting/simulating/settings
 
-  - packages/receptionist
-  - packages/receptionist/settings
+  - packages/receptioning
+  - packages/receptioning/settings
 
-  - packages/client/simulator
-  - packages/client/simulator/settings
+  - packages/packaging
+  - packages/packaging/settings
 
   - packages/zeus
 

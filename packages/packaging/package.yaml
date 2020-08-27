@@ -1,0 +1,43 @@
+name: dolla-consensus-proposing-packaging
+version: 0.0.0.1
+extra-source-files:
+  - README.md
+
+ghc-options:
+  - -Wall
+  - -j
+
+library:
+  source-dirs: lib
+
+  dependencies:
+
+    - dolla-base == 1.0.0
+    - dolla-consensus-base == 1.0.0
+    - dolla-consensus-proposing-packaging-settings
+
+    - base == 4.13.0.0
+    - containers == 0.6.2.1
+    - mtl == 2.2.2
+    - streamly == 0.7.2
+    - interpolatedstring-perl6 == 1.0.2
+    - aeson == 1.4.7.1
+    - lens == 4.18.1
+    - bytestring == 0.10.10.0
+    - exceptions == 0.10.4
+    - directory == 1.3.6.0
+
+
+executables:
+  dolla-consensus-proposing-packaging :
+    main: Executables.hs
+    source-dirs: app
+    ghc-options:
+      - -main-is Executables.packaging
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - dolla-consensus-proposing-packaging
+      - base == 4.13.0.0
+
