@@ -6,6 +6,8 @@ module Dolla.Consensus.Proposing.Packaging.Dependencies (Dependencies (..)) wher
 import           Dolla.Common.NodeId
 import           Dolla.Common.Dependencies.Core
 import           Dolla.Common.Logging.Core
+import           Dolla.Common.Memory.Byte (Byte)
+
 import qualified Dolla.Libraries.LogEngine.Instances.EventStore.Settings as EventStore
 import           Dolla.Consensus.Proposal.Persistence
 import           Dolla.Consensus.Proposing.Packaging.Settings
@@ -15,6 +17,7 @@ data Dependencies
     { nodeId :: NodeId
     , logger :: Logger
     , proposalRootFolder :: ProposalRootFolder
+    , proposalSizeLimit :: Byte
     , eventStoreClient :: EventStore.Dependencies}
 
 
@@ -23,7 +26,8 @@ instance DependencyDerivable Settings Dependencies where
     Settings
       { eventStoreClient = eventStoreClientSettings
       , logger = loggerSettings
-      , proposalRootFolder 
+      , proposalRootFolder
+      , proposalSizeLimit
       , nodeId
       }
     executionUnderBracket

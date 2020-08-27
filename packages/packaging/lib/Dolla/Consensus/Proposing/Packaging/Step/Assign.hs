@@ -12,54 +12,59 @@ module Dolla.Consensus.Proposing.Packaging.Step.Assign
 
 import           Prelude hiding (log,writeFile)
 
+import           Control.Monad.RWS.Class
 import           Data.Function ((&))
 import           Data.Word (Word8)
 
 import qualified Streamly.Prelude as S hiding (length,bracket)
 import qualified Streamly as S
-import           Dolla.Common.Offset
+import           Streamly.Internal.Data.Fold.Types
 
+import           Dolla.Common.Offset
 import           Dolla.Common.Memory.Byte (Byte)
 
-import           Streamly.Internal.Data.Fold.Types
+import           Dolla.Consensus.Proposing.Packaging.Dependencies
+
+type RequestSerialized = [Word8]
 
 data AssigningState
   = AssigningState
     { currentLocalOffset :: Offset
-    , currentRequest :: [Word8]
+    , currentRequestSerialized :: RequestSerialized
     , currentProposalSize :: Byte}
 
 data Assignment
   = Assignment
     { localProposalOffset :: Offset
-    , content :: Word8} deriving Show
+    , requestByteChunk :: Word8} deriving Show
 
 assign
-  :: Monad m
-  => S.SerialT m [Word8]
+  :: ( MonadReader Dependencies m
+     , Monad m)
+  => S.SerialT m RequestSerialized
   -> S.SerialT m Assignment
 assign input
   = input
     & S.postscan
         (Fold
-          (\AssigningState {..} requestInBytes -> do
-              let proposalSizeLimit = 1000 * 1024 :: Byte -- 1 MB
-                  requestSize  = fromIntegral $ length requestInBytes
+          (\AssigningState {currentLocalOffset,currentProposalSize} currentRequestSerialized -> do
+              let requestSize  = fromIntegral $ length currentRequestSerialized
+              Dependencies {proposalSizeLimit} <- ask
               if (currentProposalSize + requestSize) > proposalSizeLimit
               then return AssigningState
                           { currentProposalSize = 0
                           , currentLocalOffset = nextOffset currentLocalOffset
-                          , currentRequest = requestInBytes}
+                          , currentRequestSerialized }
               else return AssigningState
                           { currentProposalSize = currentProposalSize + requestSize
                           , currentLocalOffset
-                          , currentRequest = requestInBytes})
+                          , currentRequestSerialized})
           (return AssigningState
             { currentLocalOffset = 0
             , currentProposalSize = 0
-            , currentRequest = []})
+            , currentRequestSerialized = []})
           (\AssigningState {..}
-              -> return $ (\requestChunk -> Assignment {localProposalOffset = currentLocalOffset, content = requestChunk} ) <$> currentRequest))
+              -> return $ (\requestByteChunk -> Assignment {localProposalOffset = currentLocalOffset, requestByteChunk} ) <$> currentRequestSerialized))
     & S.concatMap S.fromList
 
 sameAssignment

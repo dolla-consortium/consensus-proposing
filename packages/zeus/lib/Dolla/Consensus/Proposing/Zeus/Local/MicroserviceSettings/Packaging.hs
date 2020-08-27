@@ -6,16 +6,17 @@ module Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Packaging
 
 import           Prelude hiding (writeFile)
 
+import           Data.Aeson (encode)
 
 
-import           Dolla.Consensus.Common.Zeus.Haskell.ExecutableSettings
-import           Dolla.Consensus.Proposing.Packaging.Settings
+import           Dolla.Common.Memory.Byte (Byte)
 import           Dolla.Common.NodeId
 import           Dolla.Common.Logging.Core
-import           Dolla.Consensus.EventStore.Zeus.Local.Settings
-import           Dolla.Consensus.Common.Zeus.Logging
 
-import Data.Aeson (encode)
+import           Dolla.Consensus.EventStore.Zeus.Local.Settings
+import           Dolla.Consensus.Common.Zeus.Haskell.ExecutableSettings
+import           Dolla.Consensus.Proposing.Packaging.Settings
+import           Dolla.Consensus.Common.Zeus.Logging
 
 data MicroServiceSettings
   = MicroServiceSettings
@@ -24,6 +25,7 @@ data MicroServiceSettings
   , logFileLocation :: FileSystemLocation
   , configurationLocation :: FileSystemLocation
   , eventStore :: EventStoreSettings
+  , proposalSizeLimit :: Byte
   , proposalRootFolder :: FilePath}
 
 instance ExecutableSettingsProvider MicroServiceSettings  where
@@ -39,6 +41,7 @@ getConfiguration MicroServiceSettings {..}
   = Settings
      { nodeId
      , proposalRootFolder
+     , proposalSizeLimit
      , logger = nodeLoggerId nodeId DEBUG "proposer"
      , eventStoreClient = mapToEventStoreSettings eventStore $ nodeLoggerId nodeId DEBUG  "event.store.client"}
 

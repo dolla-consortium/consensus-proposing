@@ -29,6 +29,7 @@ import qualified Dolla.Consensus.EventStore.Zeus.Local.Settings as EventStore
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Requesting.Simulating as Requesting.Simulating
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Receptionist as Receptioning
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Packaging as Packaging
+import Dolla.Common.Memory.Byte (mb)
 
 start
   :: MonadIO m
@@ -83,6 +84,7 @@ getProposerMicroservicesSettings
                 , executableName = "dolla-consensus-proposing-packaging"
                 , logFileLocation =  FileSystemLocation {rootFolder = logFolder, fileName = "packaging.log"}
                 , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "packaging.config"}
+                , proposalSizeLimit = 2 * mb
                 , eventStore
                 , proposalRootFolder}
             , getExecutableSettings

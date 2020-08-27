@@ -40,7 +40,7 @@ persist inputStream = do
       & S.groupsBy2
           sameAssignment
           getLocalProposalFileHandle
-          (S.lmap2 content IFH.write2)
+          (S.lmap2 requestByteChunk IFH.write2)
       & S.evalStateT State
                       { localProposalRootFolder = proposalRootFolder ++ "local/"
                       , handleMaybe = Nothing

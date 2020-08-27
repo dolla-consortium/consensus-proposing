@@ -33,7 +33,7 @@ packaging
   => log Request
   -> log Output
   ->  S.SerialT m ()
-packaging requestLog outputLog =
+packaging requestLog outputLog = 
   streamWithLogItem infinitely requestLog
   & serialize
   & assign
