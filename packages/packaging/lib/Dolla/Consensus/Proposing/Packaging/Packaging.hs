@@ -1,41 +1,28 @@
 {-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE FlexibleContexts #-}
 
 module Dolla.Consensus.Proposing.Packaging.Packaging (packaging) where
 
 import           Prelude hiding (log,writeFile)
 
-import           GHC.IO.IOMode
-import           System.Directory
-import qualified System.IO as FH
 import           Data.Function ((&))
-import           Data.ByteString hiding (length,map,append)
-import           Data.Word (Word8)
-import           Data.Aeson.Types (ToJSON)
+
 import           Control.Monad.Reader
-import           Control.Monad.State (MonadState, put, get)
 import           Control.Monad.Catch (MonadCatch)
 
-import qualified Streamly.Prelude as S hiding (length,bracket)
 import qualified Streamly as S
-import qualified Streamly.Internal.Prelude as S
-import qualified Streamly.Internal.FileSystem.Handle as IFH
-import qualified Dolla.Common.Streamly as S (groupsBy2,lmap2)
 
 import           Dolla.Common.Range
-import           Dolla.Common.Offset
 
 import           Dolla.Libraries.LogEngine.LogEngine
 import           Dolla.Consensus.Proposing.Packaging.Dependencies
 import           Dolla.Consensus.Proposing.Packaging.Output
 import           Dolla.Consensus.Request
 
-import           Dolla.Common.Memory.Byte (Byte)
-import           Dolla.Common.UUID.Deterministic
-
-import           Streamly.Internal.Data.Fold.Types
+import           Dolla.Consensus.Proposing.Packaging.Step.Notify (notify)
+import           Dolla.Consensus.Proposing.Packaging.Step.Serialize (serialize)
+import           Dolla.Consensus.Proposing.Packaging.Step.Assign (assign)
+import           Dolla.Consensus.Proposing.Packaging.Step.Persist (persist)
 
 packaging
   :: ( MemoryStreamLoggable m log
@@ -51,110 +38,5 @@ packaging requestLog outputLog =
   & serialize
   & assign
   & persist
-  & notify
-
-  where notify = S.mapM (\localOffsetPersisted -> void $ append outputLog localOffsetPersisted LocalProposalProduced)
-
-serialize
-  :: ( MonadReader Dependencies m
-     , MonadIO m
-     , S.MonadAsync m
-     , ToJSON a)
-  => S.SerialT m a
-  -> S.SerialT m [Word8]
-serialize input =  input & S.map (unpack . getEncodedItem)
-
-data AssigningState
-  = AssigningState
-    { currentLocalOffset :: Offset
-    , currentRequest :: [Word8]
-    , currentProposalSize :: Byte}
-
-data Assignment = Assignment {localProposalOffset :: Offset, content :: Word8} deriving Show
-
-assign
-  :: Monad m
-  => S.SerialT m [Word8]
-  -> S.SerialT m Assignment
-assign input
-  = input
-    & S.postscan
-        (Fold
-          (\AssigningState {..} requestInBytes -> do
-              let proposalSizeLimit = 1000 * 1024 :: Byte -- 1 MB
-                  requestSize  = fromIntegral $ length requestInBytes
-              if (currentProposalSize + requestSize) > proposalSizeLimit
-              then return AssigningState
-                          { currentProposalSize = 0
-                          , currentLocalOffset = nextOffset currentLocalOffset
-                          , currentRequest = requestInBytes}
-              else return AssigningState
-                          { currentProposalSize = currentProposalSize + requestSize
-                          , currentLocalOffset
-                          , currentRequest = requestInBytes})
-          (return AssigningState
-            { currentLocalOffset = 0
-            , currentProposalSize = 0
-            , currentRequest = []})
-          (\AssigningState {..}
-              -> return $ (\requestChunk -> Assignment {localProposalOffset = currentLocalOffset, content = requestChunk} ) <$> currentRequest))
-    & S.concatMap S.fromList
-
-persist
-  :: ( MonadReader Dependencies m
-     , S.MonadAsync m
-     , Monad m)
-  => S.SerialT m Assignment
-  -> S.SerialT m Offset
-persist inputStream = do
-    Dependencies {proposalRootFolder} <- ask
-    inputStream
-      & S.liftInner
-      & S.groupsBy2
-          assignedWithingSameLocalProposal
-          getLocalProposalFileHandle
-          (S.lmap2 content IFH.write2)
-      & S.evalStateT State
-                      { localProposalRootFolder = proposalRootFolder ++ "local/"
-                      , handleMaybe = Nothing
-                      , localBlockOffset = 0}
-      & S.indexed
-      & S.mapM (\(blockOffset,()) -> do
-          liftIO $ renameFile
-            (proposalRootFolder ++ "local/" ++ show blockOffset ++ ".tmp")
-            (proposalRootFolder ++ "local/" ++ show blockOffset ++ ".proposal")
-          return $ fromIntegralToOffset blockOffset)
-
-assignedWithingSameLocalProposal
-  :: Assignment
-  -> Assignment
-  -> Bool
-assignedWithingSameLocalProposal
-  Assignment {localProposalOffset = previous}
-  Assignment {localProposalOffset = current}
-  = previous == current
-
-data State
-  = State
-    { localProposalRootFolder::FilePath
-    , handleMaybe :: Maybe FH.Handle
-    , localBlockOffset :: Offset }
-
-getLocalProposalFileHandle
-  :: ( MonadIO m
-     , Monad m
-     , MonadState State m)
-     => m FH.Handle
-getLocalProposalFileHandle = do
-    State {..} <- get
-    liftIO (createDirectoryIfMissing True localProposalRootFolder )
-    newLocalOffset <- case handleMaybe of
-            Nothing -> return localBlockOffset
-            Just handle -> do
-              _ <- liftIO (FH.hClose handle)
-              return $ nextOffset localBlockOffset
-    newHandle <- liftIO $ FH.openFile (localProposalRootFolder ++ show newLocalOffset ++ ".tmp") WriteMode
-    put State {handleMaybe = Just newHandle,localBlockOffset = newLocalOffset,.. }
-    return newHandle
-
+  & notify outputLog
 
