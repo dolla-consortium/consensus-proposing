@@ -29,7 +29,7 @@ import qualified Dolla.Consensus.EventStore.Zeus.Local.Settings as EventStore
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Requesting.Simulating as Requesting.Simulating
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Receptionist as Receptioning
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Packaging as Packaging
-import Dolla.Common.Memory.Byte (mb)
+
 
 start
   :: MonadIO m
@@ -58,10 +58,10 @@ stop
 
 delete
   :: MonadIO m
-  => ReaderT Context m ()
-delete
+  => Prelude.FilePath
+  -> m ()
+delete rootFolder
   = do
-  Context {rootFolder} <- ask
   echo ">| Deleting proposals recorded on the file system"
   stdout $ echoCommandAndInShell $ "rm -rf "<++> rootFolder <++> "*"
 
@@ -84,7 +84,7 @@ getProposerMicroservicesSettings
                 , executableName = "dolla-consensus-proposing-packaging"
                 , logFileLocation =  FileSystemLocation {rootFolder = logFolder, fileName = "packaging.log"}
                 , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "packaging.config"}
-                , proposalSizeLimit = 2 * mb
+                , proposalSizeLimit
                 , eventStore
                 , proposalRootFolder}
             , getExecutableSettings

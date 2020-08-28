@@ -18,13 +18,13 @@ data ZeusAction
 startInteractiveZeus :: MonadIO m => m ()
 startInteractiveZeus
   = do
-    echo "###############################################"
-    echo "|| Welcome on Zeus for the Proposer Pipeline ||"
-    echo "###############################################"
+    echo "################################################"
+    echo "|| Welcome on Zeus for the Proposing Pipeline ||"
+    echo "################################################"
     void <$> liftIO $ runByline displayZeusMenu
-    echo "###############################################"
-    echo "||              End of Zeus                  ||"
-    echo "###############################################"
+    echo "################################################"
+    echo "||              End of Zeus                   ||"
+    echo "################################################"
 
 displayZeusMenu :: MonadIO m =>  Byline m ()
 displayZeusMenu
