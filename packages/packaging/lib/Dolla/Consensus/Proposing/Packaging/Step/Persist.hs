@@ -23,7 +23,7 @@ import qualified Dolla.Common.Streamly as S (groupsBy2,lmap2)
 import           Dolla.Common.Offset
 
 import           Dolla.Consensus.Proposing.Packaging.Dependencies
-
+import           Dolla.Consensus.Proposal.Persistence
 import           Dolla.Consensus.Proposing.Packaging.Step.Assign (sameAssignment, Assignment (..))
 
 
@@ -42,19 +42,18 @@ persist inputStream = do
           getLocalProposalFileHandle
           (S.lmap2 requestByteChunk IFH.write2)
       & S.evalStateT State
-                      { localProposalRootFolder = proposalRootFolder ++ "local/"
+                      { proposalRootFolder
                       , handleMaybe = Nothing
                       , localBlockOffset = 0}
       & S.indexed
-      & S.mapM (\(blockOffset,()) -> do
-          liftIO $ renameFile
-            (proposalRootFolder ++ "local/" ++ show blockOffset ++ ".tmp")
-            (proposalRootFolder ++ "local/" ++ show blockOffset ++ ".proposal")
-          return $ fromIntegralToOffset blockOffset)
+      & S.mapM (\(blockOffset,()) ->
+          transactLocalProposalCreation
+            proposalRootFolder
+            (fromIntegralToOffset blockOffset))
 
 data State
   = State
-    { localProposalRootFolder::FilePath
+    { proposalRootFolder::FilePath
     , handleMaybe :: Maybe FH.Handle
     , localBlockOffset :: Offset }
 
@@ -65,13 +64,13 @@ getLocalProposalFileHandle
      => m FH.Handle
 getLocalProposalFileHandle = do
     State {..} <- get
-    liftIO (createDirectoryIfMissing True localProposalRootFolder )
+    liftIO (createDirectoryIfMissing True (getLocalProposalFolder proposalRootFolder)  )
     newLocalOffset <- case handleMaybe of
             Nothing -> return localBlockOffset
             Just handle -> do
               _ <- liftIO (FH.hClose handle)
               return $ nextOffset localBlockOffset
-    newHandle <- liftIO $ FH.openFile (localProposalRootFolder ++ show newLocalOffset ++ ".tmp") WriteMode
+    newHandle <- liftIO $ FH.openFile (getLocalProposalTemporaryFile proposalRootFolder newLocalOffset) WriteMode
     put State {handleMaybe = Just newHandle,localBlockOffset = newLocalOffset,.. }
     return newHandle
 
