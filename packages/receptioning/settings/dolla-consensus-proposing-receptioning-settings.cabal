@@ -1,0 +1,28 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 89414d0b286daff42730784d3e85e57f3dc64db037bcd1be83f3e8ad582b81af
+
+name:           dolla-consensus-proposing-receptioning-settings
+version:        0.0.0.1
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposing.Receptioning.API.Client.Settings
+      Dolla.Consensus.Proposing.Receptioning.API.Server.Settings
+  other-modules:
+      Paths_dolla_consensus_proposing_receptioning_settings
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall -j
+  build-depends:
+      aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , dolla-base ==1.0.0
+  default-language: Haskell2010

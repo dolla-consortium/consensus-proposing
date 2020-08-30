@@ -22,7 +22,7 @@ data EntryPointsSettings
     , statusServerUrl :: URL
     , downloadServerUrl :: URL
     , votingBroadcastUrl :: URL
-    , receptionistUrl :: URL}
+    , receptioningUrl :: URL}
 
 getLocalConfiguration
   :: Node
@@ -33,7 +33,7 @@ getLocalConfiguration Node {..}
     , statusServerUrl = URL { host = "127.0.0.1",port = getNodePort 10000 nodeIndex,path = ""}
     , downloadServerUrl = URL { host = "127.0.0.1",port = getNodePort 10500 nodeIndex,path = ""}
     , votingBroadcastUrl = URL { host = "127.0.0.1",port = getNodePort 11000 nodeIndex,path = ""}
-    , receptionistUrl = URL { host = "127.0.0.1",port = getNodePort 11500 nodeIndex,path = ""}}
+    , receptioningUrl = URL { host = "127.0.0.1",port = getNodePort 11500 nodeIndex,path = ""}}
 
 getLocalConfigurations
   :: Int

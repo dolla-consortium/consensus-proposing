@@ -1,4 +1,4 @@
-name: dolla-consensus-proposer-zeus
+name: dolla-consensus-proposing-zeus
 version: 0.0.0.1
 extra-source-files:
   - README.md
@@ -15,10 +15,9 @@ library:
     - dolla-base == 1.0.0
     - dolla-consensus-base == 1.0.0
 
-    - dolla-consensus-proposer-bucketizer-settings
-    - dolla-consensus-proposer-receptionist-settings
-    - dolla-consensus-proposer-client-simulator-settings
-
+    - dolla-consensus-proposing-requesting-simulating-settings
+    - dolla-consensus-proposing-receptioning-settings
+    - dolla-consensus-proposing-packaging-settings
 
     - base == 4.13.0.0
     - text == 1.2.4.0
@@ -52,7 +51,7 @@ library:
     - byline == 0.3.2.1
 
 executables:
-  dolla-consensus-proposer-zeus :
+  dolla-consensus-proposing-zeus :
     main: Executables.hs
     source-dirs: app
     ghc-options:
@@ -61,6 +60,6 @@ executables:
       - -rtsopts
       - -with-rtsopts=-N
     dependencies:
-      - dolla-consensus-proposer-zeus
+      - dolla-consensus-proposing-zeus
       - base == 4.13.0.0
 

@@ -1,0 +1,27 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 97294accea08ea31e92d009e19d070edceb6bcfbc37a310a4520045e9937de7f
+
+name:           dolla-consensus-proposing-packaging-settings
+version:        0.0.0.1
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposing.Packaging.Settings
+  other-modules:
+      Paths_dolla_consensus_proposing_packaging_settings
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall -j
+  build-depends:
+      aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , dolla-base ==1.0.0
+  default-language: Haskell2010
