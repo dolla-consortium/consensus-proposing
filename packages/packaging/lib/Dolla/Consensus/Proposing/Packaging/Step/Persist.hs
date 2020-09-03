@@ -24,7 +24,7 @@ import           Dolla.Common.Offset
 
 import           Dolla.Consensus.Proposing.Packaging.Dependencies
 import           Dolla.Consensus.Proposal.Persistence
-import           Dolla.Consensus.Proposing.Packaging.Step.Assign (sameAssignment, Assignment (..))
+import           Dolla.Consensus.Proposing.Packaging.Step.Assign (sameLocalProposalSpace, Assignment (..))
 
 
 persist
@@ -38,7 +38,7 @@ persist inputStream = do
     inputStream
       & S.liftInner
       & S.groupsBy2
-          sameAssignment
+          sameLocalProposalSpace
           getLocalProposalFileHandle
           (S.lmap2 requestByteChunk IFH.write2)
       & S.evalStateT State

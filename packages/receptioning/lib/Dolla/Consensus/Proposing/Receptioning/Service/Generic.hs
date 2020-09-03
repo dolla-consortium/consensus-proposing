@@ -1,24 +1,25 @@
 {-# LANGUAGE FlexibleContexts #-}
 module Dolla.Consensus.Proposing.Receptioning.Service.Generic
-  ( persistClientRequest
-  , persistClientRequests) where
+  ( transmitClientRequestToProposing
+  , transmitClientRequestsToProposing) where
 
 
 import           Dolla.Consensus.Dummy.Client.Request
 import           Data.List.NonEmpty
 import           Dolla.Libraries.LogEngine.LogEngine
 import           Dolla.Consensus.Request
+import           Dolla.Consensus.Proposing.Packaging.Input as Proposing.Packaging
 
-persistClientRequest
+transmitClientRequestToProposing
   :: MemoryStreamLoggable IO log
-  => log Request
+  => log (Proposing.Packaging.Input Request)
   -> ClientRequest
   -> IO ()
-persistClientRequest eLog clientRequest = nonIdempotentAppend eLog $ ClientReq clientRequest
+transmitClientRequestToProposing eLog clientRequest = nonIdempotentAppend eLog $ RequestData (ClientReq clientRequest)
 
-persistClientRequests
+transmitClientRequestsToProposing
   :: MemoryStreamLoggable IO log
-  => log Request
+  => log (Proposing.Packaging.Input Request)
   -> NonEmpty ClientRequest
   -> IO ()
-persistClientRequests eLog clientRequests = nonIdempotentAppendList eLog $ ClientReq <$> clientRequests
+transmitClientRequestsToProposing eLog clientRequests = nonIdempotentAppendList eLog $ RequestData . ClientReq <$> clientRequests 

@@ -16,7 +16,7 @@ persistClientRequest
   -> ClientRequest
   -> IO ()
 persistClientRequest eventStoreClientDependencies =
-  Service.Generic.persistClientRequest
+  Service.Generic.transmitClientRequestToProposing
     (getEventStoreLog eventStoreClientDependencies LocalRequestLog)
 
 persistClientRequests
@@ -24,5 +24,5 @@ persistClientRequests
   -> NonEmpty ClientRequest
   -> IO ()
 persistClientRequests eventStoreClientDependencies =
-  Service.Generic.persistClientRequests
+  Service.Generic.transmitClientRequestsToProposing
     (getEventStoreLog eventStoreClientDependencies LocalRequestLog)
