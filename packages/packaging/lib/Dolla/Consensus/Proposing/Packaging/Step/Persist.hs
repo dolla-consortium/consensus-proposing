@@ -2,6 +2,7 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE LambdaCase #-}
 
 module Dolla.Consensus.Proposing.Packaging.Step.Persist (persist) where
 
@@ -18,7 +19,7 @@ import qualified Streamly.Prelude as S hiding (length,bracket)
 import qualified Streamly as S
 import qualified Streamly.Internal.Prelude as S
 import qualified Streamly.Internal.FileSystem.Handle as IFH
-import qualified Dolla.Common.Streamly as S (groupsBy2,lmap2)
+import qualified Dolla.Common.Streamly as S (groupsBy2,lmap2,lfilter2)
 
 import           Dolla.Common.Offset
 
@@ -40,7 +41,11 @@ persist inputStream = do
       & S.groupsBy2
           sameLocalProposalSpace
           getLocalProposalFileHandle
-          (S.lmap2 requestByteChunk IFH.write2)
+          (S.lfilter2
+            (\case
+               Commit -> False
+               _ -> True)
+              $ S.lmap2 requestByteChunk IFH.write2)
       & S.evalStateT State
                       { proposalRootFolder
                       , handleMaybe = Nothing

@@ -24,13 +24,13 @@ execute = executeMicroservice (\Settings {logger} -> logger) start
 --     * proposalProposer Stream processor plugged with streams from the Event store
 start :: ReaderT Dependencies IO ()
 start = do
-  d@Dependencies {eventStoreClient,logger} <- ask
+  dependencies@Dependencies {eventStoreClient,logger} <- ask
   log logger INFO "Proposal Maker up and running"
   lift $ drain
     $ SIP.runReaderT
-        d
+        dependencies
         (packaging
           (getEventStoreLog eventStoreClient LocalRequestLog)
-          (getEventStoreLog eventStoreClient ProposerOutputLog))
+          (getEventStoreLog eventStoreClient ProposingPackagingOutputLog) )
   log logger INFO "Proposal Maker down"
 

@@ -1,0 +1,29 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 4c32f7194f053e59eda24a79587945b05e1910ecd02112bbc0430058fccd4ba0
+
+name:           dolla-consensus-proposing-simulating-settings
+version:        0.0.0.1
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposing.Simulating.Settings
+      Dolla.Consensus.Proposing.Simulating.StressLoad
+  other-modules:
+      Paths_dolla_consensus_proposing_simulating_settings
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall -j
+  build-depends:
+      aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , dolla-base ==1.0.0
+    , dolla-consensus-proposing-receptioning-settings
+  default-language: Haskell2010

@@ -15,9 +15,10 @@ library:
     - dolla-base == 1.0.0
     - dolla-consensus-base == 1.0.0
 
-    - dolla-consensus-proposing-requesting-simulating-settings
+    - dolla-consensus-proposing-simulating-settings
     - dolla-consensus-proposing-receptioning-settings
     - dolla-consensus-proposing-packaging-settings
+    - dolla-consensus-proposing-flushing-settings
 
     - base == 4.13.0.0
     - text == 1.2.4.0

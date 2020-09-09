@@ -30,7 +30,7 @@ type RequestSerialized = [Word8]
 
 data AssigningState
   = AssigningState
-    { commit :: Bool
+    { flush :: Bool
     , localProposalIdInProgress :: Offset
     , localProposalInProgressSize :: Byte
     , requestSerialized :: RequestSerialized}
@@ -56,10 +56,7 @@ assigning =
   Fold
     (\AssigningState {localProposalIdInProgress,localProposalInProgressSize} input ->
         case input of
-        LocalProposalConsumed {offsetConsumed} ->
-          if nextOffset offsetConsumed == localProposalIdInProgress
-          then return AssigningState { commit = True, requestSerialized = [], .. }
-          else return AssigningState { commit = False, requestSerialized = [], .. }
+        Flush _ -> return AssigningState { flush = True, requestSerialized = [], .. }
         RequestData requestSerialized ->  do
           let requestSize  = fromIntegral $ length requestSerialized
           Dependencies {proposalSizeLimit} <- ask
@@ -68,19 +65,19 @@ assigning =
                       { localProposalInProgressSize = 0
                       , localProposalIdInProgress = nextOffset localProposalIdInProgress
                       , requestSerialized
-                      , commit = False}
+                      , flush = False}
           else return AssigningState
                       { localProposalInProgressSize = localProposalInProgressSize + requestSize
                       , localProposalIdInProgress
                       , requestSerialized
-                      , commit = False})
+                      , flush = False})
     (return AssigningState
       { localProposalIdInProgress = 0
       , localProposalInProgressSize = 0
       , requestSerialized = []
-      , commit = False})
-    (\AssigningState {commit,..} ->
-        if commit
+      , flush = False})
+    (\AssigningState {flush,..} ->
+        if flush
         then return [Commit]
         else return $ (\requestByteChunk -> Stage {localProposalOffset = localProposalIdInProgress, requestByteChunk} ) <$> requestSerialized)
 
@@ -92,5 +89,5 @@ sameLocalProposalSpace
   Stage {localProposalOffset = previous}
   Stage {localProposalOffset = current} = previous == current
 
-sameLocalProposalSpace _ Commit = True
-sameLocalProposalSpace Commit _ = False
+sameLocalProposalSpace Commit _ = True
+sameLocalProposalSpace  _ Commit = False

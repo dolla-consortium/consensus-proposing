@@ -2,28 +2,31 @@
 resolver: lts-16.2
 packages:
   # Packages specific to the proposing pipeline
-  - packages/requesting/simulating
-  - packages/requesting/simulating/settings
-
   - packages/receptioning
   - packages/receptioning/settings
+
+  - packages/flushing
+  - packages/flushing/settings
 
   - packages/packaging
   - packages/packaging/settings
 
+  - packages/simulating
+  - packages/simulating/settings
+
   - packages/zeus
 
   # Working locally with internal dependencies directly (comment them in extra-deps)
-#  - ../base
-#  - ../consensus-base
+  - ../base
+  - ../consensus-base
 
 extra-deps:
   # Internal dependencies
-  - github: dolla-consortium/base
-    commit: fcf6502c2ee19322b9fb688cb48bc87edf5ad81a
-
-  - github: dolla-consortium/consensus-base
-    commit: 64232cfdc348a48dd8fdf7d567761354d63d9a0a
+#  - github: dolla-consortium/base
+#    commit: fcf6502c2ee19322b9fb688cb48bc87edf5ad81a
+#
+#  - github: dolla-consortium/consensus-base
+#    commit: 64232cfdc348a48dd8fdf7d567761354d63d9a0a
 
   # Third party dependencies
   - terminfo-hs-0.2.1.1

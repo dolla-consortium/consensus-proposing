@@ -1,0 +1,27 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 40a29220917b6429c5055d4875ed78ac1a46110804d3a81fe1b226b2c1ba3cf4
+
+name:           dolla-consensus-proposing-flushing-settings
+version:        0.0.0
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposing.Flushing.Settings
+  other-modules:
+      Paths_dolla_consensus_proposing_flushing_settings
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall -j
+  build-depends:
+      aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , dolla-base ==1.0.0
+  default-language: Haskell2010

@@ -26,9 +26,10 @@ import qualified Dolla.Consensus.Common.Zeus.Local.NodeEntryPoints as NodeEntryP
 
 import           Dolla.Consensus.Proposing.Zeus.Local.Context
 import qualified Dolla.Consensus.EventStore.Zeus.Local.Settings as EventStore
-import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Requesting.Simulating as Requesting.Simulating
+import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Simulating as Simulating
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Receptionist as Receptioning
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Packaging as Packaging
+import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Flushing as Flushing
 
 
 start
@@ -96,12 +97,20 @@ getProposerMicroservicesSettings
                 , eventStore
                 , receptioningUrl}
             , getExecutableSettings
-                Requesting.Simulating.MicroserviceSettings
+                Simulating.MicroserviceSettings
                 { nodeId
-                , executableName = "dolla-consensus-proposing-requesting-simulating"
-                , logFileLocation =  FileSystemLocation {rootFolder , fileName = "proposing-requesting.log"}
-                , configurationLocation =  FileSystemLocation {rootFolder, fileName = "proposing-requesting.config"}
+                , executableName = "dolla-consensus-proposing-simulating"
+                , stressLoad
+                , logFileLocation =  FileSystemLocation {rootFolder , fileName = "simulating.log"}
+                , configurationLocation =  FileSystemLocation {rootFolder, fileName = "simulating.config"}
                 , receptioningUrl}
+            , getExecutableSettings
+                Flushing.MicroServiceSettings
+                { nodeId
+                , executableName = "dolla-consensus-proposing-flushing"
+                , logFileLocation =  FileSystemLocation {rootFolder = logFolder, fileName = "flushing.log"}
+                , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "flushing.config"}
+                , eventStore}
              ]
 
 
