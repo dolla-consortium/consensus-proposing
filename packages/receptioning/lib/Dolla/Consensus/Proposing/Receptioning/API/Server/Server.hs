@@ -17,7 +17,7 @@ import           Dolla.Common.Dependencies.Core
 import           Dolla.Consensus.Dummy.Client.Request
 import qualified Dolla.Consensus.Proposing.Receptioning.API.Server.Settings as Server
 import qualified Dolla.Consensus.Proposing.Receptioning.API.Server.Dependencies     as Server
-import qualified Dolla.Consensus.Proposing.Receptioning.Service.OverEventStore as Service
+import qualified Dolla.Consensus.Proposing.Receptioning.Service.OverDolla as DollaService
 import           Dolla.Consensus.Proposing.Receptioning.API.Definition
 import           Control.Monad
 import           Control.Monad.Reader
@@ -51,20 +51,20 @@ checkHealthRequest dependencies = liftIO $ fmap (toEither . void) (checkHealth d
 
 sendClientRequest
   :: Server.Dependencies
-  -> ClientRequest
+  -> DollaClientRequest
   -> Handler ()
 sendClientRequest Server.Dependencies {logger,eventStoreClientDependencies} proposalRequest = do
   liftIO $ log logger DEBUG $ "client request received :" ++ show proposalRequest
-  liftIO $ Service.persistClientRequest
+  liftIO $ DollaService.persistClientRequest
                             eventStoreClientDependencies
                             proposalRequest
                             
 sendClientRequests
   :: Server.Dependencies
-  -> NonEmpty ClientRequest
+  -> NonEmpty DollaClientRequest
   -> Handler ()
 sendClientRequests Server.Dependencies {logger,eventStoreClientDependencies} proposalRequests = do
   liftIO $ log logger DEBUG $ "client requests received :" ++ show proposalRequests
-  liftIO $ Service.persistClientRequests
+  liftIO $ DollaService.persistClientRequests
                             eventStoreClientDependencies
                             proposalRequests

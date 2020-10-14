@@ -1,24 +1,37 @@
 {-# LANGUAGE FlexibleContexts #-}
 module Dolla.Consensus.Proposing.Receptioning.Service.Generic
-  ( persistClientRequest
-  , persistClientRequests) where
+  ( transmitRequestToProposingPackagingPipeline
+  , transmitRequestsToProposingPackagingPipeline) where
 
-
-import           Dolla.Consensus.Dummy.Client.Request
 import           Data.List.NonEmpty
 import           Dolla.Libraries.LogEngine.LogEngine
 import           Dolla.Consensus.Request
+import           Dolla.Libraries.LogEngine.Appendable
+import           Dolla.Common.UUID.Provider
+import           Dolla.Consensus.Proposing.Receptioning.Output
 
-persistClientRequest
-  :: MemoryStreamLoggable IO log
-  => log Request
-  -> ClientRequest
-  -> IO ()
-persistClientRequest eLog clientRequest = nonIdempotentAppend eLog $ ClientReq clientRequest
+transmitRequestToProposingPackagingPipeline
+  :: ( Appendable clientRequest
+     , Appendable consortiumRequest
+     , UUIDProvider clientRequest
+     , UUIDProvider consortiumRequest
+     , MemoryStreamLoggable m log)
+  => log (Output (Request clientRequest consortiumRequest))
+  -> Request clientRequest consortiumRequest
+  -> m ()
+transmitRequestToProposingPackagingPipeline eventStoreLog request
+  = nonIdempotentAppend eventStoreLog $ RequestData request
 
-persistClientRequests
-  :: MemoryStreamLoggable IO log
-  => log Request
-  -> NonEmpty ClientRequest
-  -> IO ()
-persistClientRequests eLog clientRequests = nonIdempotentAppendList eLog $ ClientReq <$> clientRequests
+transmitRequestsToProposingPackagingPipeline
+  :: ( Appendable clientRequest
+     , Appendable consortiumRequest
+     , UUIDProvider clientRequest
+     , UUIDProvider consortiumRequest
+     , Show clientRequest
+     , Show consortiumRequest
+     , MemoryStreamLoggable m log)
+  => log (Output (Request clientRequest consortiumRequest))
+  -> NonEmpty (Request clientRequest consortiumRequest)
+  -> m ()
+transmitRequestsToProposingPackagingPipeline eventStoreLog requests
+  = nonIdempotentAppendList eventStoreLog $ RequestData <$> requests
