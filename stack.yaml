@@ -23,10 +23,10 @@ packages:
 extra-deps:
   # Internal dependencies
   - github: dolla-consortium/base
-    commit: fcf6502c2ee19322b9fb688cb48bc87edf5ad81a
+    commit: 1053d9896e8d45bcb17b4f15b4dc789e60fa11f1
 
   - github: dolla-consortium/consensus-base
-    commit: 64232cfdc348a48dd8fdf7d567761354d63d9a0a
+    commit: c357190f2a6b2c2629562e60f6126ebfee140e93
 
   # Third party dependencies
   - terminfo-hs-0.2.1.1
