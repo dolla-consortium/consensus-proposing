@@ -4,9 +4,9 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2ab309650fb4134f5b9950bffbcbb85077015ebd47d4ac6c355f0455fe308454
+-- hash: d12b2af87e1af0e7e9b0609cb78b97e10678b704d8f0e20f7c2540292af611ee
 
-name:           dolla-consensus-proposing-requesting-simulating
+name:           dolla-consensus-proposing-simulating
 version:        0.0.0.1
 build-type:     Simple
 extra-source-files:
@@ -14,10 +14,13 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.Requesting.Simulating.Dependencies
-      Dolla.Consensus.Proposing.Requesting.Simulating.Simulating
+      Dolla.Consensus.Proposing.Simulating.Dependencies
+      Dolla.Consensus.Proposing.Simulating.GenRequest
+      Dolla.Consensus.Proposing.Simulating.OverFlowing
+      Dolla.Consensus.Proposing.Simulating.Simulating
+      Dolla.Consensus.Proposing.Simulating.UnderSupplying
   other-modules:
-      Paths_dolla_consensus_proposing_requesting_simulating
+      Paths_dolla_consensus_proposing_simulating
   hs-source-dirs:
       lib
   ghc-options: -Wall -j
@@ -25,11 +28,14 @@ library
       aeson ==1.4.7.1
     , base ==4.13.0.0
     , byline ==0.3.2.1
+    , bytestring ==0.10.10.0
     , dolla-base ==1.0.0
     , dolla-consensus-base ==1.0.0
+    , dolla-consensus-proposing-packaging
     , dolla-consensus-proposing-receptioning
     , dolla-consensus-proposing-receptioning-settings
-    , dolla-consensus-proposing-requesting-simulating-settings
+    , dolla-consensus-proposing-simulating-settings
+    , exceptions ==0.10.4
     , mtl ==2.2.2
     , random ==1.1
     , streamly ==0.7.2
@@ -37,17 +43,17 @@ library
     , uuid ==1.3.13
   default-language: Haskell2010
 
-executable dolla-consensus-proposing-requesting-simulating
+executable dolla-consensus-proposing-simulating
   main-is: Executables.hs
   other-modules:
-      Paths_dolla_consensus_proposing_requesting_simulating
+      Paths_dolla_consensus_proposing_simulating
   hs-source-dirs:
       app
-  ghc-options: -Wall -j -main-is Executables.requestingSimulating -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -j -main-is Executables.simulating -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base ==4.13.0.0
     , dolla-base ==1.0.0
     , dolla-consensus-proposing-receptioning-settings
-    , dolla-consensus-proposing-requesting-simulating
-    , dolla-consensus-proposing-requesting-simulating-settings
+    , dolla-consensus-proposing-simulating
+    , dolla-consensus-proposing-simulating-settings
   default-language: Haskell2010

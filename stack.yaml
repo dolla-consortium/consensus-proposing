@@ -2,16 +2,17 @@
 resolver: lts-16.2
 packages:
   # Packages specific to the proposing pipeline
-  - packages/requesting/simulating
-  - packages/requesting/simulating/settings
-
   - packages/receptioning
   - packages/receptioning/settings
 
   - packages/detecting-starvation
   - packages/detecting-starvation/settings
+
   - packages/packaging
   - packages/packaging/settings
+
+  - packages/simulating
+  - packages/simulating/settings
 
   - packages/zeus
 

@@ -1,6 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
-module Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Requesting.Simulating
+module Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Simulating
   ( MicroserviceSettings (..))
   where
 
@@ -14,8 +14,9 @@ import           Dolla.Common.Network.Core (URL)
 
 import           Dolla.Consensus.Common.Zeus.Logging
 import           Dolla.Consensus.Common.Zeus.Haskell.ExecutableSettings
-
-import           Dolla.Consensus.Proposing.Client.Simulator.Settings
+import           Dolla.Consensus.EventStore.Zeus.Local.Settings
+import           Dolla.Consensus.Proposing.Simulating.Settings
+import           Dolla.Consensus.Proposing.Simulating.StressLoad
 
 import qualified Dolla.Consensus.Proposing.Receptioning.API.Client.Settings as Receptionist.Client
 
@@ -26,6 +27,8 @@ data MicroserviceSettings
   , executableName :: String
   , logFileLocation :: FileSystemLocation
   , configurationLocation :: FileSystemLocation
+  , eventStore :: EventStoreSettings
+  , stressLoad :: StressLoad
   , receptioningUrl :: URL}
 
 instance ExecutableSettingsProvider MicroserviceSettings  where
@@ -40,10 +43,12 @@ instance ExecutableSettingsProvider MicroserviceSettings  where
 getExecutableConfiguration :: MicroserviceSettings -> Settings
 getExecutableConfiguration MicroserviceSettings {..}
   = Settings
-    { logger = LoggerSettings { priority = INFO , loggerId = LoggerId "[requesting.simulating]"}
+    { logger = LoggerSettings { priority = INFO , loggerId = LoggerId "[simulating]"}
+    , stressLoad
+    , eventStoreClient = mapToEventStoreSettings eventStore $ nodeLoggerId nodeId DEBUG  "event.store.client"
     , receptioningClient
         = Receptionist.Client.Settings
-          { logger = nodeLoggerId nodeId INFO  "receptioning.client"
+          { logger = nodeLoggerId nodeId INFO  "simulating"
           , nodeId
           , url = receptioningUrl }}
 

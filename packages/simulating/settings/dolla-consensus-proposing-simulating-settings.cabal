@@ -4,9 +4,9 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c76ac38e420efb69c0982b0eefc9eb3aca9c2a3dfb5fbd73ef6d93b65c387c40
+-- hash: 4c32f7194f053e59eda24a79587945b05e1910ecd02112bbc0430058fccd4ba0
 
-name:           dolla-consensus-proposing-requesting-simulating-settings
+name:           dolla-consensus-proposing-simulating-settings
 version:        0.0.0.1
 build-type:     Simple
 extra-source-files:
@@ -14,9 +14,10 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.Client.Simulator.Settings
+      Dolla.Consensus.Proposing.Simulating.Settings
+      Dolla.Consensus.Proposing.Simulating.StressLoad
   other-modules:
-      Paths_dolla_consensus_proposing_requesting_simulating_settings
+      Paths_dolla_consensus_proposing_simulating_settings
   hs-source-dirs:
       lib
   ghc-options: -Wall -j

@@ -1,4 +1,4 @@
-name: dolla-consensus-proposing-requesting-simulating-settings
+name: dolla-consensus-proposing-simulating-settings
 version: 0.0.0.1
 extra-source-files:
   - README.md
