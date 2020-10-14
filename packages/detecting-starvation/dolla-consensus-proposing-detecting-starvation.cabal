@@ -1,0 +1,87 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 759e8b61cdc7ffab0e976ad063eb4fd8720fe7278a07e259cf09cf8c10e170b7
+
+name:           dolla-consensus-proposing-detecting-starvation
+version:        0.0.0.1
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposing.Starving.Detecting.Dependencies
+      Dolla.Consensus.Proposing.Starving.Detecting.ESMerger
+      Dolla.Consensus.Proposing.Starving.Detecting.Input
+      Dolla.Consensus.Proposing.Starving.Detecting.Output
+      Dolla.Consensus.Proposing.Starving.Detecting.OverEventStore
+      Dolla.Consensus.Proposing.Starving.Detecting.OverMemoryStream
+      Dolla.Consensus.Proposing.Starving.Detecting.OverPersistedLog
+      Dolla.Consensus.Proposing.Starving.Detecting.State
+  other-modules:
+      Paths_dolla_consensus_proposing_detecting_starvation
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall -j
+  build-depends:
+      QuickCheck ==2.13.2
+    , aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , bytestring ==0.10.10.0
+    , containers ==0.6.2.1
+    , directory ==1.3.6.0
+    , dolla-base ==1.0.0
+    , dolla-consensus-base ==1.0.0
+    , dolla-consensus-proposing-detecting-starvation-settings
+    , exceptions ==0.10.4
+    , interpolatedstring-perl6 ==1.0.2
+    , lens ==4.18.1
+    , mtl ==2.2.2
+    , streamly ==0.7.2
+    , uuid ==1.3.13
+  default-language: Haskell2010
+
+executable dolla-consensus-proposing-detecting-starvation
+  main-is: Executables.hs
+  other-modules:
+      Paths_dolla_consensus_proposing_detecting_starvation
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -j -main-is Executables.detectingStarvation -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base ==4.13.0.0
+    , dolla-consensus-proposing-detecting-starvation
+  default-language: Haskell2010
+
+test-suite dolla-consensus-proposing-detecting-starvation-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Dolla.Consensus.Proposing.Starving.Detecting.GenInput
+      Dolla.Consensus.Proposing.Starving.Detecting.GenOutput
+      Dolla.Consensus.Proposing.Starving.Detecting.IOSpec
+      Dolla.Consensus.Proposing.Starving.Detecting.OverMemoryStreamSpec
+      Dolla.Consensus.Proposing.Starving.Detecting.StateSpec
+      Paths_dolla_consensus_proposing_detecting_starvation
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -j -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , aeson ==1.4.7.1
+    , base
+    , dolla-consensus-base ==1.0.0
+    , dolla-consensus-proposing-detecting-starvation
+    , generic-arbitrary
+    , hspec
+    , interpolatedstring-perl6 ==1.0.2
+    , mtl ==2.2.2
+    , quickcheck-instances
+    , random ==1.1
+    , streamly ==0.7.2
+    , uuid ==1.3.13
+  default-language: Haskell2010

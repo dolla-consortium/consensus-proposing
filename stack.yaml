@@ -8,6 +8,8 @@ packages:
   - packages/receptioning
   - packages/receptioning/settings
 
+  - packages/detecting-starvation
+  - packages/detecting-starvation/settings
   - packages/packaging
   - packages/packaging/settings
 
