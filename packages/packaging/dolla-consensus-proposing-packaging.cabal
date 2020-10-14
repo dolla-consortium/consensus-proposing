@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 149aa6eda00bdb248d99ec4f317bcdaf0b2500ca302b4b28129f0610dd7279cf
+-- hash: 61c28197ee148054aa1aa7b9a8e8f77ec259796733fc5bce2dd894b5c06b46de
 
 name:           dolla-consensus-proposing-packaging
 version:        0.0.0.1
@@ -14,14 +14,29 @@ extra-source-files:
 
 library
   exposed-modules:
+      Dolla.Consensus.Proposing.Packaging.Capping.Input
+      Dolla.Consensus.Proposing.Packaging.Capping.Output
+      Dolla.Consensus.Proposing.Packaging.Capping.Sizable
+      Dolla.Consensus.Proposing.Packaging.Capping.StreamProcessing
+      Dolla.Consensus.Proposing.Packaging.Connecting
       Dolla.Consensus.Proposing.Packaging.Dependencies
+      Dolla.Consensus.Proposing.Packaging.Input
+      Dolla.Consensus.Proposing.Packaging.NonEmptying.Input
+      Dolla.Consensus.Proposing.Packaging.NonEmptying.Output
+      Dolla.Consensus.Proposing.Packaging.NonEmptying.StreamProcessing
+      Dolla.Consensus.Proposing.Packaging.Notifying.Input
+      Dolla.Consensus.Proposing.Packaging.Notifying.StreamProcessing
       Dolla.Consensus.Proposing.Packaging.Output
-      Dolla.Consensus.Proposing.Packaging.Packaging
-      Dolla.Consensus.Proposing.Packaging.PackagingOverEventStore
-      Dolla.Consensus.Proposing.Packaging.Step.Assign
-      Dolla.Consensus.Proposing.Packaging.Step.Notify
-      Dolla.Consensus.Proposing.Packaging.Step.Persist
-      Dolla.Consensus.Proposing.Packaging.Step.Serialize
+      Dolla.Consensus.Proposing.Packaging.OverDolla
+      Dolla.Consensus.Proposing.Packaging.OverEventStore
+      Dolla.Consensus.Proposing.Packaging.OverMemoryStream
+      Dolla.Consensus.Proposing.Packaging.Persisting.Input
+      Dolla.Consensus.Proposing.Packaging.Persisting.Output
+      Dolla.Consensus.Proposing.Packaging.Persisting.StreamProcessing
+      Dolla.Consensus.Proposing.Packaging.Serializing.Input
+      Dolla.Consensus.Proposing.Packaging.Serializing.Output
+      Dolla.Consensus.Proposing.Packaging.Serializing.SerializedRequest
+      Dolla.Consensus.Proposing.Packaging.Serializing.StreamProcessing
   other-modules:
       Paths_dolla_consensus_proposing_packaging
   hs-source-dirs:
@@ -40,7 +55,10 @@ library
     , interpolatedstring-perl6 ==1.0.2
     , lens ==4.18.1
     , mtl ==2.2.2
+    , natural-transformation
+    , random ==1.1
     , streamly ==0.7.2
+    , uuid ==1.3.13
   default-language: Haskell2010
 
 executable dolla-consensus-proposing-packaging
@@ -53,4 +71,45 @@ executable dolla-consensus-proposing-packaging
   build-depends:
       base ==4.13.0.0
     , dolla-consensus-proposing-packaging
+  default-language: Haskell2010
+
+test-suite dolla-consensus-proposing-packaging-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Dolla.Consensus.Proposing.Packaging.Capping.GenInput
+      Dolla.Consensus.Proposing.Packaging.Capping.StreamProcessingSpec
+      Dolla.Consensus.Proposing.Packaging.DummyRequest
+      Dolla.Consensus.Proposing.Packaging.GenInput
+      Dolla.Consensus.Proposing.Packaging.GenOutput
+      Dolla.Consensus.Proposing.Packaging.IOSpec
+      Dolla.Consensus.Proposing.Packaging.NonEmptying.StreamProcessingSpec
+      Dolla.Consensus.Proposing.Packaging.Persisting.GenInput
+      Dolla.Consensus.Proposing.Packaging.Persisting.StreamProcessingSpec
+      Dolla.Consensus.Proposing.Packaging.Serializing.GenInput
+      Dolla.Consensus.Proposing.Packaging.Serializing.StreamProcessingSpec
+      Paths_dolla_consensus_proposing_packaging
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -j -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      MissingH
+    , QuickCheck
+    , aeson ==1.4.7.1
+    , base
+    , bytestring ==0.10.10.0
+    , directory ==1.3.6.0
+    , dolla-base
+    , dolla-consensus-base ==1.0.0
+    , dolla-consensus-proposing-packaging
+    , generic-arbitrary
+    , hspec
+    , hspec-core ==2.7.1
+    , interpolatedstring-perl6 ==1.0.2
+    , mtl ==2.2.2
+    , quickcheck-instances
+    , random ==1.1
+    , streamly ==0.7.2
+    , turtle ==1.5.19
+    , uuid ==1.3.13
   default-language: Haskell2010
