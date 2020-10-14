@@ -26,9 +26,10 @@ import qualified Dolla.Consensus.Common.Zeus.Local.NodeEntryPoints as NodeEntryP
 
 import           Dolla.Consensus.Proposing.Zeus.Local.Context
 import qualified Dolla.Consensus.EventStore.Zeus.Local.Settings as EventStore
-import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Requesting.Simulating as Requesting.Simulating
+import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Simulating as Simulating
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Receptionist as Receptioning
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Packaging as Packaging
+import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.DetectingStarvation as Flushing
 
 
 start
@@ -96,12 +97,21 @@ getProposerMicroservicesSettings
                 , eventStore
                 , receptioningUrl}
             , getExecutableSettings
-                Requesting.Simulating.MicroserviceSettings
+                Simulating.MicroserviceSettings
                 { nodeId
-                , executableName = "dolla-consensus-proposing-requesting-simulating"
-                , logFileLocation =  FileSystemLocation {rootFolder , fileName = "proposing-requesting.log"}
-                , configurationLocation =  FileSystemLocation {rootFolder, fileName = "proposing-requesting.config"}
+                , executableName = "dolla-consensus-proposing-simulating"
+                , stressLoad
+                , eventStore
+                , logFileLocation =  FileSystemLocation {rootFolder = logFolder , fileName = "simulating.log"}
+                , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "simulating.config"}
                 , receptioningUrl}
+            , getExecutableSettings
+                Flushing.MicroServiceSettings
+                { nodeId
+                , executableName = "dolla-consensus-proposing-detecting-starvation"
+                , logFileLocation =  FileSystemLocation {rootFolder = logFolder, fileName = "starving-detection.log"}
+                , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "starving-detection.config"}
+                , eventStore}
              ]
 
 

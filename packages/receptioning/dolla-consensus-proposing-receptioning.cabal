@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 05bca13cd9454c22dfa6c917342194408c63b54cef472c36e140100971557f0a
+-- hash: bb1387e5f71e7908dee53aab4b9903b439d56e8b015c63bfb1e480878bd1d30e
 
 name:           dolla-consensus-proposing-receptioning
 version:        0.0.0.1
@@ -19,7 +19,9 @@ library
       Dolla.Consensus.Proposing.Receptioning.API.Definition
       Dolla.Consensus.Proposing.Receptioning.API.Server.Dependencies
       Dolla.Consensus.Proposing.Receptioning.API.Server.Server
+      Dolla.Consensus.Proposing.Receptioning.Output
       Dolla.Consensus.Proposing.Receptioning.Service.Generic
+      Dolla.Consensus.Proposing.Receptioning.Service.OverDolla
       Dolla.Consensus.Proposing.Receptioning.Service.OverEventStore
   other-modules:
       Paths_dolla_consensus_proposing_receptioning
@@ -50,4 +52,30 @@ executable dolla-consensus-proposing-receptioning
   build-depends:
       base ==4.13.0.0
     , dolla-consensus-proposing-receptioning
+  default-language: Haskell2010
+
+test-suite dolla-consensus-proposing-receptioning-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Dolla.Consensus.Proposing.Receptioning.OutputSpec
+      Paths_dolla_consensus_proposing_receptioning
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -j -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , aeson ==1.4.7.1
+    , base
+    , dolla-base
+    , dolla-consensus-base ==1.0.0
+    , dolla-consensus-proposing-receptioning
+    , generic-arbitrary
+    , hspec
+    , interpolatedstring-perl6 ==1.0.2
+    , mtl ==2.2.2
+    , quickcheck-instances
+    , random ==1.1
+    , streamly ==0.7.2
+    , uuid ==1.3.13
   default-language: Haskell2010

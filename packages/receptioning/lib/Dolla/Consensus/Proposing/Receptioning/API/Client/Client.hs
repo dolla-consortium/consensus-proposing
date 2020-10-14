@@ -1,5 +1,4 @@
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 module Dolla.Consensus.Proposing.Receptioning.API.Client.Client
   ( sendProposalRequest
@@ -17,11 +16,12 @@ import           Dolla.Common.Dependencies.Core
 import           Data.List.NonEmpty
 import           Servant.Client
 import           Network.HTTP.Client (Manager)
+import           Control.Monad.IO.Class
 
 sendProposalRequest
   :: Manager
   -> BaseUrl
-  -> ClientRequest
+  -> DollaClientRequest
   -> IO (Either String ())
 sendProposalRequest httpClientManager url proposalRequest =
   S.withClientM
@@ -31,23 +31,24 @@ sendProposalRequest httpClientManager url proposalRequest =
       (return . Left. show)
       (return . Right))
   where
-    sendProposalRequestCall :: ClientRequest -> S.ClientM ()
+    sendProposalRequestCall :: DollaClientRequest -> S.ClientM ()
     sendProposalRequestCall = S.client (Proxy :: Proxy SendClientRequest )
 
 sendProposalRequests
-  :: Manager
+  :: MonadIO m
+  => Manager
   -> BaseUrl
-  -> NonEmpty ClientRequest -- compressed / cut them into unit compress pieces
-  -> IO (Either String ())
+  -> NonEmpty DollaClientRequest -- compressed / cut them into unit compress pieces
+  -> m (Either String ())
 sendProposalRequests httpClientManager url proposalRequests =
-  S.withClientM
+  liftIO $ S.withClientM
     (sendProposalRequestsCall proposalRequests)
     (S.mkClientEnv httpClientManager url)
     (either
       (return . Left. show)
       (return . Right))
   where
-    sendProposalRequestsCall :: NonEmpty ClientRequest -> S.ClientM ()
+    sendProposalRequestsCall :: NonEmpty DollaClientRequest -> S.ClientM ()
     sendProposalRequestsCall = S.client (Proxy :: Proxy SendClientRequests )
 
 sendHealthCheckRequest

@@ -24,9 +24,9 @@ type ReceptionistApi
 type HealthCheckRequest = "health" :> Get '[JSON] (Either (NonEmpty UnhealthyDependency) ())
 
 type SendClientRequest = "consortium" :> "team" :> "sendClientRequest"
-                                :> ReqBody '[JSON] ClientRequest
+                                :> ReqBody '[JSON] DollaClientRequest
                                 :> PostAccepted '[JSON] ()
 
 type SendClientRequests = "consortium" :> "team" :> "sendClientRequests"
-                                :> ReqBody '[JSON] (NonEmpty ClientRequest)
+                                :> ReqBody '[JSON] (NonEmpty DollaClientRequest)
                                 :> PostAccepted '[JSON] ()

@@ -3,8 +3,7 @@ module Executables
   ( packaging
   ) where
 
-
-import qualified Dolla.Consensus.Proposing.Packaging.PackagingOverEventStore as Packaging
+import qualified Dolla.Consensus.Proposing.Packaging.OverDolla  as Packaging
 
 packaging :: IO ()
 packaging = Packaging.execute

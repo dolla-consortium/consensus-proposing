@@ -46,6 +46,6 @@ zeusMenu
       , StopProposerPipeline  "Stop the proposer pipeline locally"
       , Quit                  "Quit Zeus"]
       (\case
-        StartProposerPipeline description -> fg white <> text description
-        StopProposerPipeline  description -> fg white <> text description
-        Quit                  description -> fg white <> text description)
+        StartProposerPipeline description -> fg green <> text description
+        StopProposerPipeline  description -> fg green <> text description
+        Quit                  description -> fg green <> text description)
