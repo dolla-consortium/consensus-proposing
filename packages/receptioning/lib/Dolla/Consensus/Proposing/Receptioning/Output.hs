@@ -14,15 +14,16 @@ import           Dolla.Adapter.Aeson.AesonVia
 import           Dolla.Libraries.LogEngine.Appendable
 import           Dolla.Common.UUID.Provider
 
-newtype Output a
-  = RequestData a
+newtype Output request
+  = Receptioned request 
   deriving (Eq, Show, Generic)
-  deriving (ToJSON, FromJSON) via DefaultJSON (Output a)
+  deriving (ToJSON, FromJSON) via DefaultJSON (Output request)
   deriving Functor
 
+
 instance Appendable a => Appendable (Output a) where
-  getItemName (RequestData a)  = "RequestData." ++ getItemName a
+  getItemName (Receptioned request)  = "Receptioned." ++ getItemName request
 
 instance UUIDProvider a => UUIDProvider (Output a) where
-  getUUID (RequestData a) = getUUID a
+  getUUID (Receptioned request) = getUUID request
 

@@ -17,13 +17,13 @@ import           Dolla.Libraries.LogEngine.Appendable
 import           Dolla.Common.UUID.Provider
 
 newtype Output
-  = PipelineStarving {itemId :: UUID}
+  = LocalProposalStarvationDetected  {itemId :: UUID}
   deriving (Eq, Show, Generic)
   deriving (ToJSON, FromJSON) via DefaultJSON Output
 
 instance Appendable Output where
-  getItemName (PipelineStarving _ )  = "PipelineStarving"
+  getItemName (LocalProposalStarvationDetected _ )  = "LocalProposalStarvationDetected"
 
 instance UUIDProvider Output where
-  getUUID PipelineStarving {itemId} = itemId
+  getUUID LocalProposalStarvationDetected {itemId} = itemId
 

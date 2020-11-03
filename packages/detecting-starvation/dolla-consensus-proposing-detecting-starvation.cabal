@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 759e8b61cdc7ffab0e976ad063eb4fd8720fe7278a07e259cf09cf8c10e170b7
+-- hash: adccecf237589ae238790098b2f10eb2d947346183933f1a3855432ca855ccfe
 
 name:           dolla-consensus-proposing-detecting-starvation
 version:        0.0.0.1
@@ -26,7 +26,7 @@ library
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
       lib
-  ghc-options: -Wall -j
+  ghc-options: -Wall
   build-depends:
       QuickCheck ==2.13.2
     , aeson ==1.4.7.1
@@ -51,7 +51,7 @@ executable dolla-consensus-proposing-detecting-starvation
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
       app
-  ghc-options: -Wall -j -main-is Executables.detectingStarvation -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -main-is Executables.detectingStarvation -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base ==4.13.0.0
     , dolla-consensus-proposing-detecting-starvation
@@ -69,7 +69,7 @@ test-suite dolla-consensus-proposing-detecting-starvation-test
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
       test
-  ghc-options: -Wall -j -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       QuickCheck
     , aeson ==1.4.7.1

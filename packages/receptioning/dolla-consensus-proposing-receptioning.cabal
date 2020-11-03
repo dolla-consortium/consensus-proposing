@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bb1387e5f71e7908dee53aab4b9903b439d56e8b015c63bfb1e480878bd1d30e
+-- hash: 40af85cd00cc04286cc9d8cb478836e170f1638fa94472c92a5249f77ba8236d
 
 name:           dolla-consensus-proposing-receptioning
 version:        0.0.0.1
@@ -27,7 +27,7 @@ library
       Paths_dolla_consensus_proposing_receptioning
   hs-source-dirs:
       lib
-  ghc-options: -Wall -j
+  ghc-options: -Wall
   build-depends:
       aeson ==1.4.7.1
     , base ==4.13.0.0
@@ -48,7 +48,7 @@ executable dolla-consensus-proposing-receptioning
       Paths_dolla_consensus_proposing_receptioning
   hs-source-dirs:
       app
-  ghc-options: -Wall -j -main-is Executables.receptioning -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -main-is Executables.receptioning -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base ==4.13.0.0
     , dolla-consensus-proposing-receptioning
@@ -62,7 +62,7 @@ test-suite dolla-consensus-proposing-receptioning-test
       Paths_dolla_consensus_proposing_receptioning
   hs-source-dirs:
       test
-  ghc-options: -Wall -j -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       QuickCheck
     , aeson ==1.4.7.1

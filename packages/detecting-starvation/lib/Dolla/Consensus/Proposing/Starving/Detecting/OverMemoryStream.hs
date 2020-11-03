@@ -38,5 +38,5 @@ detectingPipelineStarving
     & S.mapM
       (\starvingOffset -> do
          let itemId = getDeterministicUUID starvingOffset
-         return PipelineStarving {..})
+         return LocalProposalStarvationDetected {..})
 

@@ -32,6 +32,6 @@ spec = parallel $
         $ property $ \OutputUnderTests {unOutputUnderTests}
             -> do
                let encodedItemId = encode $ itemId unOutputUnderTests
-               encode unOutputUnderTests `shouldBe` [qc|\{"tag":"PipelineStarving","itemId":{encodedItemId}}|]
+               encode unOutputUnderTests `shouldBe` [qc|\{"tag":"LocalProposalStarvationDetected","itemId":{encodedItemId}}|]
 
 

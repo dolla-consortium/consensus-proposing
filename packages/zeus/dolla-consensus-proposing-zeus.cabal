@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b955e0cb4e533807f441afef94f1b51572491f32e882b0bee3249cf76bb2c3ab
+-- hash: 2c0ecd7b21144551873bd809ee3c5b53fe4bee7315b145093bcd4e75edb4e91a
 
 name:           dolla-consensus-proposing-zeus
 version:        0.0.0.1
@@ -34,7 +34,7 @@ library
       Paths_dolla_consensus_proposing_zeus
   hs-source-dirs:
       lib
-  ghc-options: -Wall -j
+  ghc-options: -Wall
   build-depends:
       adjunctions ==4.4
     , aeson
@@ -80,7 +80,7 @@ executable dolla-consensus-proposing-zeus
       Paths_dolla_consensus_proposing_zeus
   hs-source-dirs:
       app
-  ghc-options: -Wall -j -main-is Executables.executeZeus -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -main-is Executables.executeZeus -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base ==4.13.0.0
     , dolla-consensus-proposing-zeus

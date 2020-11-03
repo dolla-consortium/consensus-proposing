@@ -19,7 +19,7 @@ startInteractiveZeus :: MonadIO m => m ()
 startInteractiveZeus
   = do
     echo "################################################"
-    echo "|| Welcome on Zeus for the Proposing Pipeline ||"
+    echo "|| Welcome on Zeus for the Proposing Section  ||"
     echo "################################################"
     void <$> liftIO $ runByline displayZeusMenu
     echo "################################################"
@@ -42,8 +42,8 @@ zeusMenu :: Menu ZeusAction
 zeusMenu
   = renderPrefixAndSuffixForDynamicMenu
     $ menu
-      [ StartProposerPipeline "Run/Re-Run the proposer pipeline locally"
-      , StopProposerPipeline  "Stop the proposer pipeline locally"
+      [ StartProposerPipeline "Run/Re-Run the Proposing Section locally"
+      , StopProposerPipeline  "Stop the Proposing Section locally"
       , Quit                  "Quit Zeus"]
       (\case
         StartProposerPipeline description -> fg green <> text description

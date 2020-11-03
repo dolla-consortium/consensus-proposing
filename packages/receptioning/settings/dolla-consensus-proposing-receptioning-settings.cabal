@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 89414d0b286daff42730784d3e85e57f3dc64db037bcd1be83f3e8ad582b81af
+-- hash: bc4850ba3771a6fa8c32dd27f670db4bf28e3c0133550646434a3f232554ee77
 
 name:           dolla-consensus-proposing-receptioning-settings
 version:        0.0.0.1
@@ -20,7 +20,7 @@ library
       Paths_dolla_consensus_proposing_receptioning_settings
   hs-source-dirs:
       lib
-  ghc-options: -Wall -j
+  ghc-options: -Wall
   build-depends:
       aeson ==1.4.7.1
     , base ==4.13.0.0

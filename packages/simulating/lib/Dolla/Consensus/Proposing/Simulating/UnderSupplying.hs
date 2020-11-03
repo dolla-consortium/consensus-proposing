@@ -33,7 +33,7 @@ import           Dolla.Consensus.Dummy.Client.Request
 import qualified Dolla.Consensus.Maestro.Output as Maestro
 import qualified Dolla.Consensus.Proposing.Receptioning.API.Client.Dependencies as Receptionist.Client
 import           Dolla.Consensus.Proposing.Receptioning.API.Client.Client
-import qualified Dolla.Consensus.Proposing.Packaging.Output as Packaging
+import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Output as Packaging
 import           Dolla.Consensus.Proposing.Simulating.GenRequest
 
 data Context log

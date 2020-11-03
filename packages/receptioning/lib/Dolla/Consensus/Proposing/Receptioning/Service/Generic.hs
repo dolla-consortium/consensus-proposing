@@ -20,7 +20,7 @@ transmitRequestToProposingPackagingPipeline
   -> Request clientRequest consortiumRequest
   -> m ()
 transmitRequestToProposingPackagingPipeline eventStoreLog request
-  = nonIdempotentAppend eventStoreLog $ RequestData request
+  = nonIdempotentAppend eventStoreLog $ Receptioned request
 
 transmitRequestsToProposingPackagingPipeline
   :: ( Appendable clientRequest
@@ -34,4 +34,4 @@ transmitRequestsToProposingPackagingPipeline
   -> NonEmpty (Request clientRequest consortiumRequest)
   -> m ()
 transmitRequestsToProposingPackagingPipeline eventStoreLog requests
-  = nonIdempotentAppendList eventStoreLog $ RequestData <$> requests
+  = nonIdempotentAppendList eventStoreLog $ Receptioned <$> requests

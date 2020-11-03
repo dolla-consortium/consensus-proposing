@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 97294accea08ea31e92d009e19d070edceb6bcfbc37a310a4520045e9937de7f
+-- hash: cd442c399b12c857f9e356f24012ad6c3588c608ef09f2a59820f16648a39c11
 
 name:           dolla-consensus-proposing-packaging-settings
 version:        0.0.0.1
@@ -19,7 +19,7 @@ library
       Paths_dolla_consensus_proposing_packaging_settings
   hs-source-dirs:
       lib
-  ghc-options: -Wall -j
+  ghc-options: -Wall
   build-depends:
       aeson ==1.4.7.1
     , base ==4.13.0.0

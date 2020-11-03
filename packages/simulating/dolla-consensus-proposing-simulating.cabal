@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d12b2af87e1af0e7e9b0609cb78b97e10678b704d8f0e20f7c2540292af611ee
+-- hash: e7cdcbc8ebf839e2eecf3625b7400ac0eb4a5a0653e05287db68138411fa9c34
 
 name:           dolla-consensus-proposing-simulating
 version:        0.0.0.1
@@ -23,7 +23,7 @@ library
       Paths_dolla_consensus_proposing_simulating
   hs-source-dirs:
       lib
-  ghc-options: -Wall -j
+  ghc-options: -Wall
   build-depends:
       aeson ==1.4.7.1
     , base ==4.13.0.0
@@ -49,7 +49,7 @@ executable dolla-consensus-proposing-simulating
       Paths_dolla_consensus_proposing_simulating
   hs-source-dirs:
       app
-  ghc-options: -Wall -j -main-is Executables.simulating -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -main-is Executables.simulating -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base ==4.13.0.0
     , dolla-base ==1.0.0
