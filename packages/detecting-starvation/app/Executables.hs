@@ -4,7 +4,7 @@ module Executables
   ) where
 
 
-import qualified Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Execute as StarvingDetection
+import qualified Dolla.Consensus.Proposing.Detecting.Starvation.Execution.EventStore.Execute as StarvingDetection
 
 detectingStarvation :: IO ()
 detectingStarvation = StarvingDetection.execute

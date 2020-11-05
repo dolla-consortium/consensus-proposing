@@ -2,7 +2,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE NamedFieldPuns #-}
-module Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.StateMachineSpec (spec) where
+module Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.StateMachineSpec (spec) where
 
 import           Data.Coerce (coerce)
 import           Data.Monoid
@@ -15,10 +15,10 @@ import           Test.Hspec
 import qualified Streamly.Prelude as S
 import qualified Streamly as S
 
-import           Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Input
-import           Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.GenInput
+import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.Input
+import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.GenInput
 
-import           Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.StateMachine
+import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.StateMachine
 
 
 spec :: Spec

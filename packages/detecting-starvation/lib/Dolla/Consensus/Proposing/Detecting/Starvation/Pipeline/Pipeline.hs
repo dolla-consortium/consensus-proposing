@@ -3,7 +3,7 @@
 {-# LANGUAGE MonoLocalBinds #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.Pipeline
+module Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.Pipeline
   (detectingStarvation) where
 
 import           Prelude hiding (log,writeFile)
@@ -19,10 +19,10 @@ import qualified Streamly.Prelude as S
 import           Dolla.Common.Range
 
 import           Dolla.Libraries.LogEngine.LogEngine
-import           Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.StreamProcessing (detectStarvation )
+import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.StreamProcessing (detectStarvation )
 
-import           Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Input
-import           Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Output
+import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.Input
+import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.Output
 
 import Dolla.Common.UUID.Deterministic (getDeterministicUUID)
 import Dolla.Common.Offset (fromIntegralToOffset)

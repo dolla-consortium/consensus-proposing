@@ -4,7 +4,7 @@
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
-module Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Input
+module Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.Input
   ( Input (..)) where
 
 import           Data.Aeson

@@ -1,7 +1,7 @@
 {-# LANGUAGE QuasiQuotes, ExtendedDefaultRules #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Junction 
+module Dolla.Consensus.Proposing.Detecting.Starvation.Execution.EventStore.Junction
   (loadJunctionInEventStore) where
 
 import           Prelude hiding (log)

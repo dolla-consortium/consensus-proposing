@@ -1,7 +1,7 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-module Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Dependencies 
+module Dolla.Consensus.Proposing.Detecting.Starvation.Execution.EventStore.Dependencies
   (Dependencies (..)) where
 
 import           Dolla.Common.NodeId
@@ -9,7 +9,7 @@ import           Dolla.Common.Dependencies.Core
 import           Dolla.Common.Logging.Core
 
 import qualified Dolla.Libraries.LogEngine.Instances.EventStore.Settings as EventStore
-import           Dolla.Consensus.Proposing.Starving.Detecting.Settings
+import           Dolla.Consensus.Proposing.Detecting.Starvation.Settings
 
 data Dependencies
   = Dependencies

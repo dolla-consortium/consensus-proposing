@@ -1,7 +1,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE FlexibleContexts #-}
-module Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Pipeline
+module Dolla.Consensus.Proposing.Detecting.Starvation.Execution.EventStore.Pipeline
   (detectingStarvation) where
 
 import           Prelude hiding (log)
@@ -13,12 +13,12 @@ import qualified Streamly as S
 import           Dolla.Consensus.Log.EventStoreLog
 import           Dolla.Libraries.LogEngine.Instances.EventStore.EventStoreLog (EventStoreLog)
 
-import           Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Dependencies
+import           Dolla.Consensus.Proposing.Detecting.Starvation.Execution.EventStore.Dependencies
 
-import           Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Output
+import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.Output
 
 
-import qualified Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.Pipeline as Generics
+import qualified Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.Pipeline as Generics
 
 detectingStarvation
   :: ( S.MonadAsync m
