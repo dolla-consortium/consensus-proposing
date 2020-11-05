@@ -1,4 +1,4 @@
-module Dolla.Consensus.Proposing.Packaging.Pipes.Notifying.Input
+module Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Input
   ( Input (..)) where
 
 import Dolla.Common.Offset (Offset)

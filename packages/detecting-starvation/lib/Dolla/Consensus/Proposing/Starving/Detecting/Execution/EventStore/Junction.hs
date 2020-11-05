@@ -1,7 +1,8 @@
 {-# LANGUAGE QuasiQuotes, ExtendedDefaultRules #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module Dolla.Consensus.Proposing.Starving.Detecting.ESMerger (loadInputProjection) where
+module Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Junction 
+  (loadJunctionInEventStore) where
 
 import           Prelude hiding (log)
 import           Data.Coerce (coerce)
@@ -14,14 +15,20 @@ import           Dolla.Common.Logging.Core
 import           Dolla.Libraries.LogEngine.Instances.EventStore.Projection.Definition
 import           Dolla.Consensus.Log.LogNameIndex
 
+-- | A Junction (Merger) is
+   --a set of persisted input streams
+   --a nondeterministic logic for merging these input streams
+   --a persisted output stream (input of a pipeline)
 
--- | User Defined Projection loaded into the event store for dispatching RB Broadcast Merged output and Result of Voting
---   events into the proper input stream for the maestro
---    * for more details about event store projection : https://eventstore.org/docs/projections/api/index.html
-loadInputProjection :: ReaderT (NodeId, EventStore.Dependencies) IO ()
-loadInputProjection = do
+-- | Junction for Starving Detection Pipeline : Logic to generate the input stream of the pipeline.
+--   We are using the "User Defined Projections" feature from the EventStore to implement this junction :
+--    - javaScript snippets
+--    - loaded in the event store microservice directly  
+--    - more details : https://eventstore.org/docs/projections/api/index.html
+loadJunctionInEventStore :: ReaderT (NodeId, EventStore.Dependencies) IO ()
+loadJunctionInEventStore = do
   (nodeId , EventStore.Dependencies {..}) <- ask
-  let projectionName = coerce nodeId ++ "_proposing_starving_detecting_input"
+  let projectionName = coerce nodeId ++ "_proposing_starving_detection_input"
       maestroOutputMergedLogStreamName = getStreamNameFromIndex MaestroOutputMergedLog
       proposingPackagingOutputLogStreamName = getStreamNameFromIndex ProposingPackagingOutputLog
       proposingStarvingDetectionInputLogStreamName = getStreamNameFromIndex ProposingStarvingDetectionInputLog

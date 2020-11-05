@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 68a075e23f5b1ed553239bc60047735e308c888fb432c3f233c4b556d924d700
+-- hash: c47507eec042ba7924093e037e7c5a9893c534735a9b5c5d43600172d08fbb94
 
 name:           dolla-consensus-proposing-packaging
 version:        0.0.0.1
@@ -14,14 +14,16 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.Packaging.Dependencies
-      Dolla.Consensus.Proposing.Packaging.Microservice
-      Dolla.Consensus.Proposing.Packaging.Pipeline.Generic
+      Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dependencies
+      Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dolla.Execute
+      Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dolla.Pipeline
+      Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Pipeline
       Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Input
       Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Output
-      Dolla.Consensus.Proposing.Packaging.Pipeline.OverEventStore
-      Dolla.Consensus.Proposing.Packaging.Pipeline.OverEventStoreAndDolla
+      Dolla.Consensus.Proposing.Packaging.Pipeline.Pipeline
       Dolla.Consensus.Proposing.Packaging.Pipeline.Welding.BluePrint
+      Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Input
+      Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Pipe
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.Input
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.Output
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.Pipe
@@ -29,8 +31,6 @@ library
       Dolla.Consensus.Proposing.Packaging.Pipes.NonEmptying.Input
       Dolla.Consensus.Proposing.Packaging.Pipes.NonEmptying.Output
       Dolla.Consensus.Proposing.Packaging.Pipes.NonEmptying.Pipe
-      Dolla.Consensus.Proposing.Packaging.Pipes.Notifying.Input
-      Dolla.Consensus.Proposing.Packaging.Pipes.Notifying.Pipe
       Dolla.Consensus.Proposing.Packaging.Pipes.Persisting.Input
       Dolla.Consensus.Proposing.Packaging.Pipes.Persisting.Output
       Dolla.Consensus.Proposing.Packaging.Pipes.Persisting.Pipe

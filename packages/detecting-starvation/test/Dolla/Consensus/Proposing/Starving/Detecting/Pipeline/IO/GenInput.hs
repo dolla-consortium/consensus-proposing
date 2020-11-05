@@ -1,6 +1,6 @@
 {-# LANGUAGE LambdaCase #-}
 
-module Dolla.Consensus.Proposing.Starving.Detecting.GenInput
+module Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.GenInput
   ( ConsistentInputs (..)
   , InputUnderTests (..)) where
 
@@ -11,7 +11,7 @@ import Test.QuickCheck.Arbitrary
 import Test.QuickCheck.Gen
 import Test.QuickCheck.Instances.UUID ()
 
-import Dolla.Consensus.Proposing.Starving.Detecting.Input
+import Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Input
 
 instance Arbitrary InputUnderTests where
   arbitrary

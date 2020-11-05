@@ -35,8 +35,8 @@
 
 `Packaging` is also a **Microservice**
 - [Settings.hs](settings/lib/Dolla/Consensus/Proposing/Packaging/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
-- [Dependencies.hs](lib/Dolla/Consensus/Proposing/Packaging/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
-- [Microservice.hs](lib/Dolla/Consensus/Proposing/Packaging/Microservice.hs)
+- [Dependencies.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
+- [Microservice.hs](lib/Dolla/Consensus/Proposing/Packaging/Execution/Over/EventStore/Dolla/Execute.hs)
     - Perform the HealhtChecks to obtain the pipeline dependencies
     - Execute the pipeline
     - Put the Microservice back in HealthCheck mode if any Exception bubbles up in the pipeline during execution.
@@ -104,7 +104,7 @@ The `Packaging` pipe recipe is
     .~> persisting proposalRootFolder
     .~> notifying outputLog
 ```
-> Defined in [Generic.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Generic.hs)
+> Defined in [Generic.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs)
 
 > The welding between each pipe is defined in [/Welding/BluePrint.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Welding/BluePrint.hs)
 
@@ -129,9 +129,9 @@ The Generic Pipeline is agnostic from
 - The log Engine used to retrieve Input and persist Output
 - The structure of the request manipulated
 
-To execute `Packaging`, we need to turn [Generic.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Generic.hs) into a concrete Pipeline
-- [OverEventStore.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/OverEventStore.hs) : EventStore is the log Engine used (Polymorphism reduced)
-- [OverEventStoreAndDolla.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/OverEventStoreAndDolla.hs) : We are using Dummy Dolla Requests with the EventStore (Concrete Pipeline)
+To execute `Packaging`, we need to turn [Generic.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs) into a concrete Pipeline
+- [OverEventStore.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Over/EventStore/Pipeline.hs) : EventStore is the log Engine used (Polymorphism reduced)
+- [OverEventStoreAndDolla.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Over/EventStore/Dolla/Pipeline.hs) : We are using Dummy Dolla Requests with the EventStore (Concrete Pipeline)
 
 # Pipes
 ## Serializing

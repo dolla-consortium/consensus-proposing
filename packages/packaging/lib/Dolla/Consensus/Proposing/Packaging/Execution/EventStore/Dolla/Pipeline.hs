@@ -1,6 +1,6 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
-module Dolla.Consensus.Proposing.Packaging.Pipeline.OverEventStoreAndDolla (packaging) where
+module Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dolla.Pipeline (packaging) where
 
 import           Prelude hiding (log)
 import           Control.Monad.Reader
@@ -10,8 +10,8 @@ import           Data.Data
 
 import qualified Streamly as S
 
-import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.OverEventStore as OverEventStore
-import           Dolla.Consensus.Proposing.Packaging.Dependencies
+import qualified Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Pipeline as OverEventStore
+import           Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dependencies
 
 import           Dolla.Consensus.Request
 import           Dolla.Consensus.Dummy.Client.Request

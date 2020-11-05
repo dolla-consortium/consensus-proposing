@@ -1,7 +1,8 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-module Dolla.Consensus.Proposing.Starving.Detecting.Dependencies (Dependencies (..)) where
+module Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Dependencies 
+  (Dependencies (..)) where
 
 import           Dolla.Common.NodeId
 import           Dolla.Common.Dependencies.Core

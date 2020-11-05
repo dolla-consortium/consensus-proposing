@@ -1,7 +1,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE FlexibleContexts #-}
-module Dolla.Consensus.Proposing.Packaging.Pipeline.OverEventStore (packaging) where
+module Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Pipeline (packaging) where
 
 import           Prelude hiding (log)
 import           Data.Data
@@ -12,8 +12,8 @@ import           Control.Monad.Catch (MonadCatch)
 
 import qualified Streamly as S
 
-import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.Generic as Generic
-import           Dolla.Consensus.Proposing.Packaging.Dependencies
+import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.Pipeline as Generic
+import           Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dependencies
 import           Dolla.Consensus.Log.EventStoreLog
 import           Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Input
 import           Dolla.Libraries.LogEngine.Instances.EventStore.EventStoreLog
@@ -28,8 +28,10 @@ packaging
   => Proxy request
   -> S.SerialT m ()
 packaging proxy = do
-  Dependencies {eventStoreClient} <- ask
+  Dependencies {eventStoreClient,proposalRootFolder,proposalSizeLimit} <- ask
   Generic.packaging
+        proposalRootFolder
+        proposalSizeLimit
         (asProxyTypeOf (getEventStoreLog eventStoreClient LocalRequestLog) (getProxyLogInput proxy))
         (getEventStoreLog eventStoreClient ProposingPackagingOutputLog)
 

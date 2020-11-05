@@ -1,11 +1,11 @@
-module Dolla.Consensus.Proposing.Starving.Detecting.GenOutput
+module Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.GenOutput
   ( OutputUnderTests (..)) where
 
 import Test.QuickCheck.Arbitrary
 
 import Test.QuickCheck.Instances.UUID ()
 
-import Dolla.Consensus.Proposing.Starving.Detecting.Output
+import Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Output
 
 instance Arbitrary OutputUnderTests where
   arbitrary = OutputUnderTests . LocalProposalStarvationDetected <$> arbitrary

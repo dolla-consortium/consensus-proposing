@@ -26,7 +26,7 @@ import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Capping.Output as Cap
 import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Persisting.Input  as Persisting
 import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Persisting.Output  as Persisting
 
-import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Notifying.Input as Notifying
+import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Input as Appending
 
 instance Weldable (Packaging.Input request) (Serializing.Input request) where
   weld
@@ -34,10 +34,10 @@ instance Weldable (Packaging.Input request) (Serializing.Input request) where
       Packaging.ForceProposalProduction {} -> Serializing.ForceProposalProduction
       Packaging.Package request -> Serializing.Serialize request
 
-instance Weldable Persisting.Output  Notifying.Input where
+instance Weldable Persisting.Output  Appending.Input where
   weld
     = \case
-      Persisting.LocalProposalPersisted {..} -> Notifying.LocalProposalProduced {..}
+      Persisting.LocalProposalPersisted {..} -> Appending.LocalProposalProduced {..}
 
 instance Weldable (Serializing.Output a) (NonEmptying.Input a) where
   weld

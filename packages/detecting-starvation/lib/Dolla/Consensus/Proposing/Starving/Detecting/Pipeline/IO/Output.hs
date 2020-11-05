@@ -6,7 +6,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE NamedFieldPuns #-}
 
-module Dolla.Consensus.Proposing.Starving.Detecting.Output
+module Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Output
   (Output (..)) where
 
 import           Data.Aeson

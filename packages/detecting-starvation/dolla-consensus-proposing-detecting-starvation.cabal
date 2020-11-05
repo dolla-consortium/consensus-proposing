@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: adccecf237589ae238790098b2f10eb2d947346183933f1a3855432ca855ccfe
+-- hash: a20dcd1a9c0d9c52f448b5e43d914686e66f0434e6d0c87111d765d88a553398
 
 name:           dolla-consensus-proposing-detecting-starvation
 version:        0.0.0.1
@@ -14,14 +14,15 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.Starving.Detecting.Dependencies
-      Dolla.Consensus.Proposing.Starving.Detecting.ESMerger
-      Dolla.Consensus.Proposing.Starving.Detecting.Input
-      Dolla.Consensus.Proposing.Starving.Detecting.Output
-      Dolla.Consensus.Proposing.Starving.Detecting.OverEventStore
-      Dolla.Consensus.Proposing.Starving.Detecting.OverMemoryStream
-      Dolla.Consensus.Proposing.Starving.Detecting.OverPersistedLog
-      Dolla.Consensus.Proposing.Starving.Detecting.State
+      Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Dependencies
+      Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Execute
+      Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Junction
+      Dolla.Consensus.Proposing.Starving.Detecting.Execution.EventStore.Pipeline
+      Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Input
+      Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.Output
+      Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.Pipeline
+      Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.StateMachine
+      Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.StreamProcessing
   other-modules:
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
@@ -61,15 +62,14 @@ test-suite dolla-consensus-proposing-detecting-starvation-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Dolla.Consensus.Proposing.Starving.Detecting.GenInput
-      Dolla.Consensus.Proposing.Starving.Detecting.GenOutput
-      Dolla.Consensus.Proposing.Starving.Detecting.IOSpec
-      Dolla.Consensus.Proposing.Starving.Detecting.OverMemoryStreamSpec
-      Dolla.Consensus.Proposing.Starving.Detecting.StateSpec
+      Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.GenInput
+      Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.GenOutput
+      Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.IO.IOSpec
+      Dolla.Consensus.Proposing.Starving.Detecting.Pipeline.StateMachineSpec
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
       test
-  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall
   build-depends:
       QuickCheck
     , aeson ==1.4.7.1

@@ -33,12 +33,12 @@ spec :: Spec
 spec = do
   describe "About Capping item " $ do
       it "outputs a series of consecutives items having always a cumulated memory size <= limit given"
-              $ property
-              $ \inputs
-                  -> getGeneratedInputStream inputs
-                      & capping (10 * kb)
-                      & S.scan consecutivesMemorySizeAdded
-                      & S.mapM_ (`shouldSatisfy` (<= (10 * kb)))
+        $ property
+        $ \inputs
+            -> getGeneratedInputStream inputs
+                & capping (10 * kb)
+                & S.scan consecutivesMemorySizeAdded
+                & S.mapM_ (`shouldSatisfy` (<= (10 * kb)))
 
 getGeneratedInputStream 
   :: Monad m 

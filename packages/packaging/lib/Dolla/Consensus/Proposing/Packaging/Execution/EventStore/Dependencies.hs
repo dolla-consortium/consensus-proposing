@@ -1,7 +1,7 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-module Dolla.Consensus.Proposing.Packaging.Dependencies (Dependencies (..)) where
+module Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dependencies (Dependencies (..)) where
 
 import           Dolla.Common.NodeId
 import           Dolla.Common.Dependencies.Core
@@ -10,7 +10,7 @@ import           Dolla.Common.Memory.Byte (Byte)
 
 import qualified Dolla.Libraries.LogEngine.Instances.EventStore.Settings as EventStore
 import           Dolla.Consensus.Proposal.Persistence
-import           Dolla.Consensus.Proposing.Packaging.Settings
+import           Dolla.Consensus.Proposing.Packaging.EventStore.Settings
 
 data Dependencies
   = Dependencies

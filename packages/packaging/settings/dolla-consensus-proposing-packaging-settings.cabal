@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cd442c399b12c857f9e356f24012ad6c3588c608ef09f2a59820f16648a39c11
+-- hash: 1c963d8dcf5991f48e81c3c37f8612835c3e3c30d94544d27375d6273b0c0a3d
 
 name:           dolla-consensus-proposing-packaging-settings
 version:        0.0.0.1
@@ -14,7 +14,7 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.Packaging.Settings
+      Dolla.Consensus.Proposing.Packaging.EventStore.Settings
   other-modules:
       Paths_dolla_consensus_proposing_packaging_settings
   hs-source-dirs:
