@@ -3,7 +3,7 @@
 - [Overview](#overview)
   - [Pipeline Folder](#pipeline-folder)
   - [Pipes Folder](#pipes-folder)
-  - [Instance Folder](#instance-folder)
+  - [Instances Folder](#instances-folder)
 - [Pipeline](#pipeline)
   - [Junction](#junction)
   - [IOs](#ios)
@@ -34,12 +34,12 @@
 - a persisted output stream : [Output.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Output.hs)
 
 ### Pipes Folder
-The pipeline is using Pipes `Serializing, nonEmptying, capping, persisting`, meaning each of them has
+The pipeline is using **Pipes** `Serializing, nonEmptying, capping, persisting`, meaning each of them has
 - An Input Stream
 - A Stream Processing
 - An Output Stream
 
-### Instance Folder
+### Instances Folder
 
 `Packaging` is Polymorphic by
 - The Log Engine used
@@ -54,7 +54,7 @@ You'll find in this folder different version of Pipeline.hs "polymorphically red
 - [Settings.hs](settings/lib/Dolla/Consensus/Proposing/Packaging/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
 - [Dependencies.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
 
-[Execute.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Execute.hs) is an executable instance of the Pipeline
+[Execute.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Execute.hs) is an **Instance** of the Pipeline
 - Perform the HealhtChecks to obtain the pipeline dependencies
 - Execute the pipeline + load the [junctions](#junction) in the EventStore Microservice
 - Put the Microservice back in HealthCheck mode if any Exception bubbles up in the pipeline during execution.
