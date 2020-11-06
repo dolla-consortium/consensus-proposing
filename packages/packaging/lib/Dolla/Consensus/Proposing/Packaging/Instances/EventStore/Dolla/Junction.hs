@@ -1,7 +1,7 @@
 {-# LANGUAGE QuasiQuotes, ExtendedDefaultRules #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dolla.Junction
+module Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Dolla.Junction
   (loadJunctionInEventStore) where
 
 import           Prelude hiding (log)
@@ -55,7 +55,7 @@ loadJunctionInEventStore = do
                                , \{"tag": "Package",
                                    "contents" : messageJson.contents}
                                , \{});
-                          } 
+                          }
                          } // $any
                      })
                      .outputState()|]

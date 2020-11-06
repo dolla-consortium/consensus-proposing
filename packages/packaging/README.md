@@ -1,12 +1,15 @@
 / [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / [Packaging](#packaging-pipeline)
 # Packaging Pipeline
 - [Overview](#overview)
+  - [Pipeline Folder](#pipeline-folder)
+  - [Pipes Folder](#pipes-folder)
+  - [Instance Folder](#instance-folder)
 - [Pipeline](#pipeline)
+  - [Junction](#junction)
   - [IOs](#ios)
     - [Input/Commands](#inputcommands)
     - [Output/Events](#outputevents)
   - [Pipe recipe](#pipe-recipe)
-  - [Polymorphism](#polymorphism)
 - [Pipes](#pipes)
   - [Serializing](#serializing)
   - [NonEmptying](#nonemptying)
@@ -21,7 +24,7 @@
 
 `Packaging` is a ***Pipeline***
 - a persisted input stream : [Input.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Input.hs)
-- a line of Pipes Welded together
+- a line of Pipes Welded together in [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs)
   - composition of **deterministic** *Pipes*
   - Welding : Adapting IOs between pipes
 
@@ -38,30 +41,54 @@ The pipeline is using Pipes `Serializing, nonEmptying, capping, persisting`, mea
 
 ### Instance Folder
 
-`Packaging` could be Executed into different environment defined by the type Log Engine used and the business logic running on top of the consensus layer.
-So far we have only one environment which the EventStore and our own Dolla Business Logic
+`Packaging` is Polymorphic by
+- The Log Engine used
+- The Business Logic used on top of the consensus layer (requests in that context)
 
-You'll find :
+You'll find in this folder different version of Pipeline.hs "polymorphically reduced" and concrete
+- [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Pipeline.hs) over the event store
+- [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Pipeline.hs) over the event store + Dolla Dummy Requests (Concrete Version)
+
+`Packaging` has some DevOps features as well
 
 - [Settings.hs](settings/lib/Dolla/Consensus/Proposing/Packaging/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
-- [Dependencies.hs](lib/Dolla/Consensus/Proposing/Packaging/Execution/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
-- [Execute.hs](lib/Dolla/Consensus/Proposing/Packaging/Execution/EventStore/Dolla/Execute.hs)
-    - Perform the HealhtChecks to obtain the pipeline dependencies
-    - Execute the pipeline
-    - Put the Microservice back in HealthCheck mode if any Exception bubbles up in the pipeline during execution.
+- [Dependencies.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
+
+[Execute.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Execute.hs) is an executable instance of the Pipeline
+- Perform the HealhtChecks to obtain the pipeline dependencies
+- Execute the pipeline + load the [junctions](#junction) in the EventStore Microservice
+- Put the Microservice back in HealthCheck mode if any Exception bubbles up in the pipeline during execution.
 
 N.B : Microservice configuration and Deployment Logic are defined in Zeus : [Pipeline.hs](../zeus/lib/Dolla/Consensus/Proposing/Zeus/Local/Pipeline.hs)
 </div>
 
 # Pipeline
-## IOs
-### Input/Commands
+## Junction
 
-> Defined in [Input.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Input.hs)
+A Junction (Merger) is
+   - a set of persisted input streams
+   - a nondeterministic logic for merging these input streams
+   - a persisted output stream (input of a pipeline)
 
 The persisted input stream is the junction of 2 upstreams pipelines
 - [Receptioning](../receptioning/README.md) providing collected requests
 - [Detecting-Starvation](../detecting-starvation/README.md) transmitting Local-Proposal-Starvation Notifications
+
+We are using the "User Defined Projections" feature from the EventStore to implement this junction :
+ - javaScript snippets
+ - loaded in the event store microservice directly
+ - more details : https://eventstore.org/docs/projections/api/index.html
+
+It has allowed us to move quicker on the proof of concept, but we'll need to do eventually our own to leverage Performance.
+
+> Defined in [Junction.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Junction.hs)
+
+> Executed in [Execute.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Execute.hs)
+
+## IOs
+### Input/Commands
+
+> Defined in [Input.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Input.hs)
 
 #### 1. Package request
 
@@ -132,16 +159,6 @@ Under the responsibility of
 - [`Persisting`](#persisting) Pipe
 
 N.B : [`Serializing`](#serializing) will be removed eventually. We'll evaluate this when addressing data compression.
-
-## Polymorphism
-
-The Generic Pipeline is agnostic from
-- The log Engine used to retrieve Input and persist Output
-- The structure of the request manipulated
-
-To execute `Packaging`, we need to turn [Generic.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs) into a concrete Pipeline
-- [OverEventStore.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Over/EventStore/Pipeline.hs) : EventStore is the log Engine used (Polymorphism reduced)
-- [OverEventStoreAndDolla.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Over/EventStore/Dolla/Pipeline.hs) : We are using Dummy Dolla Requests with the EventStore (Concrete Pipeline)
 
 # Pipes
 ## Serializing

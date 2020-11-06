@@ -1,7 +1,7 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-module Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dependencies (Dependencies (..)) where
+module Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Dependencies (Dependencies (..)) where
 
 import           Dolla.Common.NodeId
 import           Dolla.Common.Dependencies.Core

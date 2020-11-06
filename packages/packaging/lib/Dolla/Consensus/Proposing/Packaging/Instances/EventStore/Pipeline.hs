@@ -1,7 +1,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE FlexibleContexts #-}
-module Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Pipeline (packaging) where
+module Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Pipeline (packaging) where
 
 import           Prelude hiding (log)
 import           Data.Data
@@ -13,7 +13,7 @@ import           Control.Monad.Catch (MonadCatch)
 import qualified Streamly as S
 
 import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.Pipeline as Generic
-import           Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dependencies
+import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Dependencies
 import           Dolla.Consensus.Log.EventStoreLog
 import           Dolla.Consensus.Log.LogNameIndex
 
