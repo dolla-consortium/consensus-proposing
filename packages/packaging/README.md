@@ -59,7 +59,7 @@ You'll find in this folder different version of Pipeline.hs "polymorphically red
 - Execute the pipeline + load the [junctions](#junction) in the EventStore Microservice
 - Put the Microservice back in HealthCheck mode if any Exception bubbles up in the pipeline during execution.
 
-N.B : Microservice configuration and Deployment Logic are defined in Zeus : [Pipeline.hs](../zeus/lib/Dolla/Consensus/Proposing/Zeus/Local/Pipeline.hs)
+N.B : Microservice configuration and Deployment Logic are defined in [Zeus](../zeus/)
 </div>
 
 # Pipeline
