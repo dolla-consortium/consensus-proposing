@@ -1,10 +1,15 @@
 / [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / [Receptioning](#receptioning)
 # Receptioning
 
+- [Overview](#overview)
+- [Package Structure](#package-structure)
+
+# Overview
 ![overview](documentation/media/overview.png)
 
+# Package Structure
 
-<img align="right" src="documentation/media/project-tree.png"><div>
+<img align="right" src="documentation/media/package-tree.png"><div>
 This is a non-deterministic service, A merge of clients requests
 - Send Requests over the network via [Client.hs](lib/Dolla/Consensus/Proposing/Receptioning/Instances/EventStore/Dolla/Warp/Client/Client.hs)
 - Receive Request via [Server.hs](lib/Dolla/Consensus/Proposing/Receptioning/Instances/EventStore/Dolla/Warp/Server/Server.hs)
