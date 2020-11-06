@@ -15,6 +15,8 @@ import qualified Streamly as S
 import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.Pipeline as Generic
 import           Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dependencies
 import           Dolla.Consensus.Log.EventStoreLog
+import           Dolla.Consensus.Log.LogNameIndex
+
 import           Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Input
 import           Dolla.Libraries.LogEngine.Instances.EventStore.EventStoreLog
 
@@ -32,7 +34,7 @@ packaging proxy = do
   Generic.packaging
         proposalRootFolder
         proposalSizeLimit
-        (asProxyTypeOf (getEventStoreLog eventStoreClient LocalRequestLog) (getProxyLogInput proxy))
+        (asProxyTypeOf (getEventStoreLog eventStoreClient ProposingPackagingInputLog) (getProxyLogInput proxy))
         (getEventStoreLog eventStoreClient ProposingPackagingOutputLog)
 
 getProxyLogInput :: Proxy  request  -> Proxy (EventStoreLog (Input request))

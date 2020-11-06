@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c47507eec042ba7924093e037e7c5a9893c534735a9b5c5d43600172d08fbb94
+-- hash: 41c09e5d98554d58b7477cb514a6d606f768d651b04ecd3b2994aaa6a060c0df
 
 name:           dolla-consensus-proposing-packaging
 version:        0.0.0.1
@@ -16,6 +16,7 @@ library
   exposed-modules:
       Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dependencies
       Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dolla.Execute
+      Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dolla.Junction
       Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Dolla.Pipeline
       Dolla.Consensus.Proposing.Packaging.Execution.EventStore.Pipeline
       Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Input
@@ -82,8 +83,6 @@ test-suite dolla-consensus-proposing-packaging-test
       Dolla.Consensus.Proposing.Packaging.DummyRequest
       Dolla.Consensus.Proposing.Packaging.Pipeline.IO.GenInput
       Dolla.Consensus.Proposing.Packaging.Pipeline.IO.GenOutput
-      Dolla.Consensus.Proposing.Packaging.Pipeline.IO.InputSpec
-      Dolla.Consensus.Proposing.Packaging.Pipeline.IO.OutputSpec
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.GenInput
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.PipeSpec
       Dolla.Consensus.Proposing.Packaging.Pipes.NonEmptying.PipeSpec

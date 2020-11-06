@@ -1,7 +1,7 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-module Dolla.Consensus.Proposing.Receptioning.API.Server.Dependencies (Dependencies (..)) where
+module Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Server.Dependencies (Dependencies (..)) where
 
 
 import qualified Dolla.Libraries.LogEngine.Instances.EventStore.Settings as EventStore

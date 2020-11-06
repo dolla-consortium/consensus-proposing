@@ -17,6 +17,8 @@
 # Overview
 
 <img align="right" src="documentation/media/package-tree.png"><div>
+### Pipeline Folder
+
 `Packaging` is a ***Pipeline***
 - a persisted input stream : [Input.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Input.hs)
 - a line of Pipes Welded together
@@ -28,19 +30,27 @@
   ```
 - a persisted output stream : [Output.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Output.hs)
 
-`Serializing, nonEmptying, capping, persisting` are **Pipes**, meaning each of them has
+### Pipes Folder
+The pipeline is using Pipes `Serializing, nonEmptying, capping, persisting`, meaning each of them has
 - An Input Stream
 - A Stream Processing
 - An Output Stream
 
-`Packaging` is also a **Microservice**
-- [Settings.hs](settings/lib/Dolla/Consensus/Proposing/Packaging/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
-- [Dependencies.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
-- [Microservice.hs](lib/Dolla/Consensus/Proposing/Packaging/Execution/Over/EventStore/Dolla/Execute.hs)
+### Instance Folder
+
+`Packaging` could be Executed into different environment defined by the type Log Engine used and the business logic running on top of the consensus layer.
+So far we have only one environment which the EventStore and our own Dolla Business Logic
+
+You'll find :
+
+- [Settings.hs](settings/lib/Dolla/Consensus/Proposing/Packaging/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
+- [Dependencies.hs](lib/Dolla/Consensus/Proposing/Packaging/Execution/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
+- [Execute.hs](lib/Dolla/Consensus/Proposing/Packaging/Execution/EventStore/Dolla/Execute.hs)
     - Perform the HealhtChecks to obtain the pipeline dependencies
     - Execute the pipeline
     - Put the Microservice back in HealthCheck mode if any Exception bubbles up in the pipeline during execution.
-- Deployment Logic in Zeus : [Pipeline.hs](../zeus/lib/Dolla/Consensus/Proposing/Zeus/Local/Pipeline.hs)
+
+N.B : Microservice configuration and Deployment Logic are defined in Zeus : [Pipeline.hs](../zeus/lib/Dolla/Consensus/Proposing/Zeus/Local/Pipeline.hs)
 </div>
 
 # Pipeline

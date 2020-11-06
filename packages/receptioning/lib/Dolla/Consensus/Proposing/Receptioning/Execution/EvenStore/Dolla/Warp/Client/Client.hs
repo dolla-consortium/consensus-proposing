@@ -1,38 +1,24 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DuplicateRecordFields #-}
-module Dolla.Consensus.Proposing.Receptioning.API.Client.Client
-  ( sendProposalRequest
-  , sendProposalRequests
+module Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Client
+  ( sendProposalRequests
   , sendHealthCheckRequest)
   where
 
+import           Control.Monad.IO.Class
+import           Data.Validation
+import           Data.List.NonEmpty
+
+import           Network.HTTP.Client (Manager)
 
 import qualified Servant.Client.Streaming as S
-import           Servant
-import           Dolla.Consensus.Proposing.Receptioning.API.Definition
-import           Dolla.Consensus.Dummy.Client.Request
-import           Data.Validation
-import           Dolla.Common.Dependencies.Core
-import           Data.List.NonEmpty
-import           Servant.Client
-import           Network.HTTP.Client (Manager)
-import           Control.Monad.IO.Class
 
-sendProposalRequest
-  :: Manager
-  -> BaseUrl
-  -> DollaClientRequest
-  -> IO (Either String ())
-sendProposalRequest httpClientManager url proposalRequest =
-  S.withClientM
-    (sendProposalRequestCall proposalRequest)
-    (S.mkClientEnv httpClientManager url)
-    (either 
-      (return . Left. show)
-      (return . Right))
-  where
-    sendProposalRequestCall :: DollaClientRequest -> S.ClientM ()
-    sendProposalRequestCall = S.client (Proxy :: Proxy SendClientRequest )
+import           Servant
+import           Servant.Client
+
+import           Dolla.Consensus.Dummy.Client.Request
+import           Dolla.Common.Dependencies.Core
+import           Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Definition
 
 sendProposalRequests
   :: MonadIO m

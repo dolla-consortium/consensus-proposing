@@ -1,17 +1,23 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-module Dolla.Consensus.Proposing.Receptioning.API.Client.Dependencies (Dependencies (..)) where
+module Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Dependencies 
+  (Dependencies (..)) where
 
-import           Dolla.Common.Dependencies.Core
 
 import           Servant.Client
+
 import           Network.HTTP.Client (Manager, newManager, defaultManagerSettings)
-import           Dolla.Common.NodeId
-import           Dolla.Consensus.Proposing.Receptioning.API.Client.Client
-import           Dolla.Common.Logging.Core
+
 import           Dolla.Adapter.Servant.Adapter
+
+import           Dolla.Common.NodeId
+import           Dolla.Common.Dependencies.Core
+import           Dolla.Common.Logging.Core
+
+
 import           Dolla.Consensus.Proposing.Receptioning.API.Client.Settings
+import           Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Client
 
 data Dependencies 
   = Dependencies 

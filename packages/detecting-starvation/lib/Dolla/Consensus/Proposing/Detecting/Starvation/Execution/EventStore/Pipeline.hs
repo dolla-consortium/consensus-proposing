@@ -11,12 +11,9 @@ import           Control.Monad.Catch (MonadCatch)
 import qualified Streamly as S
 
 import           Dolla.Consensus.Log.EventStoreLog
-import           Dolla.Libraries.LogEngine.Instances.EventStore.EventStoreLog (EventStoreLog)
+import           Dolla.Consensus.Log.LogNameIndex
 
 import           Dolla.Consensus.Proposing.Detecting.Starvation.Execution.EventStore.Dependencies
-
-import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.Output
-
 
 import qualified Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.Pipeline as Generics
 
@@ -25,12 +22,11 @@ detectingStarvation
      , MonadReader Dependencies m
      , MonadCatch m)
   => m ()
-detectingStarvation = do
-  Dependencies {eventStoreClient} <- ask
-  let inputLog  = getEventStoreLog eventStoreClient ProposingStarvingDetectionInputLog
-      outputLog = getEventStoreLog eventStoreClient LocalRequestLog :: EventStoreLog Output
-  Generics.detectingStarvation
-    inputLog
-    outputLog
+detectingStarvation = 
+  ask 
+  >>= \Dependencies {eventStoreClient} -> 
+      Generics.detectingStarvation
+        (getEventStoreLog eventStoreClient ProposingStarvingDetectionInputLog)
+        (getEventStoreLog eventStoreClient ProposingStarvingDetectionOutputLog)
 
 

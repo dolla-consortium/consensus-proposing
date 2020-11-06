@@ -5,7 +5,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveFunctor #-}
 
-module Dolla.Consensus.Proposing.Receptioning.Output
+module Dolla.Consensus.Proposing.Receptioning.Service.Output
   ( Output (..)) where
 
 import           Data.Aeson
@@ -22,7 +22,7 @@ newtype Output request
 
 
 instance Appendable a => Appendable (Output a) where
-  getItemName (Receptioned request)  = "Receptioned." ++ getItemName request
+  getItemName _  = "Receptioned"
 
 instance UUIDProvider a => UUIDProvider (Output a) where
   getUUID (Receptioned request) = getUUID request

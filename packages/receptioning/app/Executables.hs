@@ -3,7 +3,7 @@ module Executables
   (receptioning) where
 
 
-import qualified Dolla.Consensus.Proposing.Receptioning.API.Server.Server as Receptioning
+import qualified Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Server.Server as Receptioning
 
 
 receptioning :: IO ()

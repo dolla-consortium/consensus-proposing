@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 40af85cd00cc04286cc9d8cb478836e170f1638fa94472c92a5249f77ba8236d
+-- hash: a712ed4e56c39e6f383634f6dc307ae7e3601ae21bfc1e031978d12f21d8c561
 
 name:           dolla-consensus-proposing-receptioning
 version:        0.0.0.1
@@ -14,15 +14,15 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.Receptioning.API.Client.Client
-      Dolla.Consensus.Proposing.Receptioning.API.Client.Dependencies
-      Dolla.Consensus.Proposing.Receptioning.API.Definition
-      Dolla.Consensus.Proposing.Receptioning.API.Server.Dependencies
-      Dolla.Consensus.Proposing.Receptioning.API.Server.Server
-      Dolla.Consensus.Proposing.Receptioning.Output
-      Dolla.Consensus.Proposing.Receptioning.Service.Generic
-      Dolla.Consensus.Proposing.Receptioning.Service.OverDolla
-      Dolla.Consensus.Proposing.Receptioning.Service.OverEventStore
+      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Service
+      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Client
+      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Dependencies
+      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Definition
+      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Server.Dependencies
+      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Server.Server
+      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Service
+      Dolla.Consensus.Proposing.Receptioning.Service.Output
+      Dolla.Consensus.Proposing.Receptioning.Service.Service
   other-modules:
       Paths_dolla_consensus_proposing_receptioning
   hs-source-dirs:
@@ -58,7 +58,7 @@ test-suite dolla-consensus-proposing-receptioning-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Dolla.Consensus.Proposing.Receptioning.OutputSpec
+      Dolla.Consensus.Proposing.Receptioning.Service.OutputSpec
       Paths_dolla_consensus_proposing_receptioning
   hs-source-dirs:
       test

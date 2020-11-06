@@ -8,7 +8,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE NamedFieldPuns #-}
-module Dolla.Consensus.Proposing.Receptioning.OutputSpec (spec) where
+module Dolla.Consensus.Proposing.Receptioning.Service.OutputSpec (spec) where
 
 
 import           Data.Aeson
@@ -19,7 +19,7 @@ import           Test.QuickCheck.Instances ()
 import           Test.Hspec
 import           Text.InterpolatedString.Perl6 (qc)
 
-import           Dolla.Consensus.Proposing.Receptioning.Output
+import           Dolla.Consensus.Proposing.Receptioning.Service.Output
 
 data DummyRequest
   = DummyRequest {fieldA :: Bool, fieldB :: Bool}

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3551e99178663f60bf859c82308b53eb7d657f8bdeb13cba618350fa1ba18149
+-- hash: 83d4ea9288d787121c848aeaf97936a98f77b049858ba68f29de37d3c807a970
 
 name:           dolla-consensus-proposing-detecting-starvation
 version:        0.0.0.1
@@ -64,7 +64,6 @@ test-suite dolla-consensus-proposing-detecting-starvation-test
   other-modules:
       Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.GenInput
       Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.GenOutput
-      Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.IOSpec
       Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.StateMachineSpec
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
