@@ -1,4 +1,4 @@
-/ [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / [Receptioning](#receptioning)
+/ [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / Receptioning
 # Receptioning
 
 - [Overview](#overview)

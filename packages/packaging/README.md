@@ -1,4 +1,4 @@
-/ [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / [Packaging](#packaging-pipeline)
+/ [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / Packaging
 # Packaging Pipeline
 - [Overview](#overview)
   - [Pipeline Folder](#pipeline-folder)
