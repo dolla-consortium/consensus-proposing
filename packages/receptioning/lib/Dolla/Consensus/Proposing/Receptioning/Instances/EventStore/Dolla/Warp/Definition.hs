@@ -4,7 +4,7 @@
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeOperators #-}
-module Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Definition
+module Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Definition
   ( ReceptionistApi
   , HealthCheckRequest
   , SendClientRequests ) where

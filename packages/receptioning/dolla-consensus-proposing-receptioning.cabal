@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a712ed4e56c39e6f383634f6dc307ae7e3601ae21bfc1e031978d12f21d8c561
+-- hash: 40ed853ac4256381141ed64bc2970efc5d92e176523decdc34b278740c3397a3
 
 name:           dolla-consensus-proposing-receptioning
 version:        0.0.0.1
@@ -14,13 +14,14 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Service
-      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Client
-      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Dependencies
-      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Definition
-      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Server.Dependencies
-      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Server.Server
-      Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Service
+      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Service
+      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Client
+      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Dependencies
+      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Definition
+      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Server.Dependencies
+      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Server.Execute
+      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Server.Server
+      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Service
       Dolla.Consensus.Proposing.Receptioning.Service.Output
       Dolla.Consensus.Proposing.Receptioning.Service.Service
   other-modules:

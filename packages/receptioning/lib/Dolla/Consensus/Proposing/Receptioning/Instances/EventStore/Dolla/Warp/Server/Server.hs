@@ -1,6 +1,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE NamedFieldPuns #-}
-module Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Server.Server (execute) where
+module Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Server.Server 
+  (runServerOnWarp) where
 
 import           Prelude hiding (log)
 import           Control.Monad
@@ -18,17 +19,12 @@ import           Dolla.Adapter.Servant.Wrapper
 import           Dolla.Common.Logging.Core
 import           Dolla.Common.Network.Core
 import           Dolla.Common.Dependencies.Core
-import           Dolla.Common.Executable.Executable
 
 import           Dolla.Consensus.Dummy.Client.Request
-import qualified Dolla.Consensus.Proposing.Receptioning.API.Server.Settings as Server
-import qualified Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Server.Dependencies as Server
-import           Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Service
-import           Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Definition
+import qualified Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Server.Dependencies as Server
+import           Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Service
+import           Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Definition
 
-
-execute :: IO ()
-execute = executeMicroservice (\Server.Settings {logger} -> logger) runServerOnWarp
 
 runServerOnWarp :: ReaderT Server.Dependencies IO()
 runServerOnWarp = do

@@ -30,7 +30,7 @@ delete
   = liftIO $ catch
     (do
       echo $ ">| reset the Event Store data for " <++> coerce nodeId
-      stdout $ echoCommandAndInShell $ "docker rm -f " <++> getEvenStoreDockerName nodeId <++> " &>/dev/null")
+      stdout $ echoCommandAndInShell $ "docker rm -f " <++> getEventStoreDockerName nodeId <++> " &>/dev/null")
     (\SomeException {} -> return ())
 
 start
@@ -42,7 +42,7 @@ start eventStoreSettings@EventStoreSettings {..}
   echo $ ">| starting containers for " <++> coerce nodeId
   let command = "docker"
                   <++> " run"
-                  <++> " --name " <++> getEvenStoreDockerName nodeId
+                  <++> " --name " <++> getEventStoreDockerName nodeId
                   <++> " -dit"
                     <++> " -p " <++> show (port projectionUrl) <++> ":2113"
                     <++> " -p " <++> show (port eventStoreUrl) <++> ":1113"
@@ -79,9 +79,9 @@ enableByCategoryProjection EventStoreSettings {..} = do
       "/projection/%24by_category/command/enable'"
 
 
-getEvenStoreDockerName
+getEventStoreDockerName
   :: NodeId
   -> String
-getEvenStoreDockerName
+getEventStoreDockerName
   NodeId {..}
   = "consensus-" ++ unNodeId

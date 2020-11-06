@@ -59,7 +59,7 @@ You'll find in this folder different version of Pipeline.hs "polymorphically red
 - Execute the pipeline + load the [junctions](#junction) in the EventStore Microservice
 - Put the Microservice back in HealthCheck mode if any Exception bubbles up in the pipeline during execution.
 
-N.B : Microservice configuration and Deployment Logic (Locally/Simulated/Production etc...) are defined in the package [Zeus](../zeus/)
+**N.B** : Microservice configuration and Deployment Logic (Locally/Simulated/Production etc...) are defined in the package [Zeus](../zeus/)
 </div>
 
 # Pipeline
@@ -79,7 +79,7 @@ We are using the "User Defined Projections" feature from the EventStore to imple
  - loaded in the event store microservice directly
  - more details : https://eventstore.org/docs/projections/api/index.html
 
-It has allowed us to move quicker on the proof of concept, but we'll need to do eventually our own to leverage Performance.
+These features were used to move quicker on the proof of concept. We'll eventually implement our own soon.
 
 > Defined in [Junction.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Junction.hs)
 
@@ -141,7 +141,7 @@ The `Packaging` pipe recipe is
     .~> persisting proposalRootFolder
     .~> notifying outputLog
 ```
-> Defined in [Generic.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs)
+> Defined in [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs)
 
 > The welding between each pipe is defined in [/Welding/BluePrint.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Welding/BluePrint.hs)
 

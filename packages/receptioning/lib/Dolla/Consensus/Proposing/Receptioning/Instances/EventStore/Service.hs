@@ -1,5 +1,5 @@
 
-module Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Service
+module Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Service
   (receptioning) where
 
 import           Data.List.NonEmpty

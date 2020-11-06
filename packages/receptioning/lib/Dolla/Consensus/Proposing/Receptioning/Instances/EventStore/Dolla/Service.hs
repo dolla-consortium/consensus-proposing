@@ -1,5 +1,5 @@
 
-module Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Service
+module Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Service
   ( receptioning) where
 
 import           Data.List.NonEmpty
@@ -7,7 +7,7 @@ import qualified Dolla.Libraries.LogEngine.Instances.EventStore.Settings as Even
 
 import           Dolla.Consensus.Dummy.Client.Request
 import           Dolla.Consensus.Consortium.Request
-import qualified Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Service as OverEventStore
+import qualified Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Service as OverEventStore
 import           Dolla.Consensus.Request
 import           Control.Monad.IO.Class 
 

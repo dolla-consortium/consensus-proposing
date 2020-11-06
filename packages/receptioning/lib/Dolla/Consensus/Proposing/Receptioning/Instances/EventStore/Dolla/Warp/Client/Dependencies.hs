@@ -1,7 +1,7 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-module Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Dependencies 
+module Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Dependencies
   (Dependencies (..)) where
 
 
@@ -17,7 +17,7 @@ import           Dolla.Common.Logging.Core
 
 
 import           Dolla.Consensus.Proposing.Receptioning.API.Client.Settings
-import           Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Client
+import           Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Client
 
 data Dependencies 
   = Dependencies 

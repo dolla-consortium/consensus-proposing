@@ -14,13 +14,13 @@ Each of these local proposals are proposed for transactions into the consortium 
 
 A **Section** is a meaningful Set of Pipelines and Junctions put together.
 
-![proposing-overview](documentation/media/proposing-overview.png)
+![proposing-overview](proposing-overview.png)
 
 > <img align="center" src="https://via.placeholder.com/15/24A712/000000?text=+"> Worth Mentioning : [Packaging](/packages/packaging/) is the core of this section.  
-> It's a good example what we have explained in the Consensus [README.md](https://github.com/dolla-consortium/consensus)
 
-- [Receptioning](/packages/receptioning) : Client/Server for collecting requests and presenting them for being packaged into a proposal.
-- [Detecting Starvation](/packages/detecting-starvation) : Notify the `Packaging` pipeline when all the local proposals produced have been consumed.
+
+- [Receptioning](/packages/receptioning) : Client/Server for collecting requests.
+- [Detecting Starvation](/packages/detecting-starvation) : Detect that local proposals produced have been consumed and that the consensus is asking for producing new ones.
 - [Packaging](/packages/packaging/) : Produce Local Proposal Files with the following properties
   - `Proposals are never empty`
   - `Proposals file size < configurable size limit`
@@ -30,7 +30,6 @@ A **Section** is a meaningful Set of Pipelines and Junctions put together.
   - 2 modes are available :
     - **Overflowing** : Sending more requests than the consortium can consume
     - **UnderSupplying** : Sending less request than the consortium can consume
-
 
 # DevOps
 

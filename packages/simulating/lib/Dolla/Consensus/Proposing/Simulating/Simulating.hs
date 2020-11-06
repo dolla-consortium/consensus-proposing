@@ -19,7 +19,7 @@ import           Dolla.Consensus.Log.EventStoreLog
 import           Dolla.Consensus.Log.LogNameIndex
 import           Dolla.Consensus.Maestro.ESMerger (loadMaestroInputProjection)
 
-import qualified Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
+import qualified Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
 
 import           Dolla.Consensus.Proposing.Simulating.Dependencies
 import           Dolla.Consensus.Proposing.Simulating.Settings

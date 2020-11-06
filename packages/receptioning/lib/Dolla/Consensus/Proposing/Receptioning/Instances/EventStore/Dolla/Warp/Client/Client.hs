@@ -1,6 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DuplicateRecordFields #-}
-module Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Client.Client
+module Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Client
   ( sendProposalRequests
   , sendHealthCheckRequest)
   where
@@ -18,7 +18,7 @@ import           Servant.Client
 
 import           Dolla.Consensus.Dummy.Client.Request
 import           Dolla.Common.Dependencies.Core
-import           Dolla.Consensus.Proposing.Receptioning.Execution.EvenStore.Dolla.Warp.Definition
+import           Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Definition
 
 sendProposalRequests
   :: MonadIO m
