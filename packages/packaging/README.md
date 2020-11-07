@@ -1,9 +1,8 @@
 / [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / Packaging
 # Packaging Pipeline
 - [Overview](#overview)
-  - [Pipeline Folder](#pipeline-folder)
-  - [Pipes Folder](#pipes-folder)
-  - [Instances Folder](#instances-folder)
+  - [Visual](#visual)
+  - [Packages Tree](#packages-tree)
 - [Pipeline](#pipeline)
   - [Junction](#junction)
   - [IOs](#ios)
@@ -18,9 +17,10 @@
 
 
 # Overview
-
+## Visual
+## Packages Tree
 <img align="right" src="documentation/media/package-tree.png"><div>
-### Pipeline Folder
+### 1. Pipeline
 
 `Packaging` is a ***Pipeline***
 - a persisted input stream : [Input.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Input.hs)
@@ -33,13 +33,13 @@
   ```
 - a persisted output stream : [Output.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Output.hs)
 
-### Pipes Folder
+### 2. Pipes
 The pipeline is using **Pipes** `Serializing, nonEmptying, capping, persisting`, meaning each of them has
 - An Input Stream
 - A Stream Processing
 - An Output Stream
 
-### Instances Folder
+### 3. Instances
 
 `Packaging` is Polymorphic by
 - The Log Engine used
@@ -51,7 +51,7 @@ You'll find in this folder different version of Pipeline.hs "polymorphically red
 
 `Packaging` has some DevOps features as well
 
-- [Settings.hs](settings/lib/Dolla/Consensus/Proposing/Packaging/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
+- [Settings.hs](settings/lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
 - [Dependencies.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
 
 [Execute.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Execute.hs) is an **Instance** of the Pipeline

@@ -12,7 +12,7 @@ import           Dolla.Common.Logging.Core
 import           Dolla.Common.Executable.Executable
 
 import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Dolla.Pipeline (packaging)
-import           Dolla.Consensus.Proposing.Packaging.EventStore.Settings
+import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Settings
 import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Dependencies
 import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Dolla.Junction
 execute :: IO ()

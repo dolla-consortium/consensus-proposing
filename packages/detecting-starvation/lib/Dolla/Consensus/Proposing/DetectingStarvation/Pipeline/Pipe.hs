@@ -1,7 +1,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
 
-module Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.StreamProcessing
+module Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.Pipe
   (detectStarvation ) where
 
 import           Prelude hiding (log,writeFile)
@@ -11,10 +11,10 @@ import qualified Streamly as S
 import qualified Streamly.Prelude as S
 import qualified Streamly.Internal.Data.Fold as SF
 
-import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.Input
+import           Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.Input
 
 
-import qualified Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.StateMachine as State
+import qualified Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.StateMachine as State
 
 detectStarvation
   :: S.MonadAsync m

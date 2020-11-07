@@ -3,7 +3,7 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE MonoLocalBinds #-}
 
-module Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.StateMachine
+module Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.StateMachine
   ( starvingPredicate
   , projection
   , State (..)
@@ -13,7 +13,7 @@ import           Prelude hiding (log,writeFile)
 
 import           Data.Monoid
 import qualified Streamly.Internal.Data.Fold as SF
-import           Dolla.Consensus.Proposing.Detecting.Starvation.Pipeline.IO.Input
+import           Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.Input
 
 
 type RemainingProposalToConsume = Integer

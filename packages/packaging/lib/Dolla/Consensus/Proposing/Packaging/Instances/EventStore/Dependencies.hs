@@ -10,7 +10,7 @@ import           Dolla.Common.Memory.Byte (Byte)
 
 import qualified Dolla.Libraries.LogEngine.Instances.EventStore.Settings as EventStore
 import           Dolla.Consensus.Proposal.Persistence
-import           Dolla.Consensus.Proposing.Packaging.EventStore.Settings
+import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Settings
 
 data Dependencies
   = Dependencies

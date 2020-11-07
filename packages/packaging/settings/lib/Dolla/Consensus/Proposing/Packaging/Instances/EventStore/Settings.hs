@@ -1,6 +1,6 @@
 {-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE DeriveGeneric #-}
-module Dolla.Consensus.Proposing.Packaging.EventStore.Settings (Settings (..)) where
+module Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Settings (Settings (..)) where
 
 import           Data.Aeson
 import           GHC.Generics
