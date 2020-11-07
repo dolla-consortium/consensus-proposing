@@ -4,7 +4,7 @@
 
 # Overview
 
-![overview](documentation/media/overview.png)
+ ![overview](documentation/media/overview.png)
 
 `Packaging` is a simple ***Pipeline***
 - a persisted input stream : [Input.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Input.hs)

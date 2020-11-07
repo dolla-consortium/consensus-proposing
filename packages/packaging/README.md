@@ -18,6 +18,7 @@
 
 # Overview
 ## Visual
+![visual](documentation/media/visual.png)
 ## Packages Tree
 <img align="right" src="documentation/media/package-tree.png"><div>
 ### 1. Pipeline
