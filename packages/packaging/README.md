@@ -1,8 +1,7 @@
 / [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / Packaging
 # Packaging Pipeline
 - [Overview](#overview)
-  - [Visual](#visual)
-  - [Packages Tree](#packages-tree)
+- [Project Tree](#project-tree)
 - [Pipeline](#pipeline)
   - [Junction](#junction)
   - [IOs](#ios)
@@ -17,10 +16,9 @@
 
 
 # Overview
-## Visual
-![visual](documentation/media/visual.png)
-## Packages Tree
-<img align="right" src="documentation/media/package-tree.png"><div>
+![visual](documentation/media/overview.png)
+# Project Tree
+<img align="right" src="documentation/media/project-tree.png"><div>
 ### 1. Pipeline
 
 `Packaging` is a ***Pipeline***
