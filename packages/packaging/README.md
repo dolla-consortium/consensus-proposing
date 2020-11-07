@@ -13,6 +13,7 @@
   - [NonEmptying](#nonemptying)
   - [Capping](#capping)
   - [Persisting](#persisting)
+  - [Appending](#appending)
 
 
 # Overview
@@ -28,12 +29,12 @@
   - Welding : Adapting IOs between pipes
 
   ```
-  serializing .~> nonEmptying .~> capping .~> persisting 
+  serializing .~> nonEmptying .~> capping .~> persisting .~> appending
   ```
 - a persisted output stream : [Output.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Output.hs)
 
 ### 2. Pipes
-The pipeline is using **Pipes** `Serializing, nonEmptying, capping, persisting`, meaning each of them has
+The pipeline is using **Pipes** `Serializing, nonEmptying, capping, persisting, Appending`, meaning each of them has
 - An Input Stream
 - A Stream Processing
 - An Output Stream
@@ -138,7 +139,7 @@ The `Packaging` pipe recipe is
     .~> nonEmptying
     .~> capping proposalSizeLimit
     .~> persisting proposalRootFolder
-    .~> notifying outputLog
+    .~> appending outputLog
 ```
 > Defined in [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs)
 
@@ -307,3 +308,9 @@ Using Streamly FileSystem primitives
 > Implemented in [Pipe.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipes/Persisting/Pipe.hs)
 
 > Integration Test in [PipeSpec.hs](test/Dolla/Consensus/Proposing/Packaging/Pipes/Persisting/PipeSpec.hs)
+
+## Appending
+
+This pipe is just responsible for appending the Pipeline Output.
+
+> Implemented in [Pipe.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipes/Appending/Pipe.hs)
