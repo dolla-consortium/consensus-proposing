@@ -5,9 +5,9 @@ extra-source-files:
 
 ghc-options:
   - -Wall
-##  - -j
+
 library:
-  source-dirs: lib
+  source-dirs: library
 
   dependencies:
     - dolla-base == 1.0.0
@@ -26,7 +26,7 @@ library:
 executables:
   dolla-consensus-proposing-receptioning :
     main: Executables.hs
-    source-dirs: app
+    source-dirs: executables
     ghc-options:
       - -main-is Executables.receptioning
       - -threaded

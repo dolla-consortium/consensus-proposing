@@ -5,7 +5,6 @@ extra-source-files:
 
 ghc-options:
   - -Wall
-##  - -j
 
 dependencies:
   - dolla-base == 1.0.0
@@ -14,12 +13,12 @@ dependencies:
   - dolla-consensus-proposing-receptioning-settings
 
 library:
-  source-dirs: lib
+  source-dirs: library
 
   dependencies:
     - dolla-consensus-base == 1.0.0
     - dolla-consensus-proposing-receptioning
-    - dolla-consensus-proposing-packaging
+    - dolla-consensus-proposing-staging
     - mtl == 2.2.2
     - text == 1.2.4.0
     - byline == 0.3.2.1
@@ -33,7 +32,7 @@ library:
 executables:
   dolla-consensus-proposing-simulating :
     main: Executables.hs
-    source-dirs: app
+    source-dirs: executables
     ghc-options:
       - -main-is Executables.simulating
       - -threaded

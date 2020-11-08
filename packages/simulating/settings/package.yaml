@@ -5,7 +5,7 @@ ghc-options:
   - -Wall
 
 library:
-  source-dirs: lib
+  source-dirs: library
 
   dependencies:
     - dolla-base == 1.0.0

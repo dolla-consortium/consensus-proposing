@@ -1,0 +1,25 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: dd1778be1bc4310dce2f750c3c27e850766a993f91544c33f2f4c38e464d8dd6
+
+name:           dolla-consensus-proposing-detecting-tension-settings
+version:        0.0.0
+build-type:     Simple
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposing.DetectingTension.Instances.EventStore.Settings
+  other-modules:
+      Paths_dolla_consensus_proposing_detecting_tension_settings
+  hs-source-dirs:
+      library
+  ghc-options: -Wall
+  build-depends:
+      aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , dolla-base ==1.0.0
+  default-language: Haskell2010
