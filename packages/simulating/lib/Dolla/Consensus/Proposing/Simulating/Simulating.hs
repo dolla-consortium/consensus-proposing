@@ -17,9 +17,7 @@ import           Dolla.Common.Logging.Core
 import           Dolla.Common.Executable.Executable
 import           Dolla.Consensus.Log.EventStoreLog
 import           Dolla.Consensus.Log.LogNameIndex
-import           Dolla.Consensus.Maestro.ESMerger (loadMaestroInputProjection)
 
-import qualified Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
 
 import           Dolla.Consensus.Proposing.Simulating.Dependencies
 import           Dolla.Consensus.Proposing.Simulating.Settings
@@ -41,13 +39,11 @@ start
     { logger
     , stressLoad
     , eventStoreClient
-    , receptioningClient = receptioningClient@Receptionist.Client.Dependencies {nodeId} } <- ask
+    , receptioningClient} <- ask
   log logger INFO "Starting Simulating"
   case stressLoad of
     OverFlowing proposalSizeLimit -> overflowing proposalSizeLimit
-    UnderSupplying proposalSizeLimit -> do
-      -- Need to run the merge of the maestro to simulate the merge of the detecting starvation merge
-      _ <- withReaderT (const (nodeId, eventStoreClient)) loadMaestroInputProjection
+    UnderSupplying proposalSizeLimit ->
       S.drain
         $ S.runReaderT
             UnderSupplying.Context 

@@ -42,10 +42,10 @@ loadJunctionInEventStore = do
                           $any : function(s,e)\{
                            function getOutputStream() \{
                                 return '{packagingInputLogLogStreamName}'}
-                          if (e.eventType == "LocalProposalStarvationDetected" ) \{
+                          if (e.eventType == "LocalProposalFlowTensed" ) \{
                             emit ( getOutputStream ()
-                               , "NewLocalProposalAsked"
-                               , \{"tag": "Produce"}
+                               , "Stage"
+                               , \{"tag": "Stage"}
                                , \{});
                           }
                           if (e.eventType == "Receptioned" ) \{

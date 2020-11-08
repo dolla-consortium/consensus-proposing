@@ -53,17 +53,20 @@ underSupplying
 underSupplying proposalSizeLimit 
   = do
     Context {packagingOutputLog,logger} <- ask
-    lift $ 
-      generateRequests (proposalSizeLimit `div` 2)
-      >>= sendSimulatedRequest
-      >>  simulateFirstConsensusReached     
+    lift $ do 
+      generateRequests (proposalSizeLimit `div` 2) >>= sendSimulatedRequest
+      log logger INFO "Requests sent."
+      _ <- simulateFirstConsensusReached
+      log logger INFO "First Consensus Reached Simulated."
     stream infinitely packagingOutputLog
         & S.mapM (\Packaging.LocalProposalStaged {localOffset} -> do
-          log logger INFO $ "Local Proposal " ++ show localOffset ++ " Staged." 
-          generateRequests (proposalSizeLimit `div` 2)
-            >>= sendSimulatedRequest
-            >> simulateLocalProposalConsumptionForBlock (localOffset + 2)
-            >> simulateConsensusReachedForBlock         (localOffset + 2))
+          log logger INFO $ "Local Proposal " ++ show localOffset ++ " Staged."
+          generateRequests (proposalSizeLimit `div` 2) >>= sendSimulatedRequest
+          log logger INFO "Requests sent."
+          simulateLocalProposalConsumptionForBlock (localOffset + 2)
+          log logger INFO "Local Proposal Consumption Simulated."
+          simulateConsensusReachedForBlock         (localOffset + 2)
+          log logger INFO "Consensus Reached Simulated.")
 
 simulateFirstConsensusReached
   :: ( MemoryStreamLoggable m log

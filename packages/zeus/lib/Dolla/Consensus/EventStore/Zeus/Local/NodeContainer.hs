@@ -48,7 +48,7 @@ start eventStoreSettings@EventStoreSettings {..}
                     <++> " -p " <++> show (port eventStoreUrl) <++> ":1113"
                   <++> " eventstore/eventstore " <++> " 1>/dev/null"
   stdout $ echoCommandAndInShell command
-  pauseThread $ 5 * s -- time for machine to start...
+  pauseThread $ 10 * s -- time for container to start, otherwise configuration fails :-(... Find a way to know when the container is up and running...
   configure eventStoreSettings
 
 configure
@@ -70,7 +70,7 @@ enableByCategoryProjection EventStoreSettings {..} = do
                 <++> fromString (unpack username )
                 <++> ":"
                 <++> fromString (unpack password)
-                <++> " &>/dev/null"
+--                <++> " &>/dev/null"
   stdout $ echoCommandAndInShell command
 
   where
