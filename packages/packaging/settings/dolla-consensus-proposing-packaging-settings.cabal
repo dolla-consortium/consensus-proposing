@@ -4,13 +4,11 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d2ae0999205872b70a319143567ca964e8c3e99ee2d93ea383373f81160f03dc
+-- hash: b9d2078ecb5313309470cd9db83657f94053bea2a8c4399a07f8d050d0d851af
 
 name:           dolla-consensus-proposing-packaging-settings
 version:        0.0.0.1
 build-type:     Simple
-extra-source-files:
-    README.md
 
 library
   exposed-modules:

@@ -1,10 +1,7 @@
 name: dolla-consensus-proposing-detecting-starvation-settings
-extra-source-files:
-  - README.md
 
 ghc-options:
   - -Wall
-##  - -j
 
 library:
   source-dirs: lib

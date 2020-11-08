@@ -49,7 +49,6 @@ import           Dolla.Consensus.Proposal.Persistence (ProposalRootFolder, getLo
 import           Dolla.Consensus.Proposing.Packaging.Pipes.Serializing.SerializedRequest
 
 import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Serializing.Output as Serializing
-import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Serializing.Input as Serializing
 
 spec :: Spec
 spec = do
@@ -117,13 +116,13 @@ getGeneratedEncodedInputStream inputs
   = getGeneratedInputStream inputs
       & S.map
       (\case
-        CommitProposal -> Serializing.ForceProposalProduction
-        Persist a -> Serializing.Serialize a )
+        CommitProposal -> Nothing
+        Persist a -> Just a )
       & serializing
         & S.map
               (\case
-                Serializing.ProposalProductionNotForced -> CommitProposal
-                Serializing.Serialized (SerializedRequest word8s) -> Persist word8s)
+                Serializing.Output Nothing -> CommitProposal
+                Serializing.Output (Just (SerializedRequest word8s)) -> Persist word8s)
 
 getGeneratedInputStream 
   :: S.MonadAsync m

@@ -1,6 +1,5 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE LambdaCase #-}
 
 module Dolla.Consensus.Proposing.Packaging.Pipes.Serializing.Pipe
   (serializing)
@@ -23,7 +22,5 @@ serializing
   :: ( Monad m, ToJSON a)
   => S.SerialT m (Input a)
   -> S.SerialT m (Output SerializedRequest)
-serializing 
-  =  S.map (\case 
-      ForceProposalProduction -> ProposalProductionNotForced -- Isomorphism with Maybe
-      Serialize request -> Serialized $ (coerce . unpack . getEncodedItem) request)
+serializing =  S.map (\input -> Output (coerce . unpack . getEncodedItem <$> input)) 
+      

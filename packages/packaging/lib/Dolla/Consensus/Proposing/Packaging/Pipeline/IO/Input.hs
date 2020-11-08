@@ -16,7 +16,7 @@ import           Dolla.Adapter.Aeson.AesonVia
 -- - Detecting-Starvation : transmitting Local-Proposal-Starvation Notifications
 
 data Input request
-  = ForceProposalProduction -- ^ ask to "Packaging Pipeline" to flush all the requests currently collected
+  = Produce -- ^ ask to "Packaging Pipeline" to force the production of a new local proposal with all the requests currently collected
   | Package request -- ^ ask to to "Packaging Pipeline" to package the request into a proposal according
                     -- some properties (see README.md)
   deriving (Eq,Show,Generic)

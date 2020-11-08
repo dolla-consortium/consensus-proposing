@@ -13,7 +13,6 @@
   - [NonEmptying](#nonemptying)
   - [Capping](#capping)
   - [Persisting](#persisting)
-  - [Appending](#appending)
 
 
 # Overview
@@ -25,16 +24,18 @@
 `Packaging` is a ***Pipeline***
 - a persisted input stream : [Input.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Input.hs)
 - a line of Pipes Welded together in [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs)
-  - composition of **deterministic** *Pipes*
-  - Welding : Adapting IOs between pipes
+  - Sourcing initial inputs : `stream infinitely inputLog`
+  - Composition of **deterministic** *Pipes*
+    - Welding : Adapting IOs between pipes
 
   ```
-  serializing .~> nonEmptying .~> capping .~> persisting .~> appending
+  serializing .~> nonEmptying .~> capping .~> persisting 
   ```
+  - Sinking final outputs : `sinking outputLog`
 - a persisted output stream : [Output.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Output.hs)
 
 ### 2. Pipes
-The pipeline is using **Pipes** `Serializing, nonEmptying, capping, persisting, Appending`, meaning each of them has
+The pipeline is using **Pipes** `serializing, nonEmptying, capping, persisting`, meaning each of them has
 - An Input Stream
 - A Stream Processing
 - An Output Stream
@@ -134,12 +135,12 @@ To produce the expected pipeline output , we are combining different pipes all t
 
 The `Packaging` pipe recipe is
 ```haskell
-  stream infinitely inputLog
+  stream infinitely inputLog -- sourcing
      ~> serializing
     .~> nonEmptying
     .~> capping proposalSizeLimit
     .~> persisting proposalRootFolder
-    .~> appending outputLog
+    .~> sinking outputLog
 ```
 > Defined in [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs)
 
@@ -308,9 +309,3 @@ Using Streamly FileSystem primitives
 > Implemented in [Pipe.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipes/Persisting/Pipe.hs)
 
 > Integration Test in [PipeSpec.hs](test/Dolla/Consensus/Proposing/Packaging/Pipes/Persisting/PipeSpec.hs)
-
-## Appending
-
-This pipe is just responsible for appending the Pipeline Output.
-
-> Implemented in [Pipe.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipes/Appending/Pipe.hs)

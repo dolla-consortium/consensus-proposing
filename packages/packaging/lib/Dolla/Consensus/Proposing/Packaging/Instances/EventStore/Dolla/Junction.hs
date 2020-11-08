@@ -44,8 +44,8 @@ loadJunctionInEventStore = do
                                 return '{packagingInputLogLogStreamName}'}
                           if (e.eventType == "LocalProposalStarvationDetected" ) \{
                             emit ( getOutputStream ()
-                               , "ForceProposalProduction"
-                               , \{"tag": "ForceProposalProduction"}
+                               , "NewLocalProposalAsked"
+                               , \{"tag": "Produce"}
                                , \{});
                           }
                           if (e.eventType == "Receptioned" ) \{

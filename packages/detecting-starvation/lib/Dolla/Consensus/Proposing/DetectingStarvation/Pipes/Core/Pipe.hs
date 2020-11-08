@@ -1,7 +1,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
 
-module Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.Pipe
+module Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.Pipe
   (detectStarvation ) where
 
 import           Prelude hiding (log,writeFile)
@@ -14,7 +14,7 @@ import qualified Streamly.Internal.Data.Fold as SF
 import           Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.Input
 
 
-import qualified Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.StateMachine as State
+import qualified Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.StateMachine as State
 
 detectStarvation
   :: S.MonadAsync m
@@ -23,7 +23,7 @@ detectStarvation
 detectStarvation
   = emitWhenPredicateValid
       State.projection
-      State.starvingPredicate
+      State.isNewLocalProposalAsked
 
 emitWhenPredicateValid
   :: S.MonadAsync m
@@ -33,9 +33,9 @@ emitWhenPredicateValid
   -> S.SerialT m ()
 emitWhenPredicateValid
   projection
-  starvingInvariantPredicate
+  predicate
   inputStream
   = inputStream
     & S.postscan projection
-    & S.filter starvingInvariantPredicate
+    & S.filter predicate
     & S.map (const ())

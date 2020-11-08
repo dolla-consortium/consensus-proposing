@@ -13,9 +13,9 @@ import           Dolla.Adapter.Aeson.AesonVia
 
 
 data  Input
-  = LocalProposalConsumed
-  | LocalProposalProduced
-  | LocalProposalAsked
+  = HandleLocalProposalConsumed
+  | HandleLocalProposalProduced
+  | HandleConsensusReached
   deriving (Eq,Show, Generic)
   deriving (ToJSON,FromJSON) via DefaultJSON Input
 

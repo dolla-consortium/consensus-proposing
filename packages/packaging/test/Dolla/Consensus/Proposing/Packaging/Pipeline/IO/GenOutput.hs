@@ -11,5 +11,5 @@ import Dolla.Common.Offset
 newtype OutputUnderTests = OutputUnderTests { unOutputUnderTests :: Output} deriving Show
 
 instance Arbitrary OutputUnderTests where
-  arbitrary = OutputUnderTests . LocalProposalProduced . Offset <$> arbitrary
+  arbitrary = OutputUnderTests . LocalProposalPackaged . Offset <$> arbitrary
 

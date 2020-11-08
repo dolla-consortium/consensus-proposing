@@ -4,13 +4,11 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6138bc8d3aeaeed5eda4ad05449f7d506e2b632c9489b7b516dcba43af8671b2
+-- hash: 35a9ca4d573acceef9e005f7d609d53437c107c8bd80d63387ab1e683e745966
 
 name:           dolla-consensus-proposing-detecting-starvation-settings
 version:        0.0.0
 build-type:     Simple
-extra-source-files:
-    README.md
 
 library
   exposed-modules:

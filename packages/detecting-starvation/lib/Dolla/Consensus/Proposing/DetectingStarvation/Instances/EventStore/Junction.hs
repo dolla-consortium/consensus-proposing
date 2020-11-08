@@ -47,21 +47,21 @@ loadJunctionInEventStore = do
                             var messageJson = JSON.parse(e.bodyRaw)
                             if (messageJson.byProposer.proposerId == {nodeId}) \{
                                 emit ( getOutputStream ()
-                                   , "LocalProposalConsumed"
-                                   , "LocalProposalConsumed"
+                                   , "HandleLocalProposalConsumed"
+                                   , "HandleLocalProposalConsumed"
                                    , \{});
                             }
                           }
                           if (e.eventType == "ConsensusReached" ) \{
                             emit ( getOutputStream ()
-                               , "LocalProposalAsked"
-                               , "LocalProposalAsked"
+                               , "HandleConsensusReached"
+                               , "HandleConsensusReached"
                                , \{});
                           }
                           if (e.eventType == "LocalProposalProduced" ) \{
                             emit ( getOutputStream ()
-                              , "LocalProposalProduced"
-                              , "LocalProposalProduced"
+                              , "HandleLocalProposalProduced"
+                              , "HandleLocalProposalProduced"
                               , \{});
                           } // if
                          } // $any

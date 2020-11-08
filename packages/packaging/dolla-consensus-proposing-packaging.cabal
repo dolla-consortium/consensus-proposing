@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 21d0d6e922fd09b1880d5ec14b448b5cbc49bc6c4d8bae8ee08c2494cd10cf34
+-- hash: c78e0f6c088ce64d8acd51ea9c4f5a05dfcae90dffd92352ab4eb9859f8ee03b
 
 name:           dolla-consensus-proposing-packaging
 version:        0.0.0.1
@@ -22,9 +22,9 @@ library
       Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Input
       Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Output
       Dolla.Consensus.Proposing.Packaging.Pipeline.Pipeline
+      Dolla.Consensus.Proposing.Packaging.Pipeline.Sinking.Input
+      Dolla.Consensus.Proposing.Packaging.Pipeline.Sinking.Pipe
       Dolla.Consensus.Proposing.Packaging.Pipeline.Welding.BluePrint
-      Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Input
-      Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Pipe
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.Input
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.Output
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.Pipe

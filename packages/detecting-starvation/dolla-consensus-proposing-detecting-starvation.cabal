@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a3b635355cbd32025a7af849111b48e931ff588e6f5bf9e76b2cb0e093b3af4c
+-- hash: 1b3662925fb6764ee48089bd7eb2dbba0b54959a5a65d34fb0a7543a595da62d
 
 name:           dolla-consensus-proposing-detecting-starvation
 version:        0.0.0.1
@@ -20,9 +20,10 @@ library
       Dolla.Consensus.Proposing.DetectingStarvation.Instances.EventStore.Pipeline
       Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.Input
       Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.Output
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.Pipe
       Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.Pipeline
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.StateMachine
+      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.Sinking.Pipe
+      Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.Pipe
+      Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.StateMachine
   other-modules:
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
@@ -64,7 +65,7 @@ test-suite dolla-consensus-proposing-detecting-starvation-test
   other-modules:
       Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.GenInput
       Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.GenOutput
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.StateMachineSpec
+      Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.StateMachineSpec
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
       test

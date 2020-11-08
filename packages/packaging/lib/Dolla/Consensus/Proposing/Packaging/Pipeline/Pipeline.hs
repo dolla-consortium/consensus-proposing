@@ -25,7 +25,7 @@ import           Dolla.Consensus.Proposing.Packaging.Pipes.Capping.Pipe      (ca
 import           Dolla.Common.Memory.Byte (Byte)
 import           Dolla.Consensus.Proposing.Packaging.Pipes.Persisting.Pipe   (persisting)
 import           Dolla.Consensus.Proposal.Persistence (ProposalRootFolder)
-import           Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Pipe    (appending)
+import           Dolla.Consensus.Proposing.Packaging.Pipeline.Sinking.Pipe (sinking)
 
 import           Dolla.Common.Pipeline.Weldable ((~>),(.~>))
 import           Dolla.Consensus.Proposing.Packaging.Pipeline.Welding.BluePrint ()
@@ -51,12 +51,12 @@ packaging
   proposalSizeLimit
   inputLog
   outputLog
-  = stream infinitely inputLog
+  = stream infinitely inputLog -- sourcing
      ~> serializing
     .~> nonEmptying
     .~> capping proposalSizeLimit
     .~> persisting proposalRootFolder
-    .~> appending outputLog
+    .~> sinking outputLog
 
 
 

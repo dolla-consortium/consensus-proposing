@@ -2,7 +2,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NamedFieldPuns #-}
 
-module Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Pipe (appending) where
+module Dolla.Consensus.Proposing.Packaging.Pipeline.Sinking.Pipe (sinking) where
 
 import           Prelude hiding (log,writeFile)
 import           Control.Monad.Reader
@@ -12,20 +12,20 @@ import qualified Streamly as S
 
 import           Dolla.Libraries.LogEngine.LogEngine
 import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Output as Packaging
-import           Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Input
+import           Dolla.Consensus.Proposing.Packaging.Pipeline.Sinking.Input
 
-appending
+sinking
   :: ( MemoryStreamLoggable m log 
      , S.MonadAsync  m )
   =>  log Packaging.Output
   ->  S.SerialT m Input
   ->  S.SerialT m ()
-appending outputLog
+sinking outputLog
   = S.mapM
-      (\LocalProposalProduced {proposalId} ->
+      (\SinkNewLocalProposal {proposalId} ->
           void
           $ append
               outputLog
               proposalId
-              $ Packaging.LocalProposalProduced proposalId)
+              $ Packaging.LocalProposalPackaged proposalId)
 

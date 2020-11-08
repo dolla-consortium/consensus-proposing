@@ -17,9 +17,9 @@ instance Arbitrary InputUnderTests where
   arbitrary
     = InputUnderTests
       <$> oneof
-          [ return LocalProposalConsumed
-          , return LocalProposalProduced
-          , return LocalProposalAsked]
+          [ return HandleLocalProposalConsumed
+          , return HandleLocalProposalProduced
+          , return HandleConsensusReached]
 
 newtype InputUnderTests = InputUnderTests { unInputUnderTests :: Input} deriving Show
 
@@ -35,7 +35,7 @@ delta :: [Input] -> Sum Integer
 delta
   = foldMap
       (\case
-         LocalProposalConsumed -> - 1
-         LocalProposalProduced -> 1
-         LocalProposalAsked -> 0)
+         HandleLocalProposalConsumed -> - 1
+         HandleLocalProposalProduced -> 1
+         HandleConsensusReached -> 0)
 

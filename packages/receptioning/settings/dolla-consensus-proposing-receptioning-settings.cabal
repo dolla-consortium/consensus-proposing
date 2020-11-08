@@ -4,13 +4,11 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bc4850ba3771a6fa8c32dd27f670db4bf28e3c0133550646434a3f232554ee77
+-- hash: bcc931c8e8908022af42d4e1baada43aecd0fbaf1b807d363d849edd2a4c5fac
 
 name:           dolla-consensus-proposing-receptioning-settings
 version:        0.0.0.1
 build-type:     Simple
-extra-source-files:
-    README.md
 
 library
   exposed-modules:

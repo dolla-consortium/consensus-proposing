@@ -14,9 +14,9 @@ import           Dolla.Common.Offset (Offset)
 import           Dolla.Libraries.LogEngine.Appendable
 
 newtype Output
-  = LocalProposalProduced {localOffset :: Offset}
+  = LocalProposalPackaged {localOffset :: Offset}
   deriving (Eq, Show, Generic)
   deriving (ToJSON, FromJSON) via DefaultJSON Output
 
 instance Appendable Output where
-  getItemName LocalProposalProduced {} = "LocalProposalProduced"
+  getItemName LocalProposalPackaged {} = "LocalProposalPackaged"

@@ -27,7 +27,7 @@ import           Dolla.Consensus.Proposing.Packaging.DummyRequest
 spec :: Spec
 spec = parallel $
   describe "Proposing.Packaging.Serializing" $ do
-    it "Serialize requests and Transmit downstream ForceProposalProduction Command"
+    it "Serialize requests when available"
       $ property
       $ \inputs ->
           aggregateInputToResult
@@ -35,9 +35,9 @@ spec = parallel $
               serializing
             & S.mapM_
               (\case
-                 (ForceProposalProduction, result)
-                   -> result `shouldBe` ProposalProductionNotForced
-                 (Serialize request@DummyRequest {}, Serialized result)
+                 (Nothing, Output result)
+                   -> result `shouldBe` Nothing
+                 (Just request@DummyRequest {}, Output (Just result) )
                    -> result `shouldBe` (coerce.unpackBytes.encode) request
                  (a, b) -> expectationFailure $ "unexpected result = " ++ show (a,b) )
 

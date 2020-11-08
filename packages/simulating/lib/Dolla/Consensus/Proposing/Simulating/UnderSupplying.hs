@@ -58,8 +58,8 @@ underSupplying proposalSizeLimit
       >>= sendSimulatedRequest
       >>  simulateFirstConsensusReached     
     stream infinitely packagingOutputLog
-        & S.mapM (\Packaging.LocalProposalProduced {localOffset} -> do
-          log logger INFO $ "Local Proposal " ++ show localOffset ++ " Produced." 
+        & S.mapM (\Packaging.LocalProposalPackaged {localOffset} -> do
+          log logger INFO $ "Local Proposal " ++ show localOffset ++ " Packaged." 
           generateRequests (proposalSizeLimit `div` 2)
             >>= sendSimulatedRequest
             >> simulateLocalProposalConsumptionForBlock (localOffset + 2)

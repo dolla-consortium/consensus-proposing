@@ -1,10 +1,7 @@
 {-# LANGUAGE DeriveFunctor #-}
 
 module Dolla.Consensus.Proposing.Packaging.Pipes.Serializing.Input
-  ( Input (..)) where
+  ( Input ) where
 
-data Input request
-  = ForceProposalProduction
-  | Serialize request
- deriving (Functor,Show)
+type Input request = Maybe request
 

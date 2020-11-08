@@ -2,7 +2,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE NamedFieldPuns #-}
-module Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.StateMachineSpec (spec) where
+module Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.StateMachineSpec (spec) where
 
 import           Data.Coerce (coerce)
 import           Data.Monoid
@@ -18,24 +18,24 @@ import qualified Streamly as S
 import           Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.Input
 import           Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.GenInput
 
-import           Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.StateMachine
+import           Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.StateMachine
 
 
 spec :: Spec
 spec = parallel $
-  describe "State Machine used for detecting a local proposal starvation " $ do
+  describe "State Machine used for detecting when a new local proposal is asked downstream the system" $ do
     it "provides the number of remaining local proposal not yet consumed" 
       $ property 
       $ \inputs -> do
            let expectedRemainingProposalToConsume  = getExpectedRemainingProposalToConsume inputs
            State {remainingProposalToConsume} <- S.fold projection (getGeneratedInputStream inputs)
            remainingProposalToConsume `shouldBe` expectedRemainingProposalToConsume
-    it "indicates when a local proposal is asked by the pipeline"
+    it "indicates when a consensus is reached"
       $ property 
       $ \inputs -> do
-           let expectedIsLocalProposalAsked  = getExpectedIsLocalProposalAsked inputs
-           State{isLocalProposalAsked} <-  S.fold projection (getGeneratedInputStream inputs)
-           isLocalProposalAsked `shouldBe` expectedIsLocalProposalAsked
+           let expectedIsConsensusReached  = getExpectedIsConsensusReached inputs
+           State{isConsensusReached} <-  S.fold projection (getGeneratedInputStream inputs)
+           isConsensusReached `shouldBe` expectedIsConsensusReached
  
 getGeneratedInputStream
   :: Monad m
@@ -50,16 +50,16 @@ delta :: [Input] -> Sum Integer
 delta
   = foldMap
       (\case
-         LocalProposalConsumed -> - 1
-         LocalProposalProduced -> 1
-         LocalProposalAsked -> 0)
+         HandleLocalProposalConsumed -> - 1
+         HandleLocalProposalProduced -> 1
+         HandleConsensusReached -> 0)
 
-getExpectedIsLocalProposalAsked :: ConsistentInputs -> Any
-getExpectedIsLocalProposalAsked inputs = foldIsLocalProposalAsked (coerce inputs)
+getExpectedIsConsensusReached :: ConsistentInputs -> Any
+getExpectedIsConsensusReached inputs = foldIsConsensusReached (coerce inputs)
 
-foldIsLocalProposalAsked :: [Input] -> Any
-foldIsLocalProposalAsked
+foldIsConsensusReached :: [Input] -> Any
+foldIsConsensusReached
   = foldMap
       (\case
-        LocalProposalAsked  -> Any True
+        HandleConsensusReached  -> Any True
         _ -> Any False )

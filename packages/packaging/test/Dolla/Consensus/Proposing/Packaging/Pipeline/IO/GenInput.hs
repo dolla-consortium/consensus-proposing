@@ -13,7 +13,7 @@ instance Arbitrary a => Arbitrary (InputUnderTests a) where
   arbitrary
     = InputUnderTests
       <$> oneof
-          [ return ForceProposalProduction
+          [ return Produce
           , Package <$> arbitrary]
 
 

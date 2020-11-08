@@ -9,6 +9,7 @@ module Dolla.Consensus.Proposing.Packaging.Pipeline.Welding.BluePrint
   () where
 
 import           Data.Word (Word8)
+import           Data.Coerce (coerce)
 import           Dolla.Common.Pipeline.Weldable
 import           Dolla.Consensus.Proposing.Packaging.Pipes.Serializing.SerializedRequest
 
@@ -26,24 +27,16 @@ import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Capping.Output as Cap
 import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Persisting.Input  as Persisting
 import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Persisting.Output  as Persisting
 
-import qualified Dolla.Consensus.Proposing.Packaging.Pipes.Appending.Input as Appending
+import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.Sinking.Input as Sinking
 
 instance Weldable (Packaging.Input request) (Serializing.Input request) where
   weld
     = \case
-      Packaging.ForceProposalProduction {} -> Serializing.ForceProposalProduction
-      Packaging.Package request -> Serializing.Serialize request
-
-instance Weldable Persisting.Output  Appending.Input where
-  weld
-    = \case
-      Persisting.LocalProposalPersisted {..} -> Appending.LocalProposalProduced {..}
+      Packaging.Produce {} -> Nothing
+      Packaging.Package request -> Just request
 
 instance Weldable (Serializing.Output a) (NonEmptying.Input a) where
-  weld
-    = \case  
-      Serializing.ProposalProductionNotForced  -> Nothing
-      Serializing.Serialized a -> Just a
+  weld = coerce
 
 instance Weldable (NonEmptying.Output a) (Capping.Input a) where
   weld
@@ -56,3 +49,8 @@ instance Weldable (Capping.Output SerializedRequest) (Persisting.Input [Word8]) 
     = \case
       Capping.Cut -> Persisting.CommitProposal
       Capping.Added (SerializedRequest word8s) -> Persisting.Persist word8s
+
+instance Weldable Persisting.Output  Sinking.Input where
+  weld
+    = \case
+      Persisting.LocalProposalPersisted {..} -> Sinking.SinkNewLocalProposal {..}

@@ -3,8 +3,8 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE MonoLocalBinds #-}
 
-module Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.StateMachine
-  ( starvingPredicate
+module Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.StateMachine
+  ( isNewLocalProposalAsked
   , projection
   , State (..)
   ) where
@@ -21,24 +21,24 @@ type RemainingProposalToConsume = Integer
 data State
   = State
     { remainingProposalToConsume :: Integer
-    , isLocalProposalAsked :: Any} deriving Eq
+    , isConsensusReached :: Any} deriving Eq
 
-starvingPredicate :: State -> Bool
-starvingPredicate = (== State 0 (Any True))
+isNewLocalProposalAsked :: State -> Bool
+isNewLocalProposalAsked = (== State 0 (Any True))
 
 projection
   ::  (Monad m)
   => SF.Fold m Input State
 projection
   = State <$> foldRemainingProposalToConsume
-          <*> foldIsLocalProposalAsked
+          <*> foldIsConsensusReached
 
 
-foldIsLocalProposalAsked :: (Monad m , Monoid Any) => SF.Fold m Input Any
-foldIsLocalProposalAsked
+foldIsConsensusReached :: (Monad m , Monoid Any) => SF.Fold m Input Any
+foldIsConsensusReached
   = SF.foldMap
       (\case
-        LocalProposalAsked  -> Any True
+        HandleConsensusReached  -> Any True
         _ -> Any False )
 
 foldRemainingProposalToConsume :: (Monad m ) => SF.Fold m Input RemainingProposalToConsume
@@ -46,8 +46,8 @@ foldRemainingProposalToConsume
   = SF.lmapM
       (\inputItem -> do
        return $ case inputItem of
-         LocalProposalProduced ->  1
-         LocalProposalConsumed -> -1
-         LocalProposalAsked    ->  0)
+         HandleLocalProposalProduced ->  1
+         HandleLocalProposalConsumed -> -1
+         HandleConsensusReached    ->  0)
        SF.sum
 
