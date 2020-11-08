@@ -27,5 +27,5 @@ sinking outputLog
           $ append
               outputLog
               proposalId
-              $ Packaging.LocalProposalPackaged proposalId)
+              $ Packaging.LocalProposalStaged proposalId)
 

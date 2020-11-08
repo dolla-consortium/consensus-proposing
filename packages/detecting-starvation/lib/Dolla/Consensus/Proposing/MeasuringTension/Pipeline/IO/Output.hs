@@ -1,22 +1,25 @@
+{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Output
-  ( Output (..)) where
+module Dolla.Consensus.Proposing.MeasuringTension.Pipeline.IO.Output
+  (Output (..)) where
 
 import           Data.Aeson
 import           GHC.Generics
 import           Dolla.Adapter.Aeson.AesonVia
-import           Dolla.Common.Offset (Offset)
 import           Dolla.Libraries.LogEngine.Appendable
 
-newtype Output
-  = LocalProposalStaged {localOffset :: Offset}
+data Output
+  = LocalProposalFlowTensed  
   deriving (Eq, Show, Generic)
   deriving (ToJSON, FromJSON) via DefaultJSON Output
 
 instance Appendable Output where
-  getItemName LocalProposalStaged {} = "LocalProposalStaged"
+  getItemName LocalProposalFlowTensed  = "LocalProposalFlowTensed"
+
+
+

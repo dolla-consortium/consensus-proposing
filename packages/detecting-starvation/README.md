@@ -13,27 +13,27 @@
 ### 1. Pipeline
 
 `DetectingStarvation` is a simple ***Pipeline***
-- a persisted input stream : [Input.hs](lib/Dolla/Consensus/Proposing/DetectingStarvation/Pipeline/IO/Input.hs)
+- a persisted input stream : [Input.hs](lib/Dolla/Consensus/Proposing/MeasuringTension/Pipeline/IO/Input.hs)
 - a pipeline [Pipeline.hs](lib/Dolla/Consensus/Proposing/DetectingStarvation/Pipeline/Pipeline.hs)
   - Sourcing initial inputs : `stream infinitely inputLog`
-  - Core [Pipe.hs](lib/Dolla/Consensus/Proposing/DetectingStarvation/Pipes/Core/Pipe.hs)
-    - using [StateMachine.hs](lib/Dolla/Consensus/Proposing/DetectingStarvation/Pipes/Core/StateMachine.hs)
+  - Core [Pipe.hs](lib/Dolla/Consensus/Proposing/MeasuringTension/Pipes/Core/Pipe.hs)
+    - using [StateMachine.hs](lib/Dolla/Consensus/Proposing/MeasuringTension/Pipes/Core/StateMachine.hs)
     - No Welding : We are using the Input/Output of the Pipeline itself (only 1 pipe)
   - Sinking final outputs : `sinking outputLog`
-- a persisted output stream : [Output.hs](lib/Dolla/Consensus/Proposing/DetectingStarvation/Pipeline/IO/Output.hs)
+- a persisted output stream : [Output.hs](lib/Dolla/Consensus/Proposing/MeasuringTension/Pipeline/IO/Output.hs)
 
 ### 3. Instances
 
 `DetectingStarvation` is Polymorphic by the Log Engine used
 
-You'll find in this folder a concrete version of [Pipeline.hs](lib/Dolla/Consensus/Proposing/DetectingStarvation/Instances/EventStore/Pipeline.hs) over the event store
+You'll find in this folder a concrete version of [Pipeline.hs](lib/Dolla/Consensus/Proposing/MeasuringTension/Instances/EventStore/Pipeline.hs) over the event store
 
 `DetectingStarvation` has some DevOps features as well
 
-- [Settings.hs](settings/lib/Dolla/Consensus/Proposing/DetectingStarvation/Instances/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
-- [Dependencies.hs](lib/Dolla/Consensus/Proposing/DetectingStarvation/Instances/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
+- [Settings.hs](settings/lib/Dolla/Consensus/Proposing/MeasuringTension/Instances/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
+- [Dependencies.hs](lib/Dolla/Consensus/Proposing/MeasuringTension/Instances/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
 
-[Execute.hs](lib/Dolla/Consensus/Proposing/DetectingStarvation/Instances/EventStore/Execute.hs) is an **Instance** of the Pipeline
+[Execute.hs](lib/Dolla/Consensus/Proposing/MeasuringTension/Instances/EventStore/Execute.hs) is an **Instance** of the Pipeline
 - Perform the HealhtChecks to obtain the pipeline dependencies
 - Execute the pipeline + load the [junctions](#junction) in the EventStore Microservice
 - Put the Microservice back in HealthCheck mode if any Exception bubbles up in the pipeline during execution.

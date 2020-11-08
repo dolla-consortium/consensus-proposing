@@ -16,8 +16,8 @@ import           Dolla.Adapter.Aeson.AesonVia
 -- - Detecting-Starvation : transmitting Local-Proposal-Starvation Notifications
 
 data Input request
-  = Produce -- ^ ask to "Packaging Pipeline" to force the production of a new local proposal with all the requests currently collected
-  | Package request -- ^ ask to to "Packaging Pipeline" to package the request into a proposal according
+  = Stage -- ^ ask to "Staging Pipeline" to force the stage of a new local proposal with all the requests currently collected
+  | Package request -- ^ ask to to "Staging Pipeline" to package the request into a proposal according
                     -- some properties (see README.md)
   deriving (Eq,Show,Generic)
   deriving (FromJSON) via DefaultJSON (Input request)

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1b3662925fb6764ee48089bd7eb2dbba0b54959a5a65d34fb0a7543a595da62d
+-- hash: ff71e6724b7c69beb4d668a6010ab057fecbbfdb9cdc4c8e3548d729873f1b90
 
 name:           dolla-consensus-proposing-detecting-starvation
 version:        0.0.0.1
@@ -14,16 +14,20 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.DetectingStarvation.Instances.EventStore.Dependencies
-      Dolla.Consensus.Proposing.DetectingStarvation.Instances.EventStore.Execute
-      Dolla.Consensus.Proposing.DetectingStarvation.Instances.EventStore.Junction
-      Dolla.Consensus.Proposing.DetectingStarvation.Instances.EventStore.Pipeline
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.Input
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.Output
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.Pipeline
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.Sinking.Pipe
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.Pipe
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.StateMachine
+      Dolla.Consensus.Proposing.MeasuringTension.Instances.EventStore.Dependencies
+      Dolla.Consensus.Proposing.MeasuringTension.Instances.EventStore.Execute
+      Dolla.Consensus.Proposing.MeasuringTension.Instances.EventStore.Junction
+      Dolla.Consensus.Proposing.MeasuringTension.Instances.EventStore.Pipeline
+      Dolla.Consensus.Proposing.MeasuringTension.Pipeline.IO.Input
+      Dolla.Consensus.Proposing.MeasuringTension.Pipeline.IO.Output
+      Dolla.Consensus.Proposing.MeasuringTension.Pipeline.Pipeline
+      Dolla.Consensus.Proposing.MeasuringTension.Pipeline.Sinking.Input
+      Dolla.Consensus.Proposing.MeasuringTension.Pipeline.Sinking.Pipe
+      Dolla.Consensus.Proposing.MeasuringTension.Pipeline.Welding.BluePrint
+      Dolla.Consensus.Proposing.MeasuringTension.Pipes.DetectingTensedFlow.Input
+      Dolla.Consensus.Proposing.MeasuringTension.Pipes.DetectingTensedFlow.Output
+      Dolla.Consensus.Proposing.MeasuringTension.Pipes.DetectingTensedFlow.Pipe
+      Dolla.Consensus.Proposing.MeasuringTension.Pipes.DetectingTensedFlow.StateMachine
   other-modules:
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
@@ -63,9 +67,8 @@ test-suite dolla-consensus-proposing-detecting-starvation-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.GenInput
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipeline.IO.GenOutput
-      Dolla.Consensus.Proposing.DetectingStarvation.Pipes.Core.StateMachineSpec
+      Dolla.Consensus.Proposing.MeasuringTension.Pipes.DetectingTensedFlow.GenInput
+      Dolla.Consensus.Proposing.MeasuringTension.Pipes.DetectingTensedFlow.StateMachineSpec
       Paths_dolla_consensus_proposing_detecting_starvation
   hs-source-dirs:
       test

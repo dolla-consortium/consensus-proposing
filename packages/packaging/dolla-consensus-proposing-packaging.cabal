@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c78e0f6c088ce64d8acd51ea9c4f5a05dfcae90dffd92352ab4eb9859f8ee03b
+-- hash: c4866eccf4cc38d2c2cd2f05f92e298578d4f89d34bc4f5b1c946bac6e08945c
 
 name:           dolla-consensus-proposing-packaging
 version:        0.0.0.1
@@ -81,8 +81,6 @@ test-suite dolla-consensus-proposing-packaging-test
   main-is: Spec.hs
   other-modules:
       Dolla.Consensus.Proposing.Packaging.DummyRequest
-      Dolla.Consensus.Proposing.Packaging.Pipeline.IO.GenInput
-      Dolla.Consensus.Proposing.Packaging.Pipeline.IO.GenOutput
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.GenInput
       Dolla.Consensus.Proposing.Packaging.Pipes.Capping.PipeSpec
       Dolla.Consensus.Proposing.Packaging.Pipes.NonEmptying.PipeSpec

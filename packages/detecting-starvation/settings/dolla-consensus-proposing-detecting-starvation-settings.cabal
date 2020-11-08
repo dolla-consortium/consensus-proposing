@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 35a9ca4d573acceef9e005f7d609d53437c107c8bd80d63387ab1e683e745966
+-- hash: 4d500c0007467465f15334f0ceacf00cf59d8ff05e96883566d0598052c8a82b
 
 name:           dolla-consensus-proposing-detecting-starvation-settings
 version:        0.0.0
@@ -12,7 +12,7 @@ build-type:     Simple
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.DetectingStarvation.Instances.EventStore.Settings
+      Dolla.Consensus.Proposing.MeasuringTension.Instances.EventStore.Settings
   other-modules:
       Paths_dolla_consensus_proposing_detecting_starvation_settings
   hs-source-dirs:

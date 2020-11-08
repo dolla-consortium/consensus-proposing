@@ -32,7 +32,7 @@ import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.Sinking.Input as S
 instance Weldable (Packaging.Input request) (Serializing.Input request) where
   weld
     = \case
-      Packaging.Produce {} -> Nothing
+      Packaging.Stage {} -> Nothing
       Packaging.Package request -> Just request
 
 instance Weldable (Serializing.Output a) (NonEmptying.Input a) where

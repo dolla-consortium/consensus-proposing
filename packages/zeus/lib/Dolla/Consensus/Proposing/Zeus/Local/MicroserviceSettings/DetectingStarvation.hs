@@ -13,7 +13,7 @@ import           Dolla.Common.Logging.Core
 
 import           Dolla.Consensus.EventStore.Zeus.Local.Settings
 import           Dolla.Consensus.Common.Zeus.Haskell.ExecutableSettings
-import           Dolla.Consensus.Proposing.DetectingStarvation.Instances.EventStore.Settings
+import           Dolla.Consensus.Proposing.MeasuringTension.Instances.EventStore.Settings
 import           Dolla.Consensus.Common.Zeus.Logging
 
 data MicroServiceSettings

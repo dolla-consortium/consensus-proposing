@@ -15,6 +15,7 @@ import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Dolla.
 import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Settings
 import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Dependencies
 import           Dolla.Consensus.Proposing.Packaging.Instances.EventStore.Dolla.Junction
+
 execute :: IO ()
 execute
   = executeMicroservice
@@ -26,6 +27,6 @@ execute
       dependencies @ Dependencies {eventStoreClient,nodeId,logger} <- ask
       withReaderT (const (nodeId, eventStoreClient)) loadJunctionInEventStore
       log logger INFO "Pipeline Starting"
-      lift $ drain $ SIP.runReaderT dependencies packaging
+      drain $ SIP.runReaderT dependencies packaging
       log logger INFO "End Of Pipeline"
 
