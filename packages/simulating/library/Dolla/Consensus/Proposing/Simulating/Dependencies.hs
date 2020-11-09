@@ -10,7 +10,7 @@ module Dolla.Consensus.Proposing.Simulating.Dependencies (Dependencies (..)) whe
 
 import           Dolla.Common.Logging.Core
 import           Dolla.Common.Dependencies.Core
-import qualified Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
+import qualified Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
 import qualified Dolla.Libraries.LogEngine.Instances.EventStore.Settings as EventStore
 import           Dolla.Consensus.Proposing.Simulating.Settings
 import           Dolla.Consensus.Proposing.Simulating.StressLoad

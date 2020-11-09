@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: dffa1dc51ac0abdd59ab6fb4103828e433d3463aed77e1ff96f715467bfa0401
+-- hash: 609a42d16391083e1afdec880fd0db8b5ac2ef588d25d18d265cdeb56bc92ea7
 
 name:           dolla-consensus-proposing-detecting-tension
 version:        0.0.0.1
@@ -14,10 +14,9 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.DetectingTension.Instances.EventStore.Dependencies
-      Dolla.Consensus.Proposing.DetectingTension.Instances.EventStore.Execute
-      Dolla.Consensus.Proposing.DetectingTension.Instances.EventStore.Junction
-      Dolla.Consensus.Proposing.DetectingTension.Instances.EventStore.Pipeline
+      Dolla.Consensus.Proposing.DetectingTension.Execution.Environment.EventStore.Dependencies
+      Dolla.Consensus.Proposing.DetectingTension.Execution.Environment.EventStore.Junction
+      Dolla.Consensus.Proposing.DetectingTension.Execution.Environment.EventStore.Pipeline
       Dolla.Consensus.Proposing.DetectingTension.Pipeline.IO.Input
       Dolla.Consensus.Proposing.DetectingTension.Pipeline.IO.Output
       Dolla.Consensus.Proposing.DetectingTension.Pipeline.Pipeline
@@ -57,10 +56,14 @@ executable dolla-consensus-proposing-detecting-tension
       Paths_dolla_consensus_proposing_detecting_tension
   hs-source-dirs:
       executables
-  ghc-options: -Wall -main-is Executables.detectingTension -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -main-is Executables.execute -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base ==4.13.0.0
+    , dolla-base ==1.0.0
     , dolla-consensus-proposing-detecting-tension
+    , dolla-consensus-proposing-detecting-tension-settings
+    , mtl ==2.2.2
+    , streamly ==0.7.2
   default-language: Haskell2010
 
 test-suite dolla-consensus-proposing-detecting-tension-test

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5cb1f7f6ec2354d5bdab5199ad6189869e46b476ec67007a61ca7a065ed64d41
+-- hash: 976655d54f366a5e241d42765414218293f04ffc2e9756e1560146e5474dad15
 
 name:           dolla-consensus-proposing-receptioning-settings
 version:        0.0.0.1
@@ -12,8 +12,8 @@ build-type:     Simple
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.Receptioning.API.Client.Settings
-      Dolla.Consensus.Proposing.Receptioning.API.Server.Settings
+      Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Settings
+      Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Server.Settings
   other-modules:
       Paths_dolla_consensus_proposing_receptioning_settings
   hs-source-dirs:

@@ -91,7 +91,7 @@ getProposerMicroservicesSettings
             , getExecutableSettings
                 Receptioning.MicroServiceSettings
                 { nodeId
-                , executableName = "dolla-consensus-proposing-receptioning"
+                , executableName = "dolla-consensus-proposing-receptioning-server"
                 , logFileLocation =  FileSystemLocation {rootFolder = logFolder, fileName = "receptioning.log"}
                 , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "receptioning.config"}
                 , eventStore

@@ -14,7 +14,6 @@ library:
     - dolla-base == 1.0.0
     - dolla-consensus-base == 1.0.0
     - dolla-consensus-proposing-detecting-tension-settings
-
     - base == 4.13.0.0
     - containers == 0.6.2.1
     - mtl == 2.2.2
@@ -33,13 +32,17 @@ executables:
     main: Executables.hs
     source-dirs: executables
     ghc-options:
-      - -main-is Executables.detectingTension
+      - -main-is Executables.execute
       - -threaded
       - -rtsopts
       - -with-rtsopts=-N
     dependencies:
-      - dolla-consensus-proposing-detecting-tension
       - base == 4.13.0.0
+      - mtl == 2.2.2
+      - streamly == 0.7.2
+      - dolla-base == 1.0.0
+      - dolla-consensus-proposing-detecting-tension
+      - dolla-consensus-proposing-detecting-tension-settings
 
 tests:
   dolla-consensus-proposing-detecting-tension-test:

@@ -14,7 +14,7 @@ import           Dolla.Common.Network.Core
 import           Dolla.Consensus.Common.Zeus.Haskell.ExecutableSettings
 import           Dolla.Consensus.Common.Zeus.Logging
 import           Dolla.Consensus.EventStore.Zeus.Local.Settings
-import qualified Dolla.Consensus.Proposing.Receptioning.API.Server.Settings   as Receptionist
+import qualified Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Server.Settings   as Receptionist
 
 data MicroServiceSettings
   = MicroServiceSettings

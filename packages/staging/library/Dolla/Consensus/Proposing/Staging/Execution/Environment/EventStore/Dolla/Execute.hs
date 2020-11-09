@@ -1,8 +1,6 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE NamedFieldPuns #-}
-module Executables
-  ( execute
-  ) where
+module Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Dolla.Execute (execute) where
 
 import           Prelude hiding (log)
 import           Control.Monad.Reader

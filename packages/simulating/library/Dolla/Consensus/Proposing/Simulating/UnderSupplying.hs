@@ -31,8 +31,8 @@ import           Dolla.Libraries.LogEngine.LogEngine
 import           Dolla.Consensus.Log.Aggregation
 import           Dolla.Consensus.Dummy.Client.Request
 import qualified Dolla.Consensus.Maestro.Output as Maestro
-import qualified Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
-import           Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Client
+import qualified Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
+import           Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Client
 import qualified Dolla.Consensus.Proposing.Staging.Pipeline.IO.Output as Packaging
 import           Dolla.Consensus.Proposing.Simulating.GenRequest
 

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f20c945c86f426e00de163afc577f5ae2c555947c4a291a161bc47c463e125aa
+-- hash: 3e2828dcb7fd643d585d413bc22777d874c10e56a30805808e46fa620911a7eb
 
 name:           dolla-consensus-proposing-receptioning
 version:        0.0.0.1
@@ -14,14 +14,13 @@ extra-source-files:
 
 library
   exposed-modules:
-      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Service
-      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Client
-      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Client.Dependencies
-      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Definition
-      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Server.Dependencies
-      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Server.Execute
-      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Dolla.Warp.Server.Server
-      Dolla.Consensus.Proposing.Receptioning.Instances.EventStore.Service
+      Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Service
+      Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Client
+      Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Dependencies
+      Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Definition
+      Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Server.Dependencies
+      Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Server.Server
+      Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Service
       Dolla.Consensus.Proposing.Receptioning.Service.Output
       Dolla.Consensus.Proposing.Receptioning.Service.Service
   other-modules:
@@ -43,16 +42,18 @@ library
     , warp ==3.3.12
   default-language: Haskell2010
 
-executable dolla-consensus-proposing-receptioning
+executable dolla-consensus-proposing-receptioning-server
   main-is: Executables.hs
   other-modules:
       Paths_dolla_consensus_proposing_receptioning
   hs-source-dirs:
       executables
-  ghc-options: -Wall -main-is Executables.receptioning -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -main-is Executables.executeServer -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base ==4.13.0.0
+    , dolla-base ==1.0.0
     , dolla-consensus-proposing-receptioning
+    , dolla-consensus-proposing-receptioning-settings
   default-language: Haskell2010
 
 test-suite dolla-consensus-proposing-receptioning-test
