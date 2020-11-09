@@ -1,5 +1,5 @@
-/ [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / Packaging
-# Packaging Pipeline
+/ [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / Staging
+# Staging Pipeline
 - [Overview](#overview)
 - [Project Tree](#project-tree)
 - [Pipeline](#pipeline)
@@ -18,12 +18,14 @@
 # Overview
 ![visual](documentation/media/overview.png)
 # Project Tree
-<img align="right" src="documentation/media/project-tree.png"><div>
+
+<img align="right" src="documentation/media/package-file-tree.png"><div>
+
 ### 1. Pipeline
 
-`Packaging` is a ***Pipeline***
-- a persisted input stream : [Input.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Input.hs)
-- a line of Pipes Welded together in [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs)
+`Staging` is a ***Pipeline***
+- a persisted input stream : [Input.hs](library/Dolla/Consensus/Proposing/Staging/Pipeline/IO/Input.hs)
+- a line of Pipes Welded together in [Pipeline.hs](library/Dolla/Consensus/Proposing/Staging/Pipeline/Pipeline.hs)
   - Sourcing initial inputs : `stream infinitely inputLog`
   - Composition of **deterministic** *Pipes*
     - Welding : Adapting IOs between pipes
@@ -32,7 +34,7 @@
   serializing .~> nonEmptying .~> capping .~> persisting 
   ```
   - Sinking final outputs : `sinking outputLog`
-- a persisted output stream : [Output.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Output.hs)
+- a persisted output stream : [Output.hs](library/Dolla/Consensus/Proposing/Staging/Pipeline/IO/Output.hs)
 
 ### 2. Pipes
 The pipeline is using **Pipes** `serializing, nonEmptying, capping, persisting`, meaning each of them has
@@ -40,27 +42,29 @@ The pipeline is using **Pipes** `serializing, nonEmptying, capping, persisting`,
 - A Stream Processing
 - An Output Stream
 
-### 3. Instances
+### 3. Execution Environment
 
-`Packaging` is Polymorphic by
+The `Staging` model (pipeline) is executed on
 - The Log Engine used
 - The Business Logic used on top of the consensus layer (requests in that context)
 
-You'll find in this folder different version of Pipeline.hs "polymorphically reduced" and concrete
-- [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Pipeline.hs) over the event store
-- [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Pipeline.hs) over the event store + Dolla Dummy Requests (Concrete Version)
+You'll find in this folder different version of Pipeline.hs "polymorphically reduced" or concrete
+- [Pipeline.hs](library/Dolla/Consensus/Proposing/Staging/Execution/Environment/EventStore/Pipeline.hs) over the event store
+- [Pipeline.hs](library/Dolla/Consensus/Proposing/Staging/Execution/Environment/EventStore/Dolla/Pipeline.hs) over the event store + Dolla Dummy Requests (Concrete Version)
 
-`Packaging` has some DevOps features as well
+### 4. Executable
 
-- [Settings.hs](settings/lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
-- [Dependencies.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
+`Staging` has some DevOps features as well
 
-[Execute.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Execute.hs) is an **Instance** of the Pipeline
+- [Settings.hs](settings/library/Dolla/Consensus/Proposing/Staging/Execution/Environment/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
+- [Dependencies.hs](library/Dolla/Consensus/Proposing/Staging/Execution/Environment/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
+
+[Executable.hs](executables/Executables.hs)
 - Perform the HealhtChecks to obtain the pipeline dependencies
 - Execute the pipeline + load the [junctions](#junction) in the EventStore Microservice
 - Put the Microservice back in HealthCheck mode if any Exception bubbles up in the pipeline during execution.
 
-**N.B** : Microservice configuration and Deployment Logic (Locally/Simulated/Production etc...) are defined in the package [Zeus](../zeus/)
+**N.B** : Microservice configuration and Deployment (Locally/Simulated/Production etc...) are defined in the package [Zeus](../zeus/)
 </div>
 
 # Pipeline
@@ -82,14 +86,14 @@ We are using the "User Defined Projections" feature from the EventStore to imple
 
 These features were used to move quicker on the proof of concept. We'll eventually implement our own soon.
 
-> Defined in [Junction.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Junction.hs)
+> Defined in [Junction.hs](library/Dolla/Consensus/Proposing/Staging/Instances/EventStore/Dolla/Junction.hs)
 
-> Executed in [Execute.hs](lib/Dolla/Consensus/Proposing/Packaging/Instances/EventStore/Dolla/Execute.hs)
+> Executed in [Execute.hs](library/Dolla/Consensus/Proposing/Staging/Instances/EventStore/Dolla/Execute.hs)
 
 ## IOs
 ### Input/Commands
 
-> Defined in [Input.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Input.hs)
+> Defined in [Input.hs](library/Dolla/Consensus/Proposing/Staging/Pipeline/IO/Input.hs)
 
 #### 1. Package request
 
@@ -119,9 +123,9 @@ Executing that command means :
 
 ### Output/Events
 
-> Defined [Output.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/IO/Output.hs)
+> Defined [Output.hs](library/Dolla/Consensus/Proposing/Staging/Pipeline/IO/Output.hs)
 
-Packaging produces
+Staging produces
 - A Notification : `LocalProposalProduced {localOffset :: Offset}`
 - a File `{localOffset}.proposal` containing requests with
 ```
@@ -133,7 +137,7 @@ To produce the expected pipeline output , we are combining different pipes all t
 - A simple function composition (.)
 - A welding : `map` to adapt `Output Pipe(x)`  with `Input Pipe(x+1)`
 
-The `Packaging` pipe recipe is
+The `Staging` pipe recipe is
 ```haskell
   stream infinitely inputLog -- sourcing
      ~> serializing
@@ -142,9 +146,9 @@ The `Packaging` pipe recipe is
     .~> persisting proposalRootFolder
     .~> sinking outputLog
 ```
-> Defined in [Pipeline.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Pipeline.hs)
+> Defined in [Pipeline.hs](library/Dolla/Consensus/Proposing/Staging/Pipeline/Pipeline.hs)
 
-> The welding between each pipe is defined in [/Welding/BluePrint.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipeline/Welding/BluePrint.hs)
+> The welding between each pipe is defined in [/Welding/BluePrint.hs](library/Dolla/Consensus/Proposing/Staging/Pipeline/Welding/BluePrint.hs)
 
 The pipe recipe goals are
 ### 1. Size properly the proposals
@@ -164,7 +168,7 @@ N.B : [`Serializing`](#serializing) will be removed eventually. We'll evaluate t
 # Pipes
 ## Serializing
 
-> Defined in [Pipe.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipes/Serializing/Pipe.hs)
+> Defined in [Pipe.hs](library/Dolla/Consensus/Proposing/Staging/Pipes/Serializing/Pipe.hs)
 
 Just Transform `request` in `SerializedRequest`
 
@@ -181,8 +185,8 @@ newtype SerializedRequest = SerializedRequest [Word8] deriving (Eq,Show)
 Remembering the initial input of the section
 ```haskell
 data Input request
-  = ForceProposalProduction -- ^ ask to "Packaging Pipeline" to flush all the requests currently collected
-  | Package request -- ^ ask to to "Packaging Pipeline" to package the request into a proposal according
+  = ForceProposalProduction -- ^ ask to "Staging Pipeline" to flush all the requests currently collected
+  | Package request -- ^ ask to to "Staging Pipeline" to package the request into a proposal according
                     -- some properties (see README.md)
   deriving (Eq,Show)
 
@@ -206,7 +210,7 @@ Said differently, we want to get the following property
 
 With the following Natural Transformation
 ``` haskell
-Packaging.Input request ~> Maybe request
+Staging.Input request ~> Maybe request
 ```
 We want the following stream property
 - Never start by `Nothing`
@@ -216,9 +220,9 @@ E.g - We want the following transformation
 ``` haskell
 [Nothing, Just r1, Just r2, Nothing, Nothing, Nothing] -> [Just r1, Just r2, Nothing]
 ```
-> Implemented in [Pipe.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipes/NonEmptying/Pipe.hs)
+> Implemented in [Pipe.hs](library/Dolla/Consensus/Proposing/Staging/Pipes/NonEmptying/Pipe.hs)
 
-> Tested in [PipeSpec.hs](test/Dolla/Consensus/Proposing/Packaging/Pipes/NonEmptying/PipeSpec.hs)
+> Tested in [PipeSpec.hs](test/Dolla/Consensus/Proposing/Staging/Pipes/NonEmptying/PipeSpec.hs)
 
 ## Capping
 
@@ -246,7 +250,7 @@ instance Weldable (NonEmptying.Output request) (Capping.Input request) where
       Nothing  -> Capping.AskForACut
       Just request -> Capping.Add request
 ```
-With the Following Output in [Output.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipes/Capping/Output.hs)
+With the Following Output in [Output.hs](library/Dolla/Consensus/Proposing/Staging/Pipes/Capping/Output.hs)
 ```haskell
 data Output request
   = Cut
@@ -273,9 +277,9 @@ Using a `Fold executed with a postscan` with the following State Machine
 
 ![state-machine](documentation/media/state-machine.png)
 
-> Implemented in [Pipe.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipes/Capping/Pipe.hs)
+> Implemented in [Pipe.hs](library/Dolla/Consensus/Proposing/Staging/Pipes/Capping/Pipe.hs)
 
-> Tested in [PipeSpec.hs](test/Dolla/Consensus/Proposing/Packaging/Pipes/Capping/PipeSpec.hs)
+> Tested in [PipeSpec.hs](test/Dolla/Consensus/Proposing/Staging/Pipes/Capping/PipeSpec.hs)
 
 ## Persisting
 
@@ -306,6 +310,6 @@ Using Streamly FileSystem primitives
   - produce `LocalProposalPersisted x`
   - `x = x + 1`
 
-> Implemented in [Pipe.hs](lib/Dolla/Consensus/Proposing/Packaging/Pipes/Persisting/Pipe.hs)
+> Implemented in [Pipe.hs](library/Dolla/Consensus/Proposing/Staging/Pipes/Persisting/Pipe.hs)
 
-> Integration Test in [PipeSpec.hs](test/Dolla/Consensus/Proposing/Packaging/Pipes/Persisting/PipeSpec.hs)
+> Integration Test in [PipeSpec.hs](test/Dolla/Consensus/Proposing/Staging/Pipes/Persisting/PipeSpec.hs)
