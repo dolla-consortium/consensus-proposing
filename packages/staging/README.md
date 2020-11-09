@@ -77,18 +77,16 @@ A Junction (Merger) is
 
 The persisted input stream is the junction of 2 upstreams pipelines
 - [Receptioning](../receptioning/README.md) providing collected requests
-- [Detecting-Starvation](../detecting-starvation/README.md) transmitting Local-Proposal-Starvation Notifications
+- [Detecting Tension](../detecting-tension/README.md) transmitting Local-Proposal-Starvation Notifications
 
-We are using the "User Defined Projections" feature from the EventStore to implement this junction :
+We are using the "User Defined Projections" EventStore feature to implement this junction
  - javaScript snippets
  - loaded in the event store microservice directly
  - more details : https://eventstore.org/docs/projections/api/index.html
 
-These features were used to move quicker on the proof of concept. We'll eventually implement our own soon.
+> Defined in [Junction.hs](library/Dolla/Consensus/Proposing/Staging/Execution/Environment/EventStore/Dolla/Junction.hs)
 
-> Defined in [Junction.hs](library/Dolla/Consensus/Proposing/Staging/Instances/EventStore/Dolla/Junction.hs)
-
-> Executed in [Execute.hs](library/Dolla/Consensus/Proposing/Staging/Instances/EventStore/Dolla/Execute.hs)
+> Executed in [Executable.hs](executables/Executables.hs)
 
 ## IOs
 ### Input/Commands
@@ -116,17 +114,19 @@ x.tmp -> x.proposal
 - Redirect the stream into a new Temporary File : `(x+1).tmp`
 - Notify the downstream Broadcasting Section that a new local proposal is available.
 
-#### 2. ForceProposalProduction
+#### 2. Stage
 
-Executing that command means :
-- Converting the temporary file into a proposal file if requests are accumulated.
+This command appears when the Local Proposal flow is **tensed**. The flow is tensed when the consensus is consuming more local proposal than produced.
+
+Executing it means :
+- Converting the temporary file into a proposal file if requests are already accumulated.
 
 ### Output/Events
 
 > Defined [Output.hs](library/Dolla/Consensus/Proposing/Staging/Pipeline/IO/Output.hs)
 
 Staging produces
-- A Notification : `LocalProposalProduced {localOffset :: Offset}`
+- A Notification : `LocalProposalStaged {localOffset :: Offset}`
 - a File `{localOffset}.proposal` containing requests with
 ```
 0 < Size <= Size Limit
@@ -135,7 +135,7 @@ Staging produces
 
 To produce the expected pipeline output , we are combining different pipes all together by
 - A simple function composition (.)
-- A welding : `map` to adapt `Output Pipe(x)`  with `Input Pipe(x+1)`
+- A welding : `map` to adapt Output Pipe `x`  with Input Pipe `x+1`
 
 The `Staging` pipe recipe is
 ```haskell
@@ -159,7 +159,7 @@ Under the responsibility of
 - [`NonEmptying`](#nonemptying) Pipe
 - [`Capping`](#capping) Pipe
 
-### 2. Convert the temporary file to a proposal file.
+### 2. Convert the temporary file into a proposal file.
 Under the responsibility of
 - [`Persisting`](#persisting) Pipe
 
@@ -185,21 +185,19 @@ newtype SerializedRequest = SerializedRequest [Word8] deriving (Eq,Show)
 Remembering the initial input of the section
 ```haskell
 data Input request
-  = ForceProposalProduction -- ^ ask to "Staging Pipeline" to flush all the requests currently collected
+  = Stage -- ^ ask to "Staging Pipeline" to force the stage of a new local proposal with all the requests currently collected
   | Package request -- ^ ask to to "Staging Pipeline" to package the request into a proposal according
                     -- some properties (see README.md)
-  deriving (Eq,Show)
-
 
 ```
-It's totally natural to receive multiple `ForceProposalProduction` commands consecutively, E.g
+It's totally natural to receive multiple `Stage` commands consecutively, E.g
 - No Requests while many blocks are appended consecutively
 - Etc...
 
 Forcing the production of empty proposal adds no value in our domain and provokes an accidental complexity downstream if not managed.  
 Therefore, we want to
-- Remove the consecutive `ForceProposalProduction` commands from our input stream.
-- Never start downstream processing with a `ForceProposalProduction`
+- Remove the consecutive `Stage` commands from our input stream.
+- Never start downstream processing with a `Stage`
 
 Said differently, we want to get the following property
 ```

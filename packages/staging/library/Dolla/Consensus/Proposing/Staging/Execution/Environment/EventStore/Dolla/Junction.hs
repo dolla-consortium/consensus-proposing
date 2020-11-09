@@ -20,7 +20,7 @@ import           Dolla.Consensus.Log.LogNameIndex
    --a nondeterministic logic for merging these input streams
    --a persisted output stream (input of a pipeline)
 
--- | Junction for Packaging Pipeline : Logic to generate the input stream of the pipeline.
+-- | Junction for Staging Pipeline : Logic to generate the input stream of the pipeline.
 --   We are using the "User Defined Projections" feature from the EventStore to implement this junction :
 --    - javaScript snippets
 --    - loaded in the event store microservice directly  
@@ -28,20 +28,20 @@ import           Dolla.Consensus.Log.LogNameIndex
 loadJunctionInEventStore :: ReaderT (NodeId, EventStore.Dependencies) IO ()
 loadJunctionInEventStore = do
   (nodeId , EventStore.Dependencies {..}) <- ask
-  let projectionName = coerce nodeId ++ "_proposing_packaging_input"
+  let projectionName = coerce nodeId ++ "_proposing_staging_input"
       starvingDetectionOutputLogStreamName = getStreamNameFromIndex ProposingStarvingDetectionOutputLog
-      packagingOutputLogStreamName = getStreamNameFromIndex ProposingReceptioningOutputLog
-      packagingInputLogLogStreamName = getStreamNameFromIndex ProposingPackagingInputLog
+      stagingOutputLogStreamName = getStreamNameFromIndex ProposingReceptioningOutputLog
+      stagingInputLogLogStreamName = getStreamNameFromIndex ProposingStagingInputLog
       body = [qc| options(\{
                          reorderEvents: false,
                          processingLag: 0
                      })
                      fromStreams ([ '{starvingDetectionOutputLogStreamName}'
-                                  , '{packagingOutputLogStreamName}'])
+                                  , '{stagingOutputLogStreamName}'])
                      .when(\{
                           $any : function(s,e)\{
                            function getOutputStream() \{
-                                return '{packagingInputLogLogStreamName}'}
+                                return '{stagingInputLogLogStreamName}'}
                           if (e.eventType == "LocalProposalFlowTensed" ) \{
                             emit ( getOutputStream ()
                                , "Stage"

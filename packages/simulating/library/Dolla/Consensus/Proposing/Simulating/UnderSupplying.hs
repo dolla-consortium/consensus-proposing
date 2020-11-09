@@ -33,14 +33,14 @@ import           Dolla.Consensus.Dummy.Client.Request
 import qualified Dolla.Consensus.Maestro.Output as Maestro
 import qualified Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
 import           Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Client
-import qualified Dolla.Consensus.Proposing.Staging.Pipeline.IO.Output as Packaging
+import qualified Dolla.Consensus.Proposing.Staging.Pipeline.IO.Output as Staging
 import           Dolla.Consensus.Proposing.Simulating.GenRequest
 
 data Context log
   = Context
     { logger :: Logger
     , receptioningClient :: Receptionist.Client.Dependencies
-    , packagingOutputLog :: log Packaging.Output
+    , stagingOutputLog :: log Staging.Output
     , getMaestroOutputLog :: ByBlockOffset -> log Maestro.Output}
 
 underSupplying
@@ -52,14 +52,14 @@ underSupplying
     -> S.SerialT m ()
 underSupplying proposalSizeLimit 
   = do
-    Context {packagingOutputLog,logger} <- ask
+    Context {stagingOutputLog,logger} <- ask
     lift $ do 
       generateRequests (proposalSizeLimit `div` 2) >>= sendSimulatedRequest
       log logger INFO "Requests sent."
       _ <- simulateFirstConsensusReached
       log logger INFO "First Consensus Reached Simulated."
-    stream infinitely packagingOutputLog
-        & S.mapM (\Packaging.LocalProposalStaged {localOffset} -> do
+    stream infinitely stagingOutputLog
+        & S.mapM (\Staging.LocalProposalStaged {localOffset} -> do
           log logger INFO $ "Local Proposal " ++ show localOffset ++ " Staged."
           generateRequests (proposalSizeLimit `div` 2) >>= sendSimulatedRequest
           log logger INFO "Requests sent."

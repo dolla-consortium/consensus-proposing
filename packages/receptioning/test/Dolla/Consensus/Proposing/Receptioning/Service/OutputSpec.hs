@@ -29,7 +29,7 @@ data DummyRequest
 spec :: Spec
 spec = parallel $
   describe "Proposing Receptioning Output" $ do
-      it "follow Proposing Packaging Input json protocol " $ do
+      it "follow Proposing Staging Input json protocol " $ do
         encode (Receptioned (DummyRequest {fieldA = True, fieldB = False}) :: (Output DummyRequest))
           `shouldBe` [qc|\{"tag":"Receptioned","contents":\{"tag":"DummyRequest","fieldA":true,"fieldB":false}}|]
 

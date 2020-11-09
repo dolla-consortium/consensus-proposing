@@ -1,6 +1,6 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
-module Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Dolla.Pipeline (packaging) where
+module Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Dolla.Pipeline (staging) where
 
 import           Prelude hiding (log)
 import           Control.Monad.Reader
@@ -17,12 +17,12 @@ import           Dolla.Consensus.Request
 import           Dolla.Consensus.Dummy.Client.Request
 import           Dolla.Consensus.Consortium.Request
 
-packaging
+staging
   :: ( MonadReader Dependencies m
      , S.MonadAsync m
      , MonadCatch m)
   => S.SerialT m ()
-packaging 
-  = OverEventStore.packaging (Proxy :: Proxy (Request DollaClientRequest ConsortiumRequest))
+staging
+  = OverEventStore.staging (Proxy :: Proxy (Request DollaClientRequest ConsortiumRequest))
 
 

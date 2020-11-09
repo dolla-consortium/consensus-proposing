@@ -2,7 +2,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 
 module Dolla.Consensus.Proposing.Staging.Pipeline.Pipeline
-  (packaging) 
+  (staging)
   where
 
 import           Prelude 
@@ -30,10 +30,10 @@ import           Dolla.Consensus.Proposing.Staging.Pipeline.Sinking.Pipe (sinkin
 import           Dolla.Common.Pipeline.Weldable ((~>),(.~>))
 import           Dolla.Consensus.Proposing.Staging.Pipeline.Welding.BluePrint ()
 
--- | Packaging Pipeline expressed in its most polymorphic way :
+-- | Staging Pipeline expressed in its most polymorphic way :
 --  - Log Engine Agnostic
 --  - Request Agnostic
-packaging
+staging
   :: ( ToJSON request
      , FromJSON request
      , Show request
@@ -46,7 +46,7 @@ packaging
   -> log (Input request)
   -> log Output
   -> S.SerialT m ()
-packaging
+staging
   proposalRootFolder
   proposalSizeLimit
   inputLog

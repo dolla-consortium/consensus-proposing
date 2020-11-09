@@ -1,7 +1,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE FlexibleContexts #-}
-module Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Pipeline (packaging) where
+module Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Pipeline (staging) where
 
 import           Prelude hiding (log)
 import           Data.Data
@@ -20,7 +20,7 @@ import           Dolla.Consensus.Log.LogNameIndex
 import           Dolla.Consensus.Proposing.Staging.Pipeline.IO.Input
 import           Dolla.Libraries.LogEngine.Instances.EventStore.EventStoreLog
 
-packaging
+staging
   :: ( ToJSON request
      , FromJSON request
      , Show request
@@ -29,13 +29,13 @@ packaging
      , MonadCatch m)
   => Proxy request
   -> S.SerialT m ()
-packaging proxy = do
+staging proxy = do
   Dependencies {eventStoreClient,proposalRootFolder,proposalSizeLimit} <- ask
-  Generic.packaging
+  Generic.staging
         proposalRootFolder
         proposalSizeLimit
-        (asProxyTypeOf (getEventStoreLog eventStoreClient ProposingPackagingInputLog) (getProxyLogInput proxy))
-        (getEventStoreLog eventStoreClient ProposingPackagingOutputLog)
+        (asProxyTypeOf (getEventStoreLog eventStoreClient ProposingStagingInputLog) (getProxyLogInput proxy))
+        (getEventStoreLog eventStoreClient ProposingStagingOutputLog)
 
 getProxyLogInput :: Proxy  request  -> Proxy (EventStoreLog (Input request))
 getProxyLogInput _ = Proxy 

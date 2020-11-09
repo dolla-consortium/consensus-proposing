@@ -12,15 +12,15 @@
 - **Receptioning** requests from customers and consortium members
 - **Staging** these requests packaged into local proposals for being consumed by the consensus.
 
-Each of these local proposals once accepted by the consortium will be uniformly transacted on each consortium node.  
-Then transactions will be appended into each node ledgers.
+Each of these local proposals once accepted by the consortium will be uniformly transacted on each consortium node.
+The transactions will then be appended into each node ledgers.
 
 A **Section** is a meaningful Set of Pipelines and Junctions put together.
 
 ![proposing-overview](documentation/media/proposing-overview.png)
 
 - [Receptioning](/packages/receptioning) : Client/Server for collecting requests.
-- [Detecting Tension](/packages/detecting-tension) : Detect if the local proposal flow is tensed, meaning if the consensus has consumed more local proposals than being staged.
+- [Detecting Flow Tension](/packages/detecting-tension) : Detect if the local proposal flow is tensed, meaning if the consensus has consumed more local proposals than being staged.
 - [Staging](/packages/staging) : Stage Local Proposal Files for being consumed by the consensus. Local Proposals have the following properties
   - `Proposals are never empty`
   - `Proposals file size < configurable size limit`

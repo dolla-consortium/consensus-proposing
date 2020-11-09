@@ -13,7 +13,7 @@ import           Data.Coerce (coerce)
 import           Dolla.Common.Pipeline.Weldable
 import           Dolla.Consensus.Proposing.Staging.Pipes.Serializing.SerializedRequest
 
-import qualified Dolla.Consensus.Proposing.Staging.Pipeline.IO.Input  as Packaging
+import qualified Dolla.Consensus.Proposing.Staging.Pipeline.IO.Input  as Staging
 
 import qualified Dolla.Consensus.Proposing.Staging.Pipes.Serializing.Input as Serializing
 import qualified Dolla.Consensus.Proposing.Staging.Pipes.Serializing.Output as Serializing
@@ -29,11 +29,11 @@ import qualified Dolla.Consensus.Proposing.Staging.Pipes.Persisting.Output  as P
 
 import qualified Dolla.Consensus.Proposing.Staging.Pipeline.Sinking.Input as Sinking
 
-instance Weldable (Packaging.Input request) (Serializing.Input request) where
+instance Weldable (Staging.Input request) (Serializing.Input request) where
   weld
     = \case
-      Packaging.Stage {} -> Nothing
-      Packaging.Package request -> Just request
+      Staging.Stage {} -> Nothing
+      Staging.Package request -> Just request
 
 instance Weldable (Serializing.Output a) (NonEmptying.Input a) where
   weld = coerce

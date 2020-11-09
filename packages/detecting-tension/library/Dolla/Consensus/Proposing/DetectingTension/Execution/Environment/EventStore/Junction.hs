@@ -30,14 +30,14 @@ loadJunctionInEventStore = do
   (nodeId , EventStore.Dependencies {..}) <- ask
   let projectionName = coerce nodeId ++ "_proposing_starving_detection_input"
       maestroOutputMergedLogStreamName = getStreamNameFromIndex MaestroOutputMergedLog
-      proposingPackagingOutputLogStreamName = getStreamNameFromIndex ProposingPackagingOutputLog
+      proposingStagingOutputLogStreamName = getStreamNameFromIndex ProposingStagingOutputLog
       proposingStarvingDetectionInputLogStreamName = getStreamNameFromIndex ProposingStarvingDetectionInputLog
       body = [qc| options(\{
                          reorderEvents: false,
                          processingLag: 0
                      })
                      fromStreams ([ '{maestroOutputMergedLogStreamName}'
-                                  , '{proposingPackagingOutputLogStreamName}'])
+                                  , '{proposingStagingOutputLogStreamName}'])
                      .when(\{
                           $any : function(s,e)\{
                            function getOutputStream() \{

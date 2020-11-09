@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 52b888837663965f9f67d6938e64abe6c0248ceda26566404c388cf92b0fa542
+-- hash: 854e5eef0fdfba2dee6f84a75a738313eec78a35bca9eb8efcfab9cd5de2df75
 
 name:           dolla-consensus-proposing-staging
 version:        0.0.0.1
@@ -15,7 +15,6 @@ extra-source-files:
 library
   exposed-modules:
       Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Dependencies
-      Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Dolla.Execute
       Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Dolla.Junction
       Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Dolla.Pipeline
       Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Pipeline

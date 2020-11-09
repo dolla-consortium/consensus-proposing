@@ -11,9 +11,9 @@ import           GHC.Generics
 import           Dolla.Adapter.Aeson.AesonVia 
 
 -- Data Origins
--- The Packaging input stream is the junction of 2 upstream pipelines :
+-- The Staging input stream is the junction of 2 upstream pipelines :
 -- - Receptioning : providing collected requests
--- - Detecting-Starvation : transmitting Local-Proposal-Starvation Notifications
+-- - Detecting-Tension : notify when the local proposal flow is tensed. 
 
 data Input request
   = Stage -- ^ ask to "Staging Pipeline" to force the stage of a new local proposal with all the requests currently collected

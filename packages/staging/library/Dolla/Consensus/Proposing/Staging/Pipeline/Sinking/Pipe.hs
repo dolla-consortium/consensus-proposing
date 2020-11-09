@@ -11,13 +11,13 @@ import qualified Streamly.Prelude as S hiding (length,bracket)
 import qualified Streamly as S
 
 import           Dolla.Libraries.LogEngine.LogEngine
-import qualified Dolla.Consensus.Proposing.Staging.Pipeline.IO.Output as Packaging
+import qualified Dolla.Consensus.Proposing.Staging.Pipeline.IO.Output as Staging
 import           Dolla.Consensus.Proposing.Staging.Pipeline.Sinking.Input
 
 sinking
   :: ( MemoryStreamLoggable m log 
      , S.MonadAsync  m )
-  =>  log Packaging.Output
+  =>  log Staging.Output
   ->  S.SerialT m Input
   ->  S.SerialT m ()
 sinking outputLog
@@ -27,5 +27,5 @@ sinking outputLog
           $ append
               outputLog
               proposalId
-              $ Packaging.LocalProposalStaged proposalId)
+              $ Staging.LocalProposalStaged proposalId)
 

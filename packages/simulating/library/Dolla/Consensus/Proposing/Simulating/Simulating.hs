@@ -47,7 +47,7 @@ start
       S.drain
         $ S.runReaderT
             UnderSupplying.Context 
-              { packagingOutputLog = getEventStoreLog eventStoreClient ProposingPackagingOutputLog 
+              { stagingOutputLog = getEventStoreLog eventStoreClient ProposingStagingOutputLog
               , getMaestroOutputLog = getEventStoreLog eventStoreClient . MaestroOutputLog
               , ..} 
             (underSupplying proposalSizeLimit)
