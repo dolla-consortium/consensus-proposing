@@ -2,7 +2,7 @@
 # Receptioning
 
 - [Overview](#overview)
-- [Project Structure](#project-tree)
+- [Project Tree](#project-tree)
 
 # Overview
 
