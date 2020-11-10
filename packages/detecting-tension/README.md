@@ -72,15 +72,13 @@ We are using the "User Defined Projections" EventStore feature to implement this
  - loaded in the event store microservice directly
  - more details : https://eventstore.org/docs/projections/api/index.html
 
-These features were used to move quicker on the proof of concept. We'll eventually implement our own soon.
-
 > Defined in [Junction.hs](library/Dolla/Consensus/Proposing/DetectingTension/Execution/Environment/EventStore/Junction.hs)
 
 > Executed in [Executable.hs](executables/Executables.hs)
 ## IOs
 ### Input/Events
 
-The pipeline does not execute commands but just `fold` previous events recorded into the system to provide insight downstream.  
+The pipeline does not execute commands but just `fold` previous events recorded into the system to provide insights to the downstream flow.  
 In this situation, it will provide information for optimising the flow
 management (purging requests accumulated in the [Staging](../staging/README.md) pipeline)
 
@@ -110,7 +108,7 @@ Detect if the local proposal flow is tensed, meaning if the consensus has consum
 
 ### Approach
 
-We'll transpose our terminology from the specific consensus domain to a more generic one :
+We'll transpose our terminology from the specific consensus domain to a more generic one
 ```haskell
 instance Weldable DetectingTension.Input DetectingTensedFlow.Input where
   weld
@@ -122,7 +120,7 @@ instance Weldable DetectingTension.Input DetectingTensedFlow.Input where
 
 A flow is tensed when
 - all the items staged have been released and pulled
-- we are pulling on `items staged - items release and pulled == 0`
+- we are pulling on `items staged - items release == 0`
 
 > Implemented in [Pipe.hs](library/Dolla/Consensus/Proposing/DetectingTension/Pipes/DetectingTensedFlow/Pipe.hs) and [StateMachine.hs](library/Dolla/Consensus/Proposing/DetectingTension/Pipes/DetectingTensedFlow/StateMachine.hs)
 
