@@ -3,8 +3,16 @@
 
 - [Overview](#overview)
 - [Project Tree](#project-tree)
+- [Pipeline](#pipeline)
+  - [Junction](#junction)
+  - [IO](#ios)
+    - [Input/Events](#input-events)
+    - [Output/Events](#output-events)
+- [Pipes](#pipes)
+  - [Detecting Tensed Flow](#detecting-tensed-flow)
 
 # Overview
+`Detecting Tension` is responsible for detecting when the local proposal flow is tensed, meaning if the consensus has consumed more local proposals than being staged.
 
  ![overview](documentation/media/overview.png)
 
@@ -25,13 +33,13 @@ From A CQRS point of view, `DetectingTension` is a projection. It projects outpu
 
 ### 2. Execution Environment
 
-`DetectingTension` is Polymorphic by the Log Engine used
+`DetectingTension` is Polymorphic by the Log Engine used.
 
 You'll find in this folder a concrete pipeline version in [Pipeline.hs](library/Dolla/Consensus/Proposing/DetectingTension/Execution/Environment/EventStore/Pipeline.hs) over the event store
 
 `DetectingTension` has some DevOps features as well
 
-- [Settings.hs](settings/library/Dolla/Consensus/Proposing/DetectingTension/Execution/Environment/EventStore/Settings.hs)  always into a separated project `xxxx-packaging-settings` for deployment purposes in Zeus
+- [Settings.hs](settings/library/Dolla/Consensus/Proposing/DetectingTension/Execution/Environment/EventStore/Settings.hs)  always into a separated project `xxxx-detecting-tension-settings` for deployment purposes in Zeus
 - [Dependencies.hs](library/Dolla/Consensus/Proposing/DetectingTension/Execution/Environment/EventStore/Dependencies.hs) are derived from Settings if sub-dependencies are all Healthy
 
 [Executable.hs](executables/Executables.hs)
@@ -67,18 +75,36 @@ These features were used to move quicker on the proof of concept. We'll eventual
 > Defined in [Junction.hs](library/Dolla/Consensus/Proposing/DetectingTension/Execution/Environment/EventStore/Junction.hs)
 
 > Executed in [Executable.hs](executables/Executables.hs)
+## IOs
+### Input/Events
+
+The pipeline does not execute commands but just `fold` previous events recorded into the system to provide insight downstream.  
+In this situation, it will provide information for optimising the flow
+management (purging requests accumulated in the [Staging](../staging/README.md) pipeline)
+
+```haskell
+data  Input
+  = LocalProposalAccepted -- ^ local proposal has been accepted by the consortium
+  | LocalProposalStaged -- ^ local proposal has been staged by the local staging pipeline
+  | ConsensusReached -- ^ A global consensus has been reached for the proposals of the current block,
+                     --   All the proposal accepted will be consumed.
+```
+> Defined in [Input.hs](library/Dolla/Consensus/Proposing/DetectingTension/Pipeline/IO/Input.hs)
+
+### Output/Events
+
+The pipeline will output
+```haskell
+data Output = Tensed deriving (Eq, Show
+```
+
+This output will be sinked and used in the [Staging](../staging/README.md) junction pipeline.
 
 # Pipes
 ## Detecting Tensed Flow
 ### Problem
-From the pipeline input
-```haskell
-data  Input
-  = LocalProposalAccepted
-  | LocalProposalStaged
-  | ConsensusReached
-```
-We want to determine if the Local Proposal Flow is tensed.
+
+Detect if the local proposal flow is tensed, meaning if the consensus has consumed more local proposals than being staged.
 
 ### Approach
 

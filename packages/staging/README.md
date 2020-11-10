@@ -16,6 +16,11 @@
 
 
 # Overview
+
+`Staging` pipeline is responsible for packaging and staging requests from `receptioning` into proposal files.
+Each of these local proposals once accepted by the consortium will be uniformly transacted on each consortium node.
+The transactions will then be appended into each node ledgers.
+
 ![visual](documentation/media/overview.png)
 # Project Tree
 

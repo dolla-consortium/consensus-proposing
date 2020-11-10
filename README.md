@@ -8,7 +8,7 @@
 
 # Section Overview
 
-"Proposing" means
+`Proposing` means
 - **Receptioning** requests from customers and consortium members
 - **Staging** these requests packaged into local proposals for being consumed by the consensus.
 
