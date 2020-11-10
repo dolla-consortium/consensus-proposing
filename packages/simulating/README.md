@@ -1,16 +1,4 @@
-# dolla-cli-client : Command Line Interface Client
+/ [Consensus](https://github.com/dolla-consortium/consensus) / [Proposing](https://github.com/dolla-consortium/consensus-proposing) / Simulating
+# Simulating
 
-This project contains 2 executables :
-
- - `dolla-cli-client` : CLI Client to communicate with the consortium
- - `dolla-cli-client-simulator` : A simulator that will heavily send requests to each nodes of the consortium
-
-## Run Executables
-
-    ```bash
-    stack run dolla-cli-client
-    ```
-
-    ```bash
-    stack run dolla-cli-client-simulator
-    ```      
+Documentation to be done.
