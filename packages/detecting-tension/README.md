@@ -37,6 +37,8 @@ From A CQRS point of view, `DetectingTension` is a projection. It projects outpu
 
 You'll find in this folder a concrete pipeline version in [Pipeline.hs](library/Dolla/Consensus/Proposing/DetectingTension/Execution/Environment/EventStore/Pipeline.hs) over the event store
 
+### 3. Executable
+
 `DetectingTension` has some DevOps features as well
 
 - [Settings.hs](settings/library/Dolla/Consensus/Proposing/DetectingTension/Execution/Environment/EventStore/Settings.hs)  always into a separated project `xxxx-detecting-tension-settings` for deployment purposes in Zeus
