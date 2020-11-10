@@ -6,8 +6,8 @@
 - [Pipeline](#pipeline)
   - [Junction](#junction)
   - [IO](#ios)
-    - [Input/Events](#input-events)
-    - [Output/Events](#output-events)
+    - [Input/Events](#inputevents)
+    - [Output/Events](#outputevents)
 - [Pipes](#pipes)
   - [Detecting Tensed Flow](#detecting-tensed-flow)
 
