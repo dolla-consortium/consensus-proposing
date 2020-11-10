@@ -5,6 +5,9 @@
 - [Project Structure](#project-tree)
 
 # Overview
+
+`Receptioning` collects requests from customers and consortium members
+
 ![overview](documentation/media/overview.png)
 
 # Project Tree
