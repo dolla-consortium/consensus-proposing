@@ -5,10 +5,10 @@ extra-source-files:
 
 ghc-options:
   - -Wall
-##  - -j
+
 
 library:
-  source-dirs: lib
+  source-dirs: library
 
   dependencies:
 
@@ -17,8 +17,8 @@ library:
 
     - dolla-consensus-proposing-simulating-settings
     - dolla-consensus-proposing-receptioning-settings
-    - dolla-consensus-proposing-packaging-settings
-    - dolla-consensus-proposing-detecting-starvation-settings
+    - dolla-consensus-proposing-staging-settings
+    - dolla-consensus-proposing-detecting-tension-settings
 
     - base == 4.13.0.0
     - text == 1.2.4.0
@@ -54,7 +54,7 @@ library:
 executables:
   dolla-consensus-proposing-zeus :
     main: Executables.hs
-    source-dirs: app
+    source-dirs: executables
     ghc-options:
       - -main-is Executables.executeZeus
       - -threaded

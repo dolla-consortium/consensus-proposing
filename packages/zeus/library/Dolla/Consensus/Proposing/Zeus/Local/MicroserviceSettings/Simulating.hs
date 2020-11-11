@@ -18,7 +18,7 @@ import           Dolla.Consensus.EventStore.Zeus.Local.Settings
 import           Dolla.Consensus.Proposing.Simulating.Settings
 import           Dolla.Consensus.Proposing.Simulating.StressLoad
 
-import qualified Dolla.Consensus.Proposing.Receptioning.API.Client.Settings as Receptionist.Client
+import qualified Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Settings as Receptionist.Client
 
 
 data MicroserviceSettings

@@ -30,7 +30,7 @@ delete
   = liftIO $ catch
     (do
       echo $ ">| reset the Event Store data for " <++> coerce nodeId
-      stdout $ echoCommandAndInShell $ "docker rm -f " <++> getEvenStoreDockerName nodeId <++> " &>/dev/null")
+      stdout $ echoCommandAndInShell $ "docker rm -f " <++> getEventStoreDockerName nodeId)
     (\SomeException {} -> return ())
 
 start
@@ -42,13 +42,13 @@ start eventStoreSettings@EventStoreSettings {..}
   echo $ ">| starting containers for " <++> coerce nodeId
   let command = "docker"
                   <++> " run"
-                  <++> " --name " <++> getEvenStoreDockerName nodeId
+                  <++> " --name " <++> getEventStoreDockerName nodeId
                   <++> " -dit"
                     <++> " -p " <++> show (port projectionUrl) <++> ":2113"
                     <++> " -p " <++> show (port eventStoreUrl) <++> ":1113"
-                  <++> " eventstore/eventstore " <++> " 1>/dev/null"
+                  <++> " eventstore/eventstore:release-5.0.6 " 
   stdout $ echoCommandAndInShell command
-  pauseThread $ 5 * s -- time for machine to start...
+  pauseThread $ 10 * s -- time for container to start, otherwise configuration fails :-(... Find a way to know when the container is up and running...
   configure eventStoreSettings
 
 configure
@@ -70,7 +70,7 @@ enableByCategoryProjection EventStoreSettings {..} = do
                 <++> fromString (unpack username )
                 <++> ":"
                 <++> fromString (unpack password)
-                <++> " &>/dev/null"
+--                <++> " &>/dev/null"
   stdout $ echoCommandAndInShell command
 
   where
@@ -79,9 +79,9 @@ enableByCategoryProjection EventStoreSettings {..} = do
       "/projection/%24by_category/command/enable'"
 
 
-getEvenStoreDockerName
+getEventStoreDockerName
   :: NodeId
   -> String
-getEvenStoreDockerName
+getEventStoreDockerName
   NodeId {..}
   = "consensus-" ++ unNodeId

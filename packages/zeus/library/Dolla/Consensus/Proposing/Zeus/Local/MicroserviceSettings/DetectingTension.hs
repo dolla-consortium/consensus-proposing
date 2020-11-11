@@ -1,6 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
-module Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.DetectingStarvation
+module Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.DetectingTension
   ( MicroServiceSettings (..))
   where
 
@@ -13,7 +13,7 @@ import           Dolla.Common.Logging.Core
 
 import           Dolla.Consensus.EventStore.Zeus.Local.Settings
 import           Dolla.Consensus.Common.Zeus.Haskell.ExecutableSettings
-import           Dolla.Consensus.Proposing.Starving.Detecting.Settings
+import           Dolla.Consensus.Proposing.DetectingTension.Execution.Environment.EventStore.Settings
 import           Dolla.Consensus.Common.Zeus.Logging
 
 data MicroServiceSettings

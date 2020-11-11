@@ -1,6 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE NamedFieldPuns #-}
-module Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Packaging
+module Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Staging
   ( MicroServiceSettings (..))
   where
 
@@ -15,7 +15,7 @@ import           Dolla.Common.Logging.Core
 
 import           Dolla.Consensus.EventStore.Zeus.Local.Settings
 import           Dolla.Consensus.Common.Zeus.Haskell.ExecutableSettings
-import           Dolla.Consensus.Proposing.Packaging.Settings
+import           Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Settings
 import           Dolla.Consensus.Common.Zeus.Logging
 
 data MicroServiceSettings

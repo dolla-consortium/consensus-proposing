@@ -28,8 +28,8 @@ import           Dolla.Consensus.Proposing.Zeus.Local.Context
 import qualified Dolla.Consensus.EventStore.Zeus.Local.Settings as EventStore
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Simulating as Simulating
 import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Receptionist as Receptioning
-import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Packaging as Packaging
-import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.DetectingStarvation as Flushing
+import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.Staging as Staging
+import qualified Dolla.Consensus.Proposing.Zeus.Local.MicroserviceSettings.DetectingTension as Flushing
 
 
 start
@@ -80,18 +80,18 @@ getProposerMicroservicesSettings
         configFolder = nodeFolder ++ "configuration/Proposer/"
         logFolder = nodeFolder ++ "log/"
     return [ getExecutableSettings
-                Packaging.MicroServiceSettings
+                Staging.MicroServiceSettings
                 { nodeId
-                , executableName = "dolla-consensus-proposing-packaging"
-                , logFileLocation =  FileSystemLocation {rootFolder = logFolder, fileName = "packaging.log"}
-                , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "packaging.config"}
+                , executableName = "dolla-consensus-proposing-staging"
+                , logFileLocation =  FileSystemLocation {rootFolder = logFolder, fileName = "staging.log"}
+                , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "staging.config"}
                 , proposalSizeLimit
                 , eventStore
                 , proposalRootFolder}
             , getExecutableSettings
                 Receptioning.MicroServiceSettings
                 { nodeId
-                , executableName = "dolla-consensus-proposing-receptioning"
+                , executableName = "dolla-consensus-proposing-receptioning-server"
                 , logFileLocation =  FileSystemLocation {rootFolder = logFolder, fileName = "receptioning.log"}
                 , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "receptioning.config"}
                 , eventStore
@@ -108,7 +108,7 @@ getProposerMicroservicesSettings
             , getExecutableSettings
                 Flushing.MicroServiceSettings
                 { nodeId
-                , executableName = "dolla-consensus-proposing-detecting-starvation"
+                , executableName = "dolla-consensus-proposing-detecting-tension"
                 , logFileLocation =  FileSystemLocation {rootFolder = logFolder, fileName = "starving-detection.log"}
                 , configurationLocation =  FileSystemLocation {rootFolder = configFolder, fileName = "starving-detection.config"}
                 , eventStore}
