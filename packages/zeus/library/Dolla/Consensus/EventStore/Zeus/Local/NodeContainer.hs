@@ -30,7 +30,7 @@ delete
   = liftIO $ catch
     (do
       echo $ ">| reset the Event Store data for " <++> coerce nodeId
-      stdout $ echoCommandAndInShell $ "docker rm -f " <++> getEventStoreDockerName nodeId <++> " &>/dev/null")
+      stdout $ echoCommandAndInShell $ "docker rm -f " <++> getEventStoreDockerName nodeId)
     (\SomeException {} -> return ())
 
 start
@@ -46,7 +46,7 @@ start eventStoreSettings@EventStoreSettings {..}
                   <++> " -dit"
                     <++> " -p " <++> show (port projectionUrl) <++> ":2113"
                     <++> " -p " <++> show (port eventStoreUrl) <++> ":1113"
-                  <++> " eventstore/eventstore " <++> " 1>/dev/null"
+                  <++> " eventstore/eventstore:release-5.0.6 " 
   stdout $ echoCommandAndInShell command
   pauseThread $ 10 * s -- time for container to start, otherwise configuration fails :-(... Find a way to know when the container is up and running...
   configure eventStoreSettings

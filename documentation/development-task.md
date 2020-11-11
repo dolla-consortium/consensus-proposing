@@ -8,8 +8,8 @@
 # Environment Setup
 
 - Install [Docker For Mac](https://docs.docker.com/docker-for-mac/install/)
+- Install [Multitail](http://macappstore.org/multitail/)
 - Install the Haskell Platform For Mac (GHC, Cabal build system, [Stack tool](https://docs.haskellstack.org/en/stable/README/), ...)
-
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 ```
@@ -20,28 +20,28 @@ curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 # Run the tests
 - Manual
 ```shell
-➜  consensus-proposing git:(master) : stack test
+stack test
 ```
 - Automatic (will rebuild and test every time a file changes)
 ```shell
-➜  consensus-proposing git:(master) : stack test --fast --file-watch
+stack test --fast --file-watch
 ```
 
 # Install the executables
 
 - Manual
 ```shell
-➜  consensus-proposing git:(master) : stack install
+stack install
 ```
 - Automatic (will rebuild and install every time a file changes)
 ```shell
-➜  consensus-proposing git:(master) : stack install --fast --file-watch
+stack install --fast --file-watch
 ```
 You should see something similar at the end :
 ```shell
 Copied executables to /Users/nhenin/.local/bin:
-- dolla-consensus-proposing-detecting-starvation
-- dolla-consensus-proposing-packaging
+- dolla-consensus-proposing-detecting-tension
+- dolla-consensus-proposing-staging
 - dolla-consensus-proposing-receptioning
 - dolla-consensus-proposing-simulating
 - dolla-consensus-proposing-zeus
@@ -52,6 +52,18 @@ Copied executables to /Users/nhenin/.local/bin:
 - Install the executables (see previous section)
 - Make sure you are at the root of the project
 - Execute Proposing Zeus
+
+```shell
+dolla-consensus-proposing-zeus
+```
+N.B : If you run it for the first time , it will install the eventstore docker image (eventstore/eventstore:release-5.0.6)
+
+Step2 :
+- Interactivity with the CLI for getting the desired parameters
+- Start the Event Store docker container
+- Configure the EventStore for running the consensus properly (**REQUIRE ADMIN PASSWORD**)
+- Run the proposing executables in another tab
+
 
 Below, an example about how to run Zeus
 ```shell
@@ -104,4 +116,4 @@ You can now see the local proposal being produced in `output/nodes/achilles/prop
 
 ![proposal-produced](media/proposal-produced.png)
 
-go back to Zeus if you want to stop the Proposing section.
+go back to Zeus if you want to stop the Proposing section. (choice 2)
