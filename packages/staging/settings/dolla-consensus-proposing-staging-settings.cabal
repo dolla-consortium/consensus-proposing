@@ -1,0 +1,25 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 99ccbf92ab6ea0490964fb920f828fb0bf190fc021aaa9a0a8101baeb0990665
+
+name:           dolla-consensus-proposing-staging-settings
+version:        0.0.0.1
+build-type:     Simple
+
+library
+  exposed-modules:
+      Dolla.Consensus.Proposing.Staging.Execution.Environment.EventStore.Settings
+  other-modules:
+      Paths_dolla_consensus_proposing_staging_settings
+  hs-source-dirs:
+      library
+  ghc-options: -Wall
+  build-depends:
+      aeson ==1.4.7.1
+    , base ==4.13.0.0
+    , dolla-base ==1.0.0
+  default-language: Haskell2010

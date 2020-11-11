@@ -1,0 +1,15 @@
+name: dolla-consensus-proposing-staging-settings
+version: 0.0.0.1
+
+ghc-options:
+  - -Wall
+
+library:
+  source-dirs: library
+
+  dependencies:
+    - dolla-base == 1.0.0
+    - base == 4.13.0.0
+    - aeson == 1.4.7.1
+
+
