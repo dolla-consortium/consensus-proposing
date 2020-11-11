@@ -31,16 +31,16 @@ import           Dolla.Libraries.LogEngine.LogEngine
 import           Dolla.Consensus.Log.Aggregation
 import           Dolla.Consensus.Dummy.Client.Request
 import qualified Dolla.Consensus.Maestro.Output as Maestro
-import qualified Dolla.Consensus.Proposing.Receptioning.API.Client.Dependencies as Receptionist.Client
-import           Dolla.Consensus.Proposing.Receptioning.API.Client.Client
-import qualified Dolla.Consensus.Proposing.Packaging.Pipeline.IO.Output as Packaging
+import qualified Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
+import           Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Client
+import qualified Dolla.Consensus.Proposing.Staging.Pipeline.IO.Output as Staging
 import           Dolla.Consensus.Proposing.Simulating.GenRequest
 
 data Context log
   = Context
     { logger :: Logger
     , receptioningClient :: Receptionist.Client.Dependencies
-    , packagingOutputLog :: log Packaging.Output
+    , stagingOutputLog :: log Staging.Output
     , getMaestroOutputLog :: ByBlockOffset -> log Maestro.Output}
 
 underSupplying
@@ -52,18 +52,21 @@ underSupplying
     -> S.SerialT m ()
 underSupplying proposalSizeLimit 
   = do
-    Context {packagingOutputLog,logger} <- ask
-    lift $ 
-      generateRequests (proposalSizeLimit `div` 2)
-      >>= sendSimulatedRequest
-      >>  simulateFirstConsensusReached     
-    stream infinitely packagingOutputLog
-        & S.mapM (\Packaging.LocalProposalProduced {localOffset} -> do
-          log logger INFO $ "Local Proposal " ++ show localOffset ++ " Produced." 
-          generateRequests (proposalSizeLimit `div` 2)
-            >>= sendSimulatedRequest
-            >> simulateLocalProposalConsumptionForBlock (localOffset + 2)
-            >> simulateConsensusReachedForBlock         (localOffset + 2))
+    Context {stagingOutputLog,logger} <- ask
+    lift $ do 
+      generateRequests (proposalSizeLimit `div` 2) >>= sendSimulatedRequest
+      log logger INFO "Requests sent."
+      _ <- simulateFirstConsensusReached
+      log logger INFO "First Consensus Reached Simulated."
+    stream infinitely stagingOutputLog
+        & S.mapM (\Staging.LocalProposalStaged {localOffset} -> do
+          log logger INFO $ "Local Proposal " ++ show localOffset ++ " Staged."
+          generateRequests (proposalSizeLimit `div` 2) >>= sendSimulatedRequest
+          log logger INFO "Requests sent."
+          simulateLocalProposalConsumptionForBlock (localOffset + 2)
+          log logger INFO "Local Proposal Consumption Simulated."
+          simulateConsensusReachedForBlock         (localOffset + 2)
+          log logger INFO "Consensus Reached Simulated.")
 
 simulateFirstConsensusReached
   :: ( MemoryStreamLoggable m log
@@ -73,8 +76,8 @@ simulateFirstConsensusReached
   = do
     Context {getMaestroOutputLog} <- ask
     let byBlockOffset = ByBlockOffset 1
-        maestroStream = getMaestroOutputLog byBlockOffset
-    void $ append maestroStream 0 (Maestro.ConsensusReached byBlockOffset)
+        maestroLog = getMaestroOutputLog byBlockOffset
+    void $ append maestroLog 0 (Maestro.ConsensusReached byBlockOffset)
 
 simulateLocalProposalConsumptionForBlock
   :: ( MemoryStreamLoggable m log
@@ -86,8 +89,8 @@ simulateLocalProposalConsumptionForBlock blockOffset
     Context{getMaestroOutputLog, receptioningClient = Receptionist.Client.Dependencies {nodeId}} <- ask 
     let byBlockOffset = ByBlockOffset {blockOffset}
         byProposer  = ByProposer { blockOffset = blockOffset  , proposerId = coerce nodeId }
-        maestroStream = getMaestroOutputLog byBlockOffset
-    void $ append maestroStream 0 (Maestro.ProposalAccepted {byProposer})
+        maestroLog = getMaestroOutputLog byBlockOffset
+    void $ append maestroLog 0 (Maestro.ProposalAccepted {byProposer})
     
 simulateConsensusReachedForBlock
   :: ( MemoryStreamLoggable m log
@@ -98,8 +101,8 @@ simulateConsensusReachedForBlock blockOffset
   = do
     Context{getMaestroOutputLog} <- ask 
     let byBlockOffset = ByBlockOffset {blockOffset}
-        maestroStream = getMaestroOutputLog byBlockOffset
-    void $ append maestroStream 1 (Maestro.ConsensusReached byBlockOffset)
+        maestroLog = getMaestroOutputLog byBlockOffset
+    void $ append maestroLog 1 (Maestro.ConsensusReached byBlockOffset)
 
 sendSimulatedRequest
   :: ( MonadIO m

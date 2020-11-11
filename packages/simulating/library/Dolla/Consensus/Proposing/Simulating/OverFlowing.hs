@@ -16,8 +16,8 @@ import           Data.Function ((&))
 
 import           Dolla.Common.Logging.Core
 
-import qualified Dolla.Consensus.Proposing.Receptioning.API.Client.Dependencies as Receptionist.Client
-import           Dolla.Consensus.Proposing.Receptioning.API.Client.Client
+import qualified Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Dependencies as Receptionist.Client
+import           Dolla.Consensus.Proposing.Receptioning.Execution.Environment.EventStore.Dolla.Warp.Client.Client
 import           Dolla.Consensus.Proposing.Simulating.Dependencies
 import           Dolla.Common.Memory.Byte (Byte)
 import           Dolla.Consensus.Proposing.Simulating.GenRequest

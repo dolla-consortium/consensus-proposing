@@ -1,14 +1,11 @@
 name: dolla-consensus-proposing-simulating-settings
 version: 0.0.0.1
-extra-source-files:
-  - README.md
 
 ghc-options:
   - -Wall
-##  - -j
 
 library:
-  source-dirs: lib
+  source-dirs: library
 
   dependencies:
     - dolla-base == 1.0.0
