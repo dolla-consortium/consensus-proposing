@@ -17,16 +17,16 @@ packages:
   - packages/zeus
 
   # Working locally with internal dependencies directly (comment them in extra-deps)
-  - ../base
-  - ../consensus-base
+#  - ../base
+#  - ../consensus-base
 
 extra-deps:
   # Internal dependencies
-#  - github: dolla-consortium/base
-#    commit: 1053d9896e8d45bcb17b4f15b4dc789e60fa11f1
-#
-#  - github: dolla-consortium/consensus-base
-#    commit: c357190f2a6b2c2629562e60f6126ebfee140e93
+  - github: dolla-consortium/base
+    commit: 1104589c2bebe2f4f90e91c6807177680c559137
+
+  - github: dolla-consortium/consensus-base
+    commit: 2b90533b74a7f2518ae20328ec882a3385f21c5a
 
   # Third party dependencies
   - terminfo-hs-0.2.1.1
