@@ -20,8 +20,8 @@ A **Section** is a meaningful Set of Pipelines and Junctions put together.
 > It's a good example of Pipeline Implementation in Haskell.
 
 - [Receptioning](/packages/receptioning) : Client/Server for collecting requests presenting them for being packaged into a proposal.
-- [Detecting Starvation](/packages/detecting-starvation) : Notify the `Packaging` pipeline when all the local proposals produced have been consumed.
 - [Packaging](/packages/packaging/) : Produce Local Proposal Files with the following properties
+- [Detecting Flow Tension](/packages/detecting-tension) : Detect if the local proposal flow is tensed, meaning if the consensus has consumed more local proposals than being staged.
   - `Proposals are never empty`
   - `Proposals file size < configurable size limit`
   - Filename - `x.proposal` with `x` the offset of proposal produced

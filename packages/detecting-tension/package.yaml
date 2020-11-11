@@ -1,0 +1,65 @@
+name: dolla-consensus-proposing-detecting-tension
+version: 0.0.0.1
+extra-source-files:
+  - README.md
+
+ghc-options:
+  - -Wall
+
+library:
+  source-dirs: library
+
+  dependencies:
+
+    - dolla-base == 1.0.0
+    - dolla-consensus-base == 1.0.0
+    - dolla-consensus-proposing-detecting-tension-settings
+    - base == 4.13.0.0
+    - containers == 0.6.2.1
+    - mtl == 2.2.2
+    - streamly == 0.7.2
+    - interpolatedstring-perl6 == 1.0.2
+    - aeson == 1.4.7.1
+    - lens == 4.18.1
+    - bytestring == 0.10.10.0
+    - exceptions == 0.10.4
+    - directory == 1.3.6.0
+    - QuickCheck == 2.13.2
+    - uuid == 1.3.13
+
+executables:
+  dolla-consensus-proposing-detecting-tension :
+    main: Executables.hs
+    source-dirs: executables
+    ghc-options:
+      - -main-is Executables.execute
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - base == 4.13.0.0
+      - mtl == 2.2.2
+      - streamly == 0.7.2
+      - dolla-base == 1.0.0
+      - dolla-consensus-proposing-detecting-tension
+      - dolla-consensus-proposing-detecting-tension-settings
+
+tests:
+  dolla-consensus-proposing-detecting-tension-test:
+    main:                Spec.hs
+    source-dirs:         test
+    dependencies:
+      - dolla-consensus-proposing-detecting-tension
+      - base
+      - streamly == 0.7.2
+      - mtl == 2.2.2
+      - random == 1.1
+      - hspec
+      - QuickCheck
+      - generic-arbitrary
+      - quickcheck-instances
+      - interpolatedstring-perl6 == 1.0.2
+      - aeson == 1.4.7.1
+      - uuid == 1.3.13
+      - dolla-consensus-base == 1.0.0
+
