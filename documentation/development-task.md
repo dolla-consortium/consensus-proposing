@@ -57,8 +57,10 @@ Copied executables to /Users/nhenin/.local/bin:
 dolla-consensus-proposing-zeus
 ```
 N.B : If you run it for the first time , it will install the eventstore docker image (eventstore/eventstore:release-5.0.6)
-
-Step2 :
+```shell
+WARNING: Some next steps will your ADMIN PASSWORD
+```
+Next Steps :
 - Interactivity with the CLI for getting the desired parameters
 - Start the Event Store docker container
 - Configure the EventStore for running the consensus properly (**REQUIRE ADMIN PASSWORD**)
